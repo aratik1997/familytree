@@ -1,0 +1,132 @@
+/**
+ * Royal Heritage — design tokens.
+ *
+ * The single source of truth for colour, type, motion and elevation. Nothing
+ * in a component should carry a literal colour; everything reads from here so
+ * both themes stay in step and the palette can be retuned in one place.
+ */
+
+:root {
+    /* Surfaces — dark theme, the default */
+    --ink-900: #071612;
+    --ink-800: #0C2620;
+    --ink-700: #113429;
+    --ink-600: #17453A;
+    --ink-500: #1F5647;
+
+    /* Royal accents */
+    --gold-500: #C9A227;
+    --gold-300: #E8CE7A;
+    --gold-700: #9C7C1B;
+    --gold-900: #6B540F;
+    --maroon-500: #7B1E3B;
+
+    /* Parchment — light theme surfaces */
+    --ivory-50: #FBF8F1;
+    --ivory-100: #F3ECDD;
+    --ivory-200: #E9DFC9;
+    --ivory-300: #DCCFB3;
+
+    /* Text */
+    --text-hi: #F4F1E8;
+    --text-mid: #B9C7BF;
+    --text-low: #7E9088;
+
+    /* Gender indicators — never altered between themes */
+    --male-500: #2F6FED;
+    --male-200: #A9C6FF;
+    --female-500: #EC6BA5;
+    --female-200: #F9BEDA;
+
+    /* Tree materials */
+    --bark-600: #4A3524;
+    --bark-400: #6E5238;
+    --leaf-600: #2E7D5B;
+    --leaf-400: #4FAE7F;
+    --leaf-autumn: #C08A3E;
+
+    /* Semantic */
+    --success: #3FA96A;
+    --warning: #D9A441;
+    --danger: #C0392B;
+
+    /* Effects */
+    --hairline: color-mix(in srgb, var(--gold-500) 45%, transparent);
+    --glass: color-mix(in srgb, var(--ink-700) 70%, transparent);
+    --shadow-card: 0 1px 2px rgb(0 0 0 / .3), 0 8px 24px rgb(0 0 0 / .28);
+    --shadow-lift: 0 4px 8px rgb(0 0 0 / .32), 0 16px 40px rgb(0 0 0 / .36);
+
+    /* Gold that is safe to read as text on the current surface. Flipped by
+       the light theme, so components never have to branch on theme. */
+    --gold-text: var(--gold-300);
+
+    /* Typography */
+    --font-display: 'Cormorant Garamond', 'Noto Serif Bengali', serif;
+    --font-body: 'Inter', 'Hind Siliguri', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    /* Radii */
+    --radius-card: 14px;
+    --radius-control: 10px;
+    --radius-modal: 18px;
+    --radius-chip: 999px;
+
+    /* Motion */
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --dur-micro: 150ms;
+    --dur-panel: 280ms;
+    --dur-page: 420ms;
+
+    /**
+     * Channel forms of the tokens above, needed only so Tailwind's alpha
+     * modifiers (`border-gold/40`) can resolve. Derived values — if a hex
+     * token changes, change its channel twin on the same line.
+     */
+    --ink-900-rgb: 7 22 18;
+    --ink-800-rgb: 12 38 32;
+    --ink-700-rgb: 17 52 41;
+    --ink-600-rgb: 23 69 58;
+    --ink-500-rgb: 31 86 71;
+    --gold-500-rgb: 201 162 39;
+    --gold-300-rgb: 232 206 122;
+    --gold-700-rgb: 156 124 27;
+    --maroon-500-rgb: 123 30 59;
+    --text-hi-rgb: 244 241 232;
+    --text-mid-rgb: 185 199 191;
+    --text-low-rgb: 126 144 136;
+    --male-500-rgb: 47 111 237;
+    --female-500-rgb: 236 107 165;
+    --leaf-600-rgb: 46 125 91;
+    --success-rgb: 63 169 106;
+    --warning-rgb: 217 164 65;
+    --danger-rgb: 192 57 43;
+}
+
+[data-theme="light"] {
+    --ink-900: var(--ivory-50);
+    --ink-800: var(--ivory-50);
+    --ink-700: #FFFFFF;
+    --ink-600: var(--ivory-200);
+    --ink-500: var(--ivory-300);
+    --text-hi: #17251F;
+    --text-mid: #4A5B53;
+    /* Darker than the dark theme's tertiary tone: #7A8A82 only reaches 3.4:1
+       on parchment, which fails AA for the nav's idle links. */
+    --text-low: #5F6F68;
+    --glass: color-mix(in srgb, #FFFFFF 78%, transparent);
+    --shadow-card: 0 1px 2px rgb(23 37 31 / .06), 0 8px 24px rgb(23 37 31 / .08);
+    --shadow-lift: 0 4px 8px rgb(23 37 31 / .10), 0 16px 40px rgb(23 37 31 / .12);
+
+    /* --gold-500 is a line colour only; gold *text* needs the darker tone to
+       clear AA against parchment. */
+    --gold-text: var(--gold-700);
+
+    --ink-900-rgb: 251 248 241;
+    --ink-800-rgb: 251 248 241;
+    --ink-700-rgb: 255 255 255;
+    --ink-600-rgb: 233 223 201;
+    --ink-500-rgb: 220 207 179;
+    --text-hi-rgb: 23 37 31;
+    --text-mid-rgb: 74 91 83;
+    --text-low-rgb: 95 111 104;
+}

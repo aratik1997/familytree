@@ -1,0 +1,826 @@
+/* Body / UI */
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+
+/* Display */
+@import '@fontsource/cormorant-garamond/latin-600.css';
+@import '@fontsource/cormorant-garamond/latin-700.css';
+
+/* Utility — dates, years, counts */
+@import '@fontsource/jetbrains-mono/latin-400.css';
+
+/* Bangla counterparts */
+@import '@fontsource/noto-serif-bengali/bengali-600.css';
+@import '@fontsource/hind-siliguri/bengali-400.css';
+@import '@fontsource/hind-siliguri/bengali-500.css';
+
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    [x-cloak] {
+        display: none !important;
+    }
+
+    html {
+        color-scheme: dark;
+    }
+
+    [data-theme='light'] {
+        color-scheme: light;
+    }
+
+    body {
+        background-color: var(--ink-800);
+        color: var(--text-hi);
+        font-family: var(--font-body);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-family: var(--font-display);
+        color: var(--text-hi);
+    }
+
+    /* Display sizes get tighter tracking and leading than body copy. */
+    .text-display,
+    h1,
+    h2 {
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+    }
+
+    :lang(bn) {
+        font-family: 'Hind Siliguri', var(--font-body);
+    }
+
+    :lang(bn) h1,
+    :lang(bn) h2,
+    :lang(bn) h3,
+    :lang(bn) h4 {
+        font-family: 'Noto Serif Bengali', var(--font-display);
+    }
+
+    /* One global focus ring, on everything interactive. */
+    :focus-visible {
+        outline: 2px solid var(--gold-300);
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+
+    ::selection {
+        background: color-mix(in srgb, var(--gold-500) 35%, transparent);
+        color: var(--text-hi);
+    }
+
+    /* Scrollbars, so they don't punch a bright hole in the dark shell. */
+    * {
+        scrollbar-color: var(--ink-600) transparent;
+        scrollbar-width: thin;
+    }
+}
+
+@layer components {
+    /* ---------------------------------------------------------------
+       Ornament devices. Five in total; no screen should use more than
+       two of them at once.
+       --------------------------------------------------------------- */
+
+    /* 1 — gold hairline */
+    .hairline {
+        border: 1px solid var(--hairline);
+    }
+
+    .hairline-t {
+        border-top: 1px solid var(--hairline);
+    }
+
+    .hairline-b {
+        border-bottom: 1px solid var(--hairline);
+    }
+
+    /* 3 — damask backdrop, fixed behind the canvas at 4% */
+    .damask {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.04;
+        background-image: var(--damask-src);
+        background-size: 320px 320px;
+        background-repeat: repeat;
+    }
+
+    /* 4 — Mughal arch silhouette, detail pages only */
+    .arch-clip {
+        border-radius: 50% 50% 12px 12px / 60% 60% 12px 12px;
+        overflow: hidden;
+    }
+
+    /* 5 — glass panel */
+    .glass {
+        background: var(--glass);
+        backdrop-filter: blur(16px) saturate(1.1);
+        -webkit-backdrop-filter: blur(16px) saturate(1.1);
+        border: 1px solid var(--hairline);
+        box-shadow: var(--shadow-card);
+    }
+
+    /* ---------------------------------------------------------------
+       Surfaces
+       --------------------------------------------------------------- */
+
+    .card {
+        background: var(--ink-700);
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius-card);
+        box-shadow: var(--shadow-card);
+    }
+
+    /* Retained so existing markup keeps rendering while views migrate. */
+    .card-royal {
+        background: var(--ink-700);
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius-card);
+        box-shadow: var(--shadow-card);
+    }
+
+    .card-hover {
+        transition: transform var(--dur-micro) var(--ease),
+            box-shadow var(--dur-micro) var(--ease),
+            border-color var(--dur-micro) var(--ease);
+    }
+
+    .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lift);
+        border-color: var(--gold-300);
+    }
+
+    /* ---------------------------------------------------------------
+       Buttons — gold is the border, never the fill.
+       --------------------------------------------------------------- */
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        min-height: 44px;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-control);
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.2;
+        cursor: pointer;
+        transition: transform 100ms var(--ease),
+            border-color var(--dur-micro) var(--ease),
+            background-color var(--dur-micro) var(--ease);
+    }
+
+    .btn:active {
+        transform: scale(0.97);
+    }
+
+    .btn-primary {
+        background: var(--ink-500);
+        color: var(--text-hi);
+        border: 1px solid var(--hairline);
+    }
+
+    .btn-primary:hover {
+        border-color: var(--gold-300);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: var(--text-hi);
+        border: 1px solid var(--hairline);
+    }
+
+    .btn-secondary:hover {
+        border-color: var(--gold-300);
+        background: color-mix(in srgb, var(--gold-500) 8%, transparent);
+    }
+
+    .btn-danger {
+        background: transparent;
+        color: var(--maroon-500);
+        border: 1px solid var(--maroon-500);
+    }
+
+    .btn-danger:hover {
+        background: var(--maroon-500);
+        color: var(--text-hi);
+    }
+
+    .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* Aliases kept so unmigrated markup still picks up the new look. */
+    .btn-royal {
+        composes: btn;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-control);
+        font-size: 0.875rem;
+        font-weight: 500;
+        background: var(--ink-500);
+        color: var(--text-hi);
+        border: 1px solid var(--hairline);
+        transition: transform 100ms var(--ease), border-color var(--dur-micro) var(--ease);
+    }
+
+    .btn-royal:hover {
+        border-color: var(--gold-300);
+    }
+
+    .btn-royal:active {
+        transform: scale(0.97);
+    }
+
+    .btn-royal-outline {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-control);
+        font-size: 0.875rem;
+        font-weight: 500;
+        background: transparent;
+        color: var(--text-hi);
+        border: 1px solid var(--hairline);
+        transition: transform 100ms var(--ease), border-color var(--dur-micro) var(--ease),
+            background-color var(--dur-micro) var(--ease);
+    }
+
+    .btn-royal-outline:hover {
+        border-color: var(--gold-300);
+        background: color-mix(in srgb, var(--gold-500) 8%, transparent);
+    }
+
+    .btn-royal-outline:active {
+        transform: scale(0.97);
+    }
+
+    .btn-royal-danger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius-control);
+        font-size: 0.875rem;
+        font-weight: 500;
+        background: transparent;
+        color: var(--maroon-500);
+        border: 1px solid var(--maroon-500);
+        transition: transform 100ms var(--ease), background-color var(--dur-micro) var(--ease);
+    }
+
+    .btn-royal-danger:hover {
+        background: var(--maroon-500);
+        color: var(--text-hi);
+    }
+
+    /* ---------------------------------------------------------------
+       Form controls
+       --------------------------------------------------------------- */
+
+    .field {
+        width: 100%;
+        min-height: 44px;
+        padding: 0.5rem 0.75rem;
+        background: var(--ink-900);
+        color: var(--text-hi);
+        border: 1px solid var(--hairline);
+        border-radius: var(--radius-control);
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        transition: border-color var(--dur-micro) var(--ease),
+            box-shadow var(--dur-micro) var(--ease);
+    }
+
+    .field::placeholder {
+        color: var(--text-low);
+    }
+
+    .field:focus {
+        outline: none;
+        border-color: var(--gold-300);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold-300) 18%, transparent);
+    }
+
+    /* Native select arrow, drawn in gold rather than the UA default. */
+    select.field {
+        appearance: none;
+        background-image: linear-gradient(45deg, transparent 50%, var(--gold-500) 50%),
+            linear-gradient(135deg, var(--gold-500) 50%, transparent 50%);
+        background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+        background-size: 5px 5px, 5px 5px;
+        background-repeat: no-repeat;
+        padding-right: 2.25rem;
+    }
+
+    select.field option {
+        background: var(--ink-700);
+        color: var(--text-hi);
+    }
+
+    .field-label {
+        display: block;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: var(--text-mid);
+        margin-bottom: 0.375rem;
+    }
+
+    /* ---------------------------------------------------------------
+       Type helpers
+       --------------------------------------------------------------- */
+
+    .eyebrow {
+        font-family: var(--font-body);
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--text-low);
+    }
+
+    /* Every date, year, lifespan and count. Tabular figures keep columns of
+       numbers aligned, which is what makes the tree read as a record. */
+    .numeric {
+        font-family: var(--font-mono);
+        font-variant-numeric: tabular-nums;
+        letter-spacing: -0.01em;
+    }
+
+    .measure {
+        max-width: 68ch;
+    }
+
+    .gold-text {
+        color: var(--gold-text);
+    }
+
+    /* ---------------------------------------------------------------
+       Chips, badges, tables
+       --------------------------------------------------------------- */
+
+    .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.125rem 0.625rem;
+        border-radius: var(--radius-chip);
+        background: var(--ink-600);
+        color: var(--text-mid);
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    /* The tint and border stay identical across themes; only the label tone
+       flips, because the pale variants can't clear AA on parchment. */
+    .chip-male {
+        background: color-mix(in srgb, var(--male-500) 15%, transparent);
+        border: 1px solid var(--male-500);
+        color: var(--male-200);
+    }
+
+    .chip-female {
+        background: color-mix(in srgb, var(--female-500) 15%, transparent);
+        border: 1px solid var(--female-500);
+        color: var(--female-200);
+    }
+
+    [data-theme='light'] .chip-male {
+        color: color-mix(in srgb, var(--male-500) 78%, #000);
+    }
+
+    [data-theme='light'] .chip-female {
+        color: color-mix(in srgb, var(--female-500) 70%, #000);
+    }
+
+    .privacy-badge-everyone,
+    .privacy-badge-family,
+    .privacy-badge-private {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.125rem 0.5rem;
+        border-radius: var(--radius-chip);
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .privacy-badge-everyone {
+        background: color-mix(in srgb, var(--success) 15%, transparent);
+        color: var(--success);
+    }
+
+    .privacy-badge-family {
+        background: color-mix(in srgb, var(--gold-500) 15%, transparent);
+        color: var(--gold-text);
+    }
+
+    .privacy-badge-private {
+        background: color-mix(in srgb, var(--maroon-500) 22%, transparent);
+        /* Maroon lifted toward the page's text tone so it clears AA on the
+           dark shell without leaving the maroon family. */
+        color: color-mix(in srgb, var(--maroon-500) 45%, var(--text-hi));
+    }
+
+    [data-theme='light'] .privacy-badge-private {
+        color: var(--maroon-500);
+    }
+
+    .table-royal {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table-royal thead {
+        background: var(--ink-700);
+    }
+
+    .table-royal th {
+        text-align: left;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--text-low);
+        padding: 0.75rem 1rem;
+    }
+
+    .table-royal td {
+        padding: 0.75rem 1rem;
+        border-top: 1px solid color-mix(in srgb, var(--gold-500) 25%, transparent);
+        color: var(--text-mid);
+    }
+
+    /* ---------------------------------------------------------------
+       Feedback
+       --------------------------------------------------------------- */
+
+    .skeleton {
+        position: relative;
+        overflow: hidden;
+        background: var(--ink-600);
+        border-radius: var(--radius-control);
+    }
+
+    .skeleton::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        transform: translateX(-100%);
+        background: linear-gradient(90deg, transparent, var(--ink-500), transparent);
+        animation: skeleton-sweep 1.4s infinite;
+    }
+
+    .toast {
+        border-top: 1px solid var(--hairline);
+        background: var(--glass);
+        backdrop-filter: blur(16px) saturate(1.1);
+        border-radius: var(--radius-control);
+        box-shadow: var(--shadow-card);
+        animation: toast-in var(--dur-panel) var(--ease);
+    }
+
+    .wordmark {
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        color: var(--text-hi);
+    }
+
+    /* ---------------------------------------------------------------
+       Navigation
+       --------------------------------------------------------------- */
+
+    .nav-link-active {
+        border-color: var(--gold-500);
+        color: var(--text-hi);
+    }
+
+    .nav-link-idle {
+        border-color: transparent;
+        color: var(--text-low);
+    }
+
+    .nav-link-idle:hover {
+        color: var(--gold-text);
+        border-color: color-mix(in srgb, var(--gold-500) 40%, transparent);
+    }
+
+    .nav-link-active-mobile {
+        border-color: var(--gold-500);
+        color: var(--gold-text);
+        background: color-mix(in srgb, var(--gold-500) 8%, transparent);
+    }
+
+    .nav-link-idle-mobile {
+        border-color: transparent;
+        color: var(--text-low);
+    }
+
+    .nav-link-idle-mobile:hover {
+        color: var(--gold-text);
+        background: color-mix(in srgb, var(--gold-500) 8%, transparent);
+    }
+
+    .dropdown-item {
+        color: var(--text-mid);
+    }
+
+    .dropdown-item:hover {
+        background: var(--ink-600);
+        color: var(--text-hi);
+    }
+
+    /* ---------------------------------------------------------------
+       The Seal
+       --------------------------------------------------------------- */
+
+    .seal {
+        border-radius: var(--radius-chip);
+        cursor: pointer;
+        transition: transform var(--dur-micro) var(--ease);
+    }
+
+    .seal:hover {
+        transform: scale(1.03);
+    }
+
+    .seal:active {
+        transform: scale(0.97);
+    }
+
+    .seal:hover svg {
+        color: var(--gold-300);
+    }
+
+    /* One full turn every four minutes. */
+    .seal-spin {
+        animation: seal-turn 240s linear infinite;
+    }
+
+    /* ---------------------------------------------------------------
+       Photo editor — crop / zoom / rotate before upload
+       --------------------------------------------------------------- */
+
+    .photo-editor {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        background: rgb(0 0 0 / .55);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        overflow-y: auto;
+    }
+
+    .photo-editor__panel {
+        width: 100%;
+        max-width: 640px;
+        padding: 1.25rem;
+        border-radius: var(--radius-modal);
+    }
+
+    .photo-editor__header {
+        margin-bottom: 1rem;
+    }
+
+    .photo-editor__title {
+        font-family: var(--font-display);
+        font-size: 1.375rem;
+        margin-top: 0.125rem;
+    }
+
+    .photo-editor__hint {
+        font-size: 0.8125rem;
+        color: var(--text-mid);
+        margin-top: 0.25rem;
+        max-width: 46ch;
+    }
+
+    .photo-editor__body {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .photo-editor__stage {
+        width: 100%;
+        max-width: 420px;
+        height: auto;
+        aspect-ratio: 1;
+        border-radius: var(--radius-control);
+        background: var(--ink-900);
+        border: 1px solid var(--hairline);
+        touch-action: none;
+    }
+
+    .photo-editor__side {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .photo-editor__preview {
+        width: 96px;
+        height: 110px;
+        border-radius: 10px;
+        border: 2px solid var(--gold-500);
+        background: var(--ink-900);
+    }
+
+    .photo-editor__controls {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+    }
+
+    .photo-editor__icon {
+        min-height: 44px;
+        width: 44px;
+        padding: 0;
+    }
+
+    .photo-editor__slider {
+        flex: 1 1 120px;
+        min-width: 120px;
+        accent-color: var(--gold-500);
+        height: 44px;
+    }
+
+    .photo-editor__reset {
+        margin-left: auto;
+    }
+
+    .photo-editor__footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--hairline);
+    }
+
+    /* Screen-reader-only, used for the tree's parallel hierarchy list. */
+    .sr-only-tree {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+}
+
+@layer utilities {
+    .stagger-in {
+        animation: card-in var(--dur-panel) var(--ease) both;
+    }
+}
+
+@keyframes skeleton-sweep {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes card-in {
+    from {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes seal-turn {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/**
+ * Structural sway. Amplitude rises with generation depth — the trunk barely
+ * moves, the outermost leaves move most. A uniform amplitude reads as
+ * everything wobbling; the cascade is what reads as wind.
+ */
+@keyframes sway {
+    0%,
+    100% {
+        transform: rotate(calc(var(--amp) * -1deg)) translateX(calc(var(--amp) * -0.6px));
+    }
+    50% {
+        transform: rotate(calc(var(--amp) * 1deg)) translateX(calc(var(--amp) * 0.6px));
+    }
+}
+
+.branch-group {
+    animation: sway var(--dur) ease-in-out infinite alternate;
+    animation-delay: var(--delay);
+    transform-box: fill-box;
+    transform-origin: var(--origin-x, 50%) var(--origin-y, 100%);
+    will-change: transform;
+}
+
+/* Birthday: a slow gold pulse on the avatar ring. */
+@keyframes birthday-pulse {
+    0%,
+    100% {
+        stroke-opacity: 1;
+    }
+    50% {
+        stroke-opacity: 0.35;
+    }
+}
+
+.birthday-ring {
+    animation: birthday-pulse 2.4s ease-in-out infinite;
+}
+
+/**
+ * Reduced motion, honoured once at the stylesheet level. The tree's JS
+ * animations check the same media query before they start.
+ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* The wind stops, the Seal stops turning, shimmer disappears. */
+    .branch-group,
+    .seal-spin,
+    .birthday-ring {
+        animation: none !important;
+    }
+
+    .skeleton::after {
+        display: none;
+    }
+}
+
+@media (prefers-contrast: more) {
+    :root {
+        --hairline: var(--gold-300);
+        --text-mid: var(--text-hi);
+    }
+}
+
+/* Backdrop and falling leaves are off on phones — battery and framerate. */
+@media (max-width: 639px) {
+    .damask {
+        display: none;
+    }
+}
