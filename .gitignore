@@ -1,8 +1,13 @@
 *.log
+*.sql
+*.sql.gz
 .DS_Store
 .env
 .env.backup
 .env.production
+# Deployment bundle: live credentials, a database dump and family photos.
+# Never belongs in the repository.
+/deploy
 .phpactor.json
 .phpunit.result.cache
 /.fleet

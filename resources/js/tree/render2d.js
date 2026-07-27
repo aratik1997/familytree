@@ -37,7 +37,9 @@ function readTokens(container) {
         leaf400: token('--leaf-400', '#4FAE7F'),
         leafAutumn: token('--leaf-autumn', '#C08A3E'),
         male: token('--male-500', '#2F6FED'),
+        maleLight: token('--male-200', '#A9C6FF'),
         female: token('--female-500', '#EC6BA5'),
+        femaleLight: token('--female-200', '#F9BEDA'),
         textHi: token('--text-hi', '#F4F1E8'),
         textMid: token('--text-mid', '#B9C7BF'),
         textLow: token('--text-low', '#7E9088'),
@@ -58,6 +60,23 @@ function genderColor(gender, tokens) {
     if (key === 'male') return tokens.male;
     if (key === 'female') return tokens.female;
     return tokens.gold;
+}
+
+/** The lighter tone of the same gender colour, for hover. */
+function genderHoverColor(gender, tokens) {
+    const key = gender?.toLowerCase?.();
+    if (key === 'male') return tokens.maleLight;
+    if (key === 'female') return tokens.femaleLight;
+    return tokens.goldLight;
+}
+
+/**
+ * Appends a hex alpha pair to a `#rrggbb` token. Anything else is returned
+ * untouched — a glow losing its transparency is a far smaller problem than a
+ * malformed colour dropping the whole filter.
+ */
+function withAlpha(color, alphaHex) {
+    return /^#[0-9a-f]{6}$/i.test(color) ? `${color}${alphaHex}` : color;
 }
 
 function genderLabel(gender) {
@@ -619,16 +638,20 @@ export function render2d(container, data, { onSelectNode, onSelectCouple, editab
         .attr('stroke-linecap', 'round');
 
     nodeGroup
+        // Hover brightens the border to the lighter tone of the same gender
+        // colour and adds a soft glow; leaving puts the exact resting colour
+        // back. Both sides must agree — resetting to anything else would
+        // leave the card permanently recoloured after a single hover.
         .on('mouseenter', function (_event, d) {
             d3.select(this).select('.card-plate')
-                .attr('stroke', tokens.goldLight)
-                .attr('stroke-opacity', 1)
-                .style('filter', `drop-shadow(0 0 10px ${genderColor(d.data.gender, tokens)}2E)`);
+                .attr('stroke', genderHoverColor(d.data.gender, tokens))
+                .attr('stroke-width', 3)
+                .style('filter', `drop-shadow(0 0 9px ${withAlpha(genderColor(d.data.gender, tokens), '66')})`);
         })
-        .on('mouseleave', function () {
+        .on('mouseleave', function (_event, d) {
             d3.select(this).select('.card-plate')
-                .attr('stroke', tokens.gold)
-                .attr('stroke-opacity', 0.45)
+                .attr('stroke', genderColor(d.data.gender, tokens))
+                .attr('stroke-width', 2.5)
                 .style('filter', null);
         });
 
