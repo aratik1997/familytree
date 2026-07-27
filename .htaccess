@@ -1,0 +1,35 @@
+# STOPGAP ONLY — this file exists because the whole project was uploaded into
+# the web root. The real fix is to point the domain's document root at the
+# public/ directory (see DEPLOYMENT.md, step 1). Once that is done this file
+# sits above the web root and is never read, so it is harmless to leave here.
+
+# No hidden files: .env, .env.production, .git, .editorconfig, .gitignore.
+<IfModule mod_authz_core.c>
+    <FilesMatch "^\.">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+<IfModule !mod_authz_core.c>
+    <FilesMatch "^\.">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # The application's guts are not web content. Nothing here is served or
+    # executed, whatever the request looks like.
+    RewriteRule ^(app|bootstrap|config|database|deploy|node_modules|resources|routes|storage|tests|vendor)(/|$) - [F,L]
+
+    # Neither are the project files that happen to sit next to public/.
+    RewriteRule ^(artisan|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|vite\.config\.js|tailwind\.config\.js|postcss\.config\.js|README\.md|DEPLOYMENT\.md)$ - [F,L]
+
+    # Everything else is the site, and the site lives in public/. From there
+    # public/.htaccess takes over and hands unmatched paths to index.php.
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
