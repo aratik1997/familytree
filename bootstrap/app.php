@@ -14,6 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\EnsureIsSuperAdmin::class,
         ]);
+
+        // Trusted proxies are configured in AppServiceProvider instead: this
+        // closure runs before the config is loaded, so config() is not
+        // available here yet.
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

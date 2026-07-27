@@ -56,6 +56,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Trusted Proxies
+    |--------------------------------------------------------------------------
+    |
+    | Cloudflare and StackCDN both sit in front of the live site, so the
+    | visitor's real address arrives in X-Forwarded-For rather than on the
+    | connection. Until a proxy is trusted, request()->ip() is the CDN's
+    | address — and that is what login rate limiting counts against.
+    |
+    | Trusting a proxy means trusting a header anyone can send, so this is
+    | deliberately empty by default. Only set it if the origin cannot be
+    | reached except through the CDN; otherwise a spoofed header would let
+    | someone slip past the throttle. Use "*" or a comma-separated list.
+    |
+    | Read here rather than via env() in bootstrap/app.php on purpose:
+    | env() returns null once config:cache has run.
+    |
+    */
+
+    'trusted_proxies' => env('TRUSTED_PROXIES'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |

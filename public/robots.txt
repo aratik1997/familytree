@@ -1,2 +1,10 @@
+# This is a private family record. Every page behind the sign-in door holds
+# living people's dates of birth, addresses and phone numbers, and claim
+# invites arrive by email rather than being linked from anywhere public.
+# None of it belongs in a search result.
+#
+# This is a request, not a control. Robots.txt is honoured by well-behaved
+# crawlers and ignored by everything else, so it supplements the auth
+# middleware rather than standing in for it.
 User-agent: *
-Disallow:
+Disallow: /

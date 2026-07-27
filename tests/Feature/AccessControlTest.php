@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Person;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 /**
@@ -40,9 +41,7 @@ class AccessControlTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider guestProtectedRoutes
-     */
+    #[DataProvider('guestProtectedRoutes')]
     public function test_guests_are_turned_away_from_protected_routes(string $method, string $uri): void
     {
         $this->{$method}($uri)->assertRedirect(route('login'));

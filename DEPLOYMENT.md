@@ -77,7 +77,21 @@ inviting anyone*.
 
 `APP_DEBUG=false` is not cosmetic. With debug on, any error page prints the
 database credentials, the failing SQL and the session cookie to whoever
-triggered it.
+triggered it. With it off, visitors get the site's own error pages instead —
+see `resources/views/errors/`.
+
+### Visitor IP addresses behind the CDN
+
+The live site sits behind both Cloudflare and StackCDN, so `request()->ip()`
+returns the CDN's address rather than the visitor's — and that is what login
+rate limiting counts against. `TRUSTED_PROXIES` makes Laravel read the
+forwarded address instead.
+
+It ships empty on purpose. `X-Forwarded-For` is a header anyone can send, so
+trusting it is only safe when the origin cannot be reached except through the
+CDN. The origin address is visible in the response headers, so confirm it is
+firewalled before setting `TRUSTED_PROXIES=*`. Left empty, throttling still
+works — it is just coarser.
 
 ## 4. Database
 
@@ -159,7 +173,22 @@ plain text, so treat it as known.
 
 ## Checking the result
 
-From your machine:
+Two checks, because neither sees what the other does.
+
+**On the server**, which knows what is configured:
+
+```bash
+php artisan app:deploy-check
+```
+
+It verifies `APP_DEBUG` is off, `APP_ENV` is production, `APP_KEY` is set,
+`APP_URL` is https and not a local address, the session cookie is HTTPS-only,
+the database is reachable, every table the app needs exists, `storage/` is
+writable, the compiled assets and the storage link are present, and whether
+mail is still going to the log. It exits non-zero if anything is wrong, so a
+cron job can run it too.
+
+**From your machine**, which knows what is exposed:
 
 ```powershell
 .\deploy\verify-live.ps1
