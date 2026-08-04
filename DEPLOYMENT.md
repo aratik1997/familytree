@@ -169,9 +169,20 @@ Port 465 is implicit TLS, which is why `MAIL_SCHEME` is `smtps` rather than
 a From address that is not the authenticated mailbox, and the symptom is
 authenticated sends that vanish rather than an obvious error.
 
-Prove it works before the cron ever runs: on the live site use **Forgot
-password** with your own address and confirm the email arrives. If nothing
-turns up, the reason is in `storage/logs/laravel-*.log`.
+Prove it works before the cron ever runs:
+
+```bash
+php artisan app:mail-check you@example.com
+```
+
+It prints the mailer settings in force, sends one message, and reports the
+exact reason if it fails. "Forgot password" cannot tell you that — the page
+says a link has been sent whether or not anything left the server.
+
+**`535 Incorrect authentication data`** means the mailbox password is wrong or
+the mailbox does not exist yet. Create it under **StackCP → Email**, set its
+password there, and put *that* in `MAIL_PASSWORD` — it is not the database
+password.
 
 Should `MAIL_MAILER` ever fall back to `log`, note what that means: claim links
 get written to a file instead of being delivered, and the invites are still
