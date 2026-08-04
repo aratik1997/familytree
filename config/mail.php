@@ -110,9 +110,18 @@ return [
     |
     */
 
+    /*
+     * The mailbox everything leaves from — password reset links, account
+     * claim invites and the "child turned 18" notice.
+     *
+     * StackMail rejects a From address that isn't the authenticated mailbox,
+     * so this has to stay in step with MAIL_USERNAME. It is the default here
+     * as well as in .env so a missing or stale environment file can't quietly
+     * put someone else's address on the family's post.
+     */
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
+        'address' => env('MAIL_FROM_ADDRESS', 'noreply@khandanilegacy.com'),
+        'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'The Khandani Legacy')),
     ],
 
 ];

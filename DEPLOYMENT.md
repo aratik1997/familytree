@@ -160,13 +160,25 @@ running **every minute**. Laravel decides internally what is actually due.
 
 ## Before inviting anyone
 
-**Email is switched off.** `.env` ships with `MAIL_MAILER=log`, so invitations
-are written to `storage/logs/` and nothing is delivered. Create a mailbox in
-StackCP, set `MAIL_MAILER=smtp` with `MAIL_USERNAME` and `MAIL_PASSWORD`, then
-re-run `php artisan config:cache`.
+**Send yourself a test first.** `.env.production` is configured to send through
+the `noreply@khandanilegacy.com` StackMail mailbox on `smtp.stackmail.com:465`.
+Port 465 is implicit TLS, which is why `MAIL_SCHEME` is `smtps` rather than
+`smtp`; if the host ever blocks 465, switch to port 587 and `MAIL_SCHEME=smtp`.
 
-Note what that means while it is still `log`: claim links get written to a
-file. If that file is web-reachable, so are the links.
+`MAIL_FROM_ADDRESS` has to stay identical to `MAIL_USERNAME`. StackMail rejects
+a From address that is not the authenticated mailbox, and the symptom is
+authenticated sends that vanish rather than an obvious error.
+
+Prove it works before the cron ever runs: on the live site use **Forgot
+password** with your own address and confirm the email arrives. If nothing
+turns up, the reason is in `storage/logs/laravel-*.log`.
+
+Should `MAIL_MAILER` ever fall back to `log`, note what that means: claim links
+get written to a file instead of being delivered, and the invites are still
+marked as sent.
+
+Re-run `php artisan config:cache` after any change here, or the old values stay
+live.
 
 **Rotate the database password.** The one in `.env.production` was shared in
 plain text, so treat it as known.

@@ -28,6 +28,16 @@ Options -Indexes
     # Neither are the project files that happen to sit next to public/.
     RewriteRule ^(artisan|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|vite\.config\.js|tailwind\.config\.js|postcss\.config\.js|README\.md|DEPLOYMENT\.md)$ - [F,L]
 
+    # Without this the site answers on two addresses — /login and
+    # /public/login — which is a duplicate entry point and a duplicate set of
+    # URLs for anything that records them. Send callers to the clean one.
+    #
+    # Matching on THE_REQUEST, the verbatim first line of the request, rather
+    # than REQUEST_URI: the internal rewrite below sets REQUEST_URI to a
+    # /public/ path, so testing that instead would redirect in a loop.
+    RewriteCond %{THE_REQUEST} \s/+public/(\S*) [NC]
+    RewriteRule ^ /%1 [R=301,L]
+
     # Everything else is the site, and the site lives in public/. From there
     # public/.htaccess takes over and hands unmatched paths to index.php.
     RewriteCond %{REQUEST_URI} !^/public/
