@@ -310,6 +310,25 @@ export function computeLayout({ nodes, edges }) {
 function computeGenerationById(nodes, links, spouseLinks) {
     const generationById = new Map(nodes.map((node) => [node.data.id, 1]));
 
+    const parentIdsByChild = new Map();
+    for (const link of links) {
+        const childId = link.target.data.id;
+        const list = parentIdsByChild.get(childId) ?? [];
+        list.push(link.source.data.id);
+        parentIdsByChild.set(childId, list);
+    }
+
+    // Two people who share a child belong in the same row whether or not a
+    // marriage between them was ever recorded. Left on separate rows they draw
+    // their child two lines arriving from two different heights, instead of one
+    // drop from the point between them — and the parent stranded a row up makes
+    // the whole branch look a generation deeper than it is.
+    //
+    // Only where exactly two parents are recorded: with a step or adoptive
+    // parent in the mix there is no reason to assume the two were ever a
+    // household, and levelling could drag a parent far off their own row.
+    const coParents = [...parentIdsByChild.values()].filter((ids) => new Set(ids).size === 2);
+
     // Two rules have to hold at once: a child sits strictly below every parent,
     // and a married couple shares a row. They pull against each other — pulling
     // a married-in spouse down to their partner's row means everyone descended
@@ -343,6 +362,16 @@ function computeGenerationById(nodes, links, spouseLinks) {
             const deepest = Math.max(a, b);
             if (a !== deepest) { generationById.set(source.data.id, deepest); changed = true; }
             if (b !== deepest) { generationById.set(target.data.id, deepest); changed = true; }
+        }
+
+        for (const ids of coParents) {
+            const deepest = Math.max(...ids.map((id) => generationById.get(id) ?? 1));
+            for (const id of ids) {
+                if ((generationById.get(id) ?? 1) !== deepest) {
+                    generationById.set(id, deepest);
+                    changed = true;
+                }
+            }
         }
 
         if (!changed) break;
@@ -426,6 +455,12 @@ function centerChildrenUnderParents(nodes, links, spouseLinks, generationById) {
 
         // Build this row's units: a couple counts as one unit so centering
         // can't split a husband and wife apart.
+        //
+        // Each unit is anchored on its blood member — the one born into this
+        // family — because that is whose birth date the ordering above placed.
+        // A married-in spouse holds no place of their own in the age order;
+        // they sit beside their partner, on the left, so the run of brothers
+        // and sisters still reads oldest to youngest across the row.
         const claimed = new Set();
         const units = [];
         for (const node of rowNodes.slice().sort((a, b) => a.x - b.x)) {
@@ -433,11 +468,29 @@ function centerChildrenUnderParents(nodes, links, spouseLinks, generationById) {
             claimed.add(node.data.id);
 
             const spouse = spouseByNodeId.get(node.data.id);
-            const members = spouse && !claimed.has(spouse.data.id) && rowNodes.includes(spouse)
-                ? (claimed.add(spouse.data.id), [node, spouse].sort((a, b) => a.x - b.x))
-                : [node];
+            const partnered = spouse && !claimed.has(spouse.data.id) && rowNodes.includes(spouse);
+            if (partnered) claimed.add(spouse.data.id);
 
-            units.push({ members, width: unitWidth(members) });
+            let anchor = node;
+            let members = [node];
+
+            if (partnered) {
+                const nodeIsBlood = familyKey(node.data.id) !== null;
+                const spouseIsBlood = familyKey(spouse.data.id) !== null;
+
+                if (nodeIsBlood === spouseIsBlood) {
+                    // Two blood lines married to each other, or neither side
+                    // in the records — nothing to prefer, so keep the order
+                    // they already sit in.
+                    members = [node, spouse].sort((a, b) => a.x - b.x);
+                    anchor = members[0];
+                } else {
+                    anchor = nodeIsBlood ? node : spouse;
+                    members = [anchor === node ? spouse : node, anchor];
+                }
+            }
+
+            units.push({ members, anchor, width: unitWidth(members) });
         }
 
         // Group units by the family they descend from, so true siblings share
@@ -477,7 +530,15 @@ function centerChildrenUnderParents(nodes, links, spouseLinks, generationById) {
                 ? group.parents.reduce((sum, p) => sum + p.x, 0) / group.parents.length
                 : currentCenter;
 
-            placements.push({ units: group.units, totalWidth, desiredCenter });
+            // Ordered by the blood member, not by whichever half of a couple
+            // happens to sit further left — otherwise a married-in spouse
+            // standing to the left of their partner would decide where their
+            // whole household falls in the age order.
+            placements.push({
+                units: [...group.units].sort((a, b) => a.anchor.x - b.anchor.x),
+                totalWidth,
+                desiredCenter,
+            });
         }
 
         // Sweep left to right: each group wants to sit centered on its
@@ -692,7 +753,12 @@ function buildRenderLinks(links, spouseLinks, relationshipType) {
             const [a, b] = parentLinks;
             const pairKey = [a.source.data.id, b.source.data.id].sort((x, y) => x - y).join('-');
 
-            if (spousePairs.has(pairKey)) {
+            // One drop from the point between the parents, rather than two
+            // lines converging on the same child. A recorded marriage is the
+            // clear case; two parents sharing a row is the same thing seen
+            // from the chart's side, and covers a mother and father whose
+            // marriage was never entered into the records.
+            if (spousePairs.has(pairKey) || a.source.generation === b.source.generation) {
                 renderLinks.push({
                     source: { x: (a.source.x + b.source.x) / 2, y: (a.source.y + b.source.y) / 2 },
                     target: a.target,
