@@ -7,10 +7,9 @@ use App\Http\Requests\UpdatePersonPhotoRequest;
 use App\Http\Requests\UpdatePersonRequest;
 use App\Models\Couple;
 use App\Models\Person;
+use App\Support\ClaimInvites;
 use App\Support\ImageStore;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class PersonController extends Controller
 {
@@ -86,6 +85,11 @@ class PersonController extends Controller
                 'profile_photo_path' => $path,
                 'created_by_person_id' => $request->user()->person?->id,
             ]);
+
+            // A child under 18 is looked after by their parent and gets no
+            // invitation; ClaimInvites decides that. An adult son or daughter
+            // added here is invited straight away, same as anybody else.
+            ClaimInvites::send($child, 'manual_invite', $request->user()->person);
         }
 
         $parentIds = [$person->id => ['relationship_type' => $request->validated('relationship_type')]];

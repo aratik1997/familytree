@@ -4,13 +4,19 @@ namespace App\Mail;
 
 use App\Models\Person;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AccountClaimInvite extends Mailable implements ShouldQueue
+/**
+ * Deliberately not ShouldQueue. Marking it so would make Mail::send() defer to
+ * the queue no matter how it is called, and on shared hosting with no worker
+ * that leaves delivery resting on QUEUE_CONNECTION staying "sync" — Laravel's
+ * own default is "database", where the invitation would sit unsent forever and
+ * nothing would say so.
+ */
+class AccountClaimInvite extends Mailable
 {
     use Queueable, SerializesModels;
 

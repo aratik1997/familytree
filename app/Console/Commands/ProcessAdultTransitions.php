@@ -2,15 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Mail\AccountClaimInvite;
-use App\Models\ClaimInvite;
 use App\Models\Person;
 use App\Notifications\ChildTurnedEighteen;
+use App\Support\ClaimInvites;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Str;
 
 class ProcessAdultTransitions extends Command
 {
@@ -27,20 +23,10 @@ class ProcessAdultTransitions extends Command
             ->whereDate('date_of_birth', '<=', now()->subYears(18))
             ->chunkById(100, function ($people) use (&$count) {
                 foreach ($people as $person) {
-                    $plainToken = Str::random(64);
+                    if (! ClaimInvites::send($person, 'adult_claim')) {
+                        continue;
+                    }
 
-                    DB::transaction(function () use ($person, $plainToken) {
-                        ClaimInvite::create([
-                            'person_id' => $person->id,
-                            'token' => hash('sha256', $plainToken),
-                            'type' => 'adult_claim',
-                            'expires_at' => now()->addDays(7),
-                        ]);
-
-                        $person->update(['claim_status' => 'pending_invite', 'invited_at' => now()]);
-                    });
-
-                    Mail::to($person->email)->queue(new AccountClaimInvite($person, $plainToken));
                     $this->notifyParents($person);
                     $count++;
                 }

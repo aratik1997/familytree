@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClaimInviteController;
 use App\Http\Controllers\CoupleController;
 use App\Http\Controllers\FieldPrivacyController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\MailDiagnosticController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PersonController;
@@ -17,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route(auth()->check() ? 'dashboard' : 'login');
 });
+
+// Outside every auth group: the language has to be changeable from the sign-in
+// and claim pages, which is where it matters most.
+Route::get('/locale/{locale}', [LocaleController::class, 'update'])->name('locale.update');
 
 Route::middleware('guest')->group(function () {
     Route::get('/claim/{token}', [ClaimInviteController::class, 'show'])->name('claim.show');

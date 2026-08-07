@@ -44,6 +44,8 @@
 
                 {{ $slot }}
             </div>
+
+            <x-language-toggle class="mt-6" />
         </div>
     </body>
 </html>

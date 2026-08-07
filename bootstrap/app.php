@@ -19,6 +19,12 @@ return Application::configure(basePath: dirname(__DIR__))
         // closure runs before the config is loaded, so config() is not
         // available here yet.
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
+
+        // Inside the web group, so the session it reads the chosen language
+        // from has already been started.
+        $middleware->web(append: [
+            \App\Http\Middleware\SetLocale::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

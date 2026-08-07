@@ -29,6 +29,7 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6 gap-1">
+                <x-language-toggle class="me-1" />
                 <x-notification-bell />
                 <x-theme-toggle />
 
@@ -110,6 +111,12 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                {{-- In the menu rather than beside the hamburger: that strip is
+                     already carrying the bell and the theme switch. --}}
+                <div class="px-4 py-2">
+                    <x-language-toggle />
+                </div>
+
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>

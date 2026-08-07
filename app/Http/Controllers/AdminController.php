@@ -5,15 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Admin\StoreParentRequest;
 use App\Http\Requests\Admin\StorePersonRequest;
 use App\Http\Requests\Admin\StoreSpouseRequest;
-use App\Mail\AccountClaimInvite;
-use App\Models\ClaimInvite;
 use App\Models\Couple;
 use App\Models\Person;
+use App\Support\ClaimInvites;
 use App\Support\ImageStore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -56,21 +53,7 @@ class AdminController extends Controller
     {
         abort_if($person->isClaimed(), 404);
 
-        $plainToken = Str::random(64);
-
-        $person->invites()->whereNull('used_at')->update(['used_at' => now()]);
-
-        ClaimInvite::create([
-            'person_id' => $person->id,
-            'token' => hash('sha256', $plainToken),
-            'type' => 'manual_invite',
-            'expires_at' => now()->addDays(7),
-            'invited_by_person_id' => auth()->user()->person?->id,
-        ]);
-
-        $person->update(['claim_status' => 'pending_invite', 'invited_at' => now()]);
-
-        Mail::to($person->email)->queue(new AccountClaimInvite($person, $plainToken));
+        $link = ClaimInvites::send($person, 'manual_invite', auth()->user()->person);
 
         // The link is also handed back once, so it can be passed on by hand —
         // over WhatsApp, or in person — without depending on the email
@@ -78,10 +61,10 @@ class AdminController extends Controller
         // real link exists anywhere outside that message.
         return back()
             ->with('status', 'invite-sent')
-            ->with('invite_link', route('claim.show', $plainToken))
+            ->with('invite_link', $link)
             ->with('invite_for', $person->full_name)
             ->with('invite_email', $person->email)
-            ->with('invite_expires', now()->addDays(7)->format('j M Y'));
+            ->with('invite_expires', now()->addDays(ClaimInvites::DAYS_VALID)->format('j M Y'));
     }
 
     /**
@@ -164,6 +147,8 @@ class AdminController extends Controller
             ]);
         }
 
+        ClaimInvites::send($person, 'manual_invite', auth()->user()->person);
+
         return redirect()->route('people.show', $person)->with('status', 'person-added');
     }
 
@@ -213,6 +198,11 @@ class AdminController extends Controller
                 'profile_photo_path' => $path,
                 'created_by_person_id' => auth()->user()->person?->id,
             ])];
+
+            // Only somebody newly entered is invited. Picking an existing
+            // person means they are already on the tree and either have their
+            // account or have been asked for it once already.
+            ClaimInvites::send($parents[0], 'manual_invite', auth()->user()->person);
         }
 
         foreach ($parents as $parent) {
@@ -283,6 +273,8 @@ class AdminController extends Controller
                 'profile_photo_path' => $path,
                 'created_by_person_id' => auth()->user()->person?->id,
             ]);
+
+            ClaimInvites::send($spouse, 'manual_invite', auth()->user()->person);
         }
 
         Couple::create([

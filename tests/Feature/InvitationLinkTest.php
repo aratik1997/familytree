@@ -48,7 +48,10 @@ class InvitationLinkTest extends TestCase
         $link = session('invite_link');
         $this->assertStringContainsString('/claim/', $link);
 
-        Mail::assertQueued(\App\Mail\AccountClaimInvite::class);
+        // Sent during the request, not queued: on a host with no worker a
+        // queued invitation depends on QUEUE_CONNECTION staying "sync", and
+        // Laravel's own default would leave it unsent with nothing to show.
+        Mail::assertSent(\App\Mail\AccountClaimInvite::class);
     }
 
     public function test_the_returned_link_actually_opens_the_claim_page(): void
