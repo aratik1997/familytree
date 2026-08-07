@@ -487,6 +487,8 @@ export function render2d(container, data, { onSelectNode, onSelectCouple, editab
         .join('g')
         .attr('transform', (d) => `translate(${d.x}, ${d.y})`)
         .attr('data-person-id', (d) => d.data.id)
+        // Read back off the drop target when confirming a new parent/child link.
+        .attr('data-person-name', (d) => d.data.name)
         .attr('data-generation', (d) => d.generation)
         .attr('cursor', draggable ? 'grab' : 'pointer')
         .attr('tabindex', 0)
@@ -721,6 +723,18 @@ export function render2d(container, data, { onSelectNode, onSelectCouple, editab
                             // Snap back first: a successful link re-renders
                             // the whole tree from scratch anyway.
                             restore();
+
+                            // Ask before writing it down. Rearranging the chart
+                            // and recording a birth are the same gesture here,
+                            // separated only by whether the card happened to
+                            // come to rest over another one — so a drag meant
+                            // to tidy the layout could silently give somebody a
+                            // new parent, and nothing on screen would say so.
+                            const targetName = targetGroup.dataset.personName || 'this person';
+                            if (!confirm(`Record ${d.data.name} as a child of ${targetName}?\n\nThis changes the family record, not just the layout.`)) {
+                                return;
+                            }
+
                             onReparent?.(d.data.id, targetId);
                             return;
                         }

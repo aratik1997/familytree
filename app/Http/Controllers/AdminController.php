@@ -316,6 +316,16 @@ class AdminController extends Controller
             return response()->json(['message' => 'That would make them their own ancestor — not allowed.'], 422);
         }
 
+        // Someone cannot be both married to a person and a child of them. The
+        // two rules the chart is drawn from — a couple shares a row, a child
+        // sits below its parents — cannot both hold for such a pair, and the
+        // layout has no sensible row left to put either of them in.
+        if ($child->isMarriedTo($parent)) {
+            return response()->json([
+                'message' => 'They are recorded as married to each other, so one cannot also be the other\'s child.',
+            ], 422);
+        }
+
         $child->parents()->syncWithoutDetaching([
             $parent->id => ['relationship_type' => $validated['relationship_type'] ?? 'biological'],
         ]);

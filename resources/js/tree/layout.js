@@ -329,6 +329,19 @@ function computeGenerationById(nodes, links, spouseLinks) {
     // household, and levelling could drag a parent far off their own row.
     const coParents = [...parentIdsByChild.values()].filter((ids) => new Set(ids).size === 2);
 
+    // Pairs where one is recorded as the other's parent. Nothing may level such
+    // a pair into the same row: descent is the stronger fact, and a record that
+    // says two people are both married and parent-and-child is a contradiction
+    // — most often a card dropped onto another by accident. Levelling them
+    // anyway sets the two rules fighting, each pass pushing the pair a row
+    // deeper until the cap stops it, and the whole tree collapses into a single
+    // row far below where it belongs. Skipping the pair keeps the damage to the
+    // one bad link.
+    const parentChildPairs = new Set(
+        links.map((link) => `${link.source.data.id}>${link.target.data.id}`)
+    );
+    const isParentChildPair = (x, y) => parentChildPairs.has(`${x}>${y}`) || parentChildPairs.has(`${y}>${x}`);
+
     // Two rules have to hold at once: a child sits strictly below every parent,
     // and a married couple shares a row. They pull against each other — pulling
     // a married-in spouse down to their partner's row means everyone descended
@@ -357,6 +370,8 @@ function computeGenerationById(nodes, links, spouseLinks) {
         }
 
         for (const { source, target } of spouseLinks) {
+            if (isParentChildPair(source.data.id, target.data.id)) continue;
+
             const a = generationById.get(source.data.id) ?? 1;
             const b = generationById.get(target.data.id) ?? 1;
             const deepest = Math.max(a, b);
@@ -365,6 +380,8 @@ function computeGenerationById(nodes, links, spouseLinks) {
         }
 
         for (const ids of coParents) {
+            if (isParentChildPair(ids[0], ids[1])) continue;
+
             const deepest = Math.max(...ids.map((id) => generationById.get(id) ?? 1));
             for (const id of ids) {
                 if ((generationById.get(id) ?? 1) !== deepest) {

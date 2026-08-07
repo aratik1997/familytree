@@ -105,6 +105,15 @@ class Person extends Model
     }
 
     /**
+     * Whether the two are recorded as a couple, from either side of the table
+     * and whatever the marriage's current status.
+     */
+    public function isMarriedTo(Person $other): bool
+    {
+        return $this->spouses()->contains('id', $other->id);
+    }
+
+    /**
      * People sharing at least one parent with this person, excluding self.
      */
     public function siblings(): Collection
