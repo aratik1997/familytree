@@ -54,21 +54,37 @@ class AccessControlTest extends TestCase
      */
     public function test_a_signed_in_user_may_not_reach_the_admin_area(): void
     {
+        // Signed in first, so the person lands in this user's own tree and
+        // what is being tested is the role rather than the tree boundary.
+        $this->actingAs(User::factory()->create());
+
         $person = Person::factory()->claimed()->create();
 
-        $this->actingAs(User::factory()->create())
-            ->get("/admin/people/{$person->id}/password")
-            ->assertForbidden();
+        $this->get("/admin/people/{$person->id}/password")->assertForbidden();
     }
 
     public function test_a_super_admin_may_reach_the_admin_area(): void
     {
-        $admin = User::factory()->create(['is_super_admin' => true]);
+        $this->actingAs(User::factory()->create(['is_super_admin' => true]));
+
         $person = Person::factory()->claimed()->create();
 
-        $this->actingAs($admin)
-            ->get("/admin/people/{$person->id}/password")
-            ->assertOk();
+        $this->get("/admin/people/{$person->id}/password")->assertOk();
+    }
+
+    /**
+     * An Admin has every power inside their own tree and none at all outside
+     * it. Somebody in another family does not come back as forbidden but as
+     * absent — the tree scope takes them out of the query before the route can
+     * bind them, so the answer never confirms they exist.
+     */
+    public function test_an_admin_cannot_reach_a_person_in_another_tree(): void
+    {
+        $stranger = Person::factory()->claimed()->create();
+
+        $this->actingAs(User::factory()->create(['is_admin' => true]))
+            ->get("/admin/people/{$stranger->id}/password")
+            ->assertNotFound();
     }
 
     /**

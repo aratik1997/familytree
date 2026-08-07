@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Person;
+use App\Models\Tree;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
@@ -59,7 +60,12 @@ class SeedSuperAdmin extends Command
 
         $storedPhotoPath = $this->storePhoto($photoPath);
 
+        // The first family. Everything the Super Admin records goes in here;
+        // each Admin created later gets one of their own.
+        $tree = Tree::firstOrCreate(['name' => config('app.name')]);
+
         $person = Person::create([
+            'tree_id' => $tree->id,
             'full_name' => $fullName,
             'email' => $email,
             'profile_photo_path' => $storedPhotoPath,
@@ -71,7 +77,10 @@ class SeedSuperAdmin extends Command
             'email' => $email,
             'password' => Hash::make($password),
             'is_super_admin' => true,
+            'tree_id' => $tree->id,
         ]);
+
+        $tree->update(['owner_user_id' => $user->id]);
 
         $person->update(['user_id' => $user->id, 'claim_status' => 'claimed', 'claimed_at' => now()]);
 

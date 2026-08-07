@@ -75,7 +75,7 @@ class AdminController extends Controller
      */
     public function destroy(Person $person)
     {
-        abort_if($person->user?->is_super_admin, 403);
+        abort_if($person->user?->managesTree(), 403);
 
         $user = $person->user;
         $person->update(['user_id' => null]);

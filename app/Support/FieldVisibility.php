@@ -16,7 +16,11 @@ class FieldVisibility
 {
     public static function canSee(User $viewer, Person $subject, string $visibility): bool
     {
-        if ($viewer->is_super_admin) {
+        // Whoever runs the tree sees everything in it — and nothing at all in
+        // anyone else's, which the tree check is what enforces. Without it,
+        // running one family's tree would open every other family's private
+        // fields, since this is the gate the JSON endpoints go through.
+        if ($viewer->managesTree() && $viewer->sharesTreeWith($subject)) {
             return true;
         }
 

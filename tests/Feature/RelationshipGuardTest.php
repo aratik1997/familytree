@@ -18,13 +18,23 @@ class RelationshipGuardTest extends TestCase
 {
     use RefreshDatabase;
 
+    private ?User $admin = null;
+
+    /** Signed in from the start, so people created here land in their tree. */
     private function admin(): User
     {
-        return User::factory()->create(['is_super_admin' => true]);
+        if ($this->admin === null) {
+            $this->admin = User::factory()->create(['is_super_admin' => true]);
+            $this->actingAs($this->admin);
+        }
+
+        return $this->admin;
     }
 
     private function person(string $name): Person
     {
+        $this->admin();
+
         return Person::create([
             'full_name' => $name,
             'email' => str($name)->slug().'@example.test',

@@ -26,6 +26,11 @@ class ClaimInviteController extends Controller
             'name' => $person->full_name,
             'email' => $request->validated('email'),
             'password' => Hash::make($request->validated('password')),
+            // The family whose tree they were invited into. Without this the
+            // new login would belong to no tree at all, and the person would
+            // sign in successfully to an empty site — their own relatives
+            // filtered out of every query by the tree scope.
+            'tree_id' => $person->tree_id,
         ]);
 
         $person->update([

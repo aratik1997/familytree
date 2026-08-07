@@ -15,7 +15,7 @@ $show = fn (string $field) => FieldVisibility::canSee($viewer, $person, FieldVis
             <div class="flex flex-wrap gap-3">
                 @if ($canEdit)
                     <a href="{{ route('people.children.create', $person) }}" class="btn btn-secondary">{{ __('Add child') }}</a>
-                    @if ($viewer->is_super_admin)
+                    @if ($viewer->managesTree())
                         <a href="{{ route('admin.people.parents.create', $person) }}" class="btn btn-secondary">{{ __('Add parent') }}</a>
                         <a href="{{ route('admin.people.spouses.create', $person) }}" class="btn btn-secondary">{{ __('Add spouse') }}</a>
                     @endif

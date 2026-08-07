@@ -12,7 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'admin' => \App\Http\Middleware\EnsureIsSuperAdmin::class,
+            // "admin" guards the family records — an Admin and the Super Admin
+            // both pass. "super-admin" guards managing the Admins themselves.
+            'admin' => \App\Http\Middleware\EnsureManagesTree::class,
+            'super-admin' => \App\Http\Middleware\EnsureIsSuperAdmin::class,
         ]);
 
         // Trusted proxies are configured in AppServiceProvider instead: this

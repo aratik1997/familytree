@@ -6,6 +6,9 @@
                 <h2 class="text-2xl mt-1">{{ __('Family members') }}</h2>
             </div>
             <div class="flex flex-wrap gap-2">
+                @if (auth()->user()->is_super_admin)
+                    <a href="{{ route('admin.admins.index') }}" class="btn btn-secondary">{{ __('Admins') }}</a>
+                @endif
                 <a href="{{ route('admin.mail-check') }}" class="btn btn-secondary">{{ __('Email check') }}</a>
                 <a href="{{ route('admin.people.create') }}" class="btn btn-primary">{{ __('Add person') }}</a>
             </div>
@@ -96,7 +99,7 @@
                                     <a href="{{ route('people.show', $person) }}" class="font-medium text-content-hi hover:underline">
                                         {{ $person->full_name }}
                                     </a>
-                                    @if ($person->user?->is_super_admin)
+                                    @if ($person->user?->managesTree())
                                         <span class="privacy-badge-everyone ml-1">{{ __('Super Admin') }}</span>
                                     @endif
                                 </td>
@@ -127,7 +130,7 @@
 
                                         @if ($person->isClaimed())
                                             <a href="{{ route('admin.people.password.edit', $person) }}" class="btn btn-secondary text-xs px-3 py-1.5">{{ __('Reset password') }}</a>
-                                        @elseif (! $person->user?->is_super_admin)
+                                        @elseif (! $person->user?->managesTree())
                                             <form method="POST" action="{{ route('admin.people.resend-invite', $person) }}">
                                                 @csrf
                                                 <button type="submit" class="btn btn-secondary text-xs px-3 py-1.5">
@@ -136,7 +139,7 @@
                                             </form>
                                         @endif
 
-                                        @unless ($person->user?->is_super_admin)
+                                        @unless ($person->user?->managesTree())
                                             <form method="POST" action="{{ route('admin.people.destroy', $person) }}"
                                                   onsubmit="return confirm('{{ __('Remove :name from the family tree? This cannot be undone.', ['name' => $person->full_name]) }}');">
                                                 @csrf

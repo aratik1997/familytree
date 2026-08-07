@@ -19,7 +19,7 @@
                     <x-nav-link :href="route('tree.index')" :active="request()->routeIs('tree.*')">
                         {{ __('Family tree') }}
                     </x-nav-link>
-                    @if (Auth::user()->is_super_admin)
+                    @if (Auth::user()->managesTree())
                         <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
                             {{ __('Admin') }}
                         </x-nav-link>
@@ -96,7 +96,7 @@
             <x-responsive-nav-link :href="route('tree.index')" :active="request()->routeIs('tree.*')">
                 {{ __('Family tree') }}
             </x-responsive-nav-link>
-            @if (Auth::user()->is_super_admin)
+            @if (Auth::user()->managesTree())
                 <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
                     {{ __('Admin') }}
                 </x-responsive-nav-link>

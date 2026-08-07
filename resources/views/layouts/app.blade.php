@@ -20,7 +20,7 @@
 
         <script>
             window.APP_URL = @json(rtrim(config('app.url'), '/'));
-            window.IS_SUPER_ADMIN = @json((bool) auth()->user()?->is_super_admin);
+            window.IS_SUPER_ADMIN = @json((bool) auth()->user()?->managesTree());
         </script>
 
         <!-- Scripts -->

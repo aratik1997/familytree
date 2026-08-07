@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ClaimInviteController;
 use App\Http\Controllers\CoupleController;
 use App\Http\Controllers\FieldPrivacyController;
@@ -94,6 +95,18 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Browser equivalent of `php artisan app:mail-check`, for hosts with no shell.
     Route::get('/mail-check', [MailDiagnosticController::class, 'show'])->name('mail-check');
     Route::post('/mail-check', [MailDiagnosticController::class, 'send'])->name('mail-check.send');
+
+    // Managing the Admins is the Super Admin's alone — an Admin passes the
+    // "admin" middleware above but not this one.
+    Route::middleware('super-admin')->group(function () {
+        Route::get('/admins', [AdminUserController::class, 'index'])->name('admins.index');
+        Route::get('/admins/create', [AdminUserController::class, 'create'])->name('admins.create');
+        Route::post('/admins', [AdminUserController::class, 'store'])->name('admins.store');
+        Route::get('/admins/{admin}/edit', [AdminUserController::class, 'edit'])->name('admins.edit');
+        Route::patch('/admins/{admin}', [AdminUserController::class, 'update'])->name('admins.update');
+        Route::post('/admins/{admin}/resend-invite', [AdminUserController::class, 'resendInvite'])->name('admins.resend-invite');
+        Route::delete('/admins/{admin}', [AdminUserController::class, 'destroy'])->name('admins.destroy');
+    });
 
     Route::patch('/tree/positions/{person}', [TreeController::class, 'updatePosition'])->name('tree.positions.update');
     Route::post('/tree/positions/reset', [TreeController::class, 'resetPositions'])->name('tree.positions.reset');

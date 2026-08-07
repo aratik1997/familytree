@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToTree;
 use App\Support\ImageStore;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,9 +14,10 @@ use Illuminate\Support\Collection;
 
 class Person extends Model
 {
-    use HasFactory, SoftDeletes;
+    use BelongsToTree, HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'tree_id',
         'user_id',
         'full_name',
         'email',
