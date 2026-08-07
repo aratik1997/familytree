@@ -58,9 +58,33 @@ class MailDiagnosticController extends Controller
                 fn ($message) => $message->to($to)->subject('Test message from The Khandani Legacy')
             );
         } catch (Throwable $e) {
-            return back()->with('mail_error', $e->getMessage());
+            return back()->with('mail_error', $this->reason($e));
         }
 
         return back()->with('mail_sent', $to);
+    }
+
+    /**
+     * The whole chain of reasons, outermost first.
+     *
+     * Symfony wraps the useful part: "Connection could not be established" is
+     * what surfaces, while the sentence that says whether the port was refused,
+     * the certificate rejected or the password wrong sits in the exception
+     * beneath it. On a host with no shell this page is the only place either
+     * can be read, so it shows both.
+     */
+    private function reason(Throwable $e): string
+    {
+        $parts = [];
+
+        for ($current = $e; $current !== null; $current = $current->getPrevious()) {
+            $message = trim($current->getMessage());
+
+            if ($message !== '' && ! in_array($message, $parts, true)) {
+                $parts[] = $message;
+            }
+        }
+
+        return implode(' — ', $parts) ?: $e::class;
     }
 }
