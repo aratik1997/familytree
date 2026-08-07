@@ -35,4 +35,16 @@ return [
         ],
     ],
 
+    /*
+     * Pictures are uploaded here rather than to the server's own disk: no
+     * symlink, no web-root arrangement, nothing to get wrong on shared
+     * hosting. Leave these blank and the app falls back to local storage.
+     */
+    'cloudinary' => [
+        'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+        'key' => env('CLOUDINARY_API_KEY'),
+        'secret' => env('CLOUDINARY_API_SECRET'),
+        'folder' => env('CLOUDINARY_FOLDER', 'khandani-legacy'),
+    ],
+
 ];

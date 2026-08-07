@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClaimInviteController;
 use App\Http\Controllers\CoupleController;
 use App\Http\Controllers\FieldPrivacyController;
+use App\Http\Controllers\MailDiagnosticController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProfileController;
@@ -83,6 +84,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::post('/relationships', [AdminController::class, 'attachParent'])->name('relationships.attach');
     Route::delete('/relationships/{child}/{parent}', [AdminController::class, 'detachParent'])->name('relationships.detach');
+
+    // Browser equivalent of `php artisan app:mail-check`, for hosts with no shell.
+    Route::get('/mail-check', [MailDiagnosticController::class, 'show'])->name('mail-check');
+    Route::post('/mail-check', [MailDiagnosticController::class, 'send'])->name('mail-check.send');
 
     Route::patch('/tree/positions/{person}', [TreeController::class, 'updatePosition'])->name('tree.positions.update');
     Route::post('/tree/positions/reset', [TreeController::class, 'resetPositions'])->name('tree.positions.reset');

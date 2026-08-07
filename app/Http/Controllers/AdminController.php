@@ -9,6 +9,7 @@ use App\Mail\AccountClaimInvite;
 use App\Models\ClaimInvite;
 use App\Models\Couple;
 use App\Models\Person;
+use App\Support\ImageStore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -71,7 +72,16 @@ class AdminController extends Controller
 
         Mail::to($person->email)->queue(new AccountClaimInvite($person, $plainToken));
 
-        return back()->with('status', 'invite-sent');
+        // The link is also handed back once, so it can be passed on by hand —
+        // over WhatsApp, or in person — without depending on the email
+        // arriving. Only its hash is stored, so this is the single moment the
+        // real link exists anywhere outside that message.
+        return back()
+            ->with('status', 'invite-sent')
+            ->with('invite_link', route('claim.show', $plainToken))
+            ->with('invite_for', $person->full_name)
+            ->with('invite_email', $person->email)
+            ->with('invite_expires', now()->addDays(7)->format('j M Y'));
     }
 
     /**
@@ -131,11 +141,7 @@ class AdminController extends Controller
             }
         }
 
-        $path = $request->file('photo')->storeAs(
-            'profile-photos',
-            Str::uuid().'.'.$request->file('photo')->extension(),
-            'public'
-        );
+        $path = ImageStore::put($request->file('photo'), 'profile-photos');
 
         $person = Person::create([
             'full_name' => $request->validated('full_name'),
@@ -197,11 +203,7 @@ class AdminController extends Controller
                 }
             }
         } else {
-            $path = $request->file('photo')->storeAs(
-                'profile-photos',
-                Str::uuid().'.'.$request->file('photo')->extension(),
-                'public'
-            );
+            $path = ImageStore::put($request->file('photo'), 'profile-photos');
 
             $parents = [Person::create([
                 'full_name' => $request->validated('full_name'),
@@ -271,11 +273,7 @@ class AdminController extends Controller
         if ($request->validated('mode') === 'existing') {
             $spouse = Person::findOrFail($request->validated('existing_person_id'));
         } else {
-            $path = $request->file('photo')->storeAs(
-                'profile-photos',
-                Str::uuid().'.'.$request->file('photo')->extension(),
-                'public'
-            );
+            $path = ImageStore::put($request->file('photo'), 'profile-photos');
 
             $spouse = Person::create([
                 'full_name' => $request->validated('full_name'),

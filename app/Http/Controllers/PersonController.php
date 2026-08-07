@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePersonPhotoRequest;
 use App\Http\Requests\UpdatePersonRequest;
 use App\Models\Couple;
 use App\Models\Person;
+use App\Support\ImageStore;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -75,11 +76,7 @@ class PersonController extends Controller
                 return back()->withErrors(['existing_person_id' => 'That would make them their own ancestor — not allowed.'])->withInput();
             }
         } else {
-            $path = $request->file('photo')->storeAs(
-                'profile-photos',
-                Str::uuid().'.'.$request->file('photo')->extension(),
-                'public'
-            );
+            $path = ImageStore::put($request->file('photo'), 'profile-photos');
 
             $child = Person::create([
                 'full_name' => $request->validated('full_name'),
@@ -162,16 +159,12 @@ class PersonController extends Controller
     {
         $previousPath = $person->profile_photo_path;
 
-        $path = $request->file('photo')->storeAs(
-            'profile-photos',
-            Str::uuid().'.'.$request->file('photo')->extension(),
-            'public'
-        );
+        $path = ImageStore::put($request->file('photo'), 'profile-photos');
 
         $person->update(['profile_photo_path' => $path]);
 
         if ($previousPath) {
-            Storage::disk('public')->delete($previousPath);
+            ImageStore::delete($previousPath);
         }
 
         return back()->with('status', 'photo-updated');

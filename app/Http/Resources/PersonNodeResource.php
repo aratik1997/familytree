@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Support\FieldVisibility;
+use App\Support\ImageStore;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,7 @@ class PersonNodeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $canSeeName ? $this->full_name : 'Private',
-            'photo_url' => ($canSeePhoto && $this->profile_photo_path) ? Storage::disk('public')->url($this->profile_photo_path) : null,
+            'photo_url' => ($canSeePhoto && $this->profile_photo_path) ? ImageStore::url($this->profile_photo_path) : null,
             'birth_year' => $this->date_of_birth?->year,
             'birth_date' => $this->date_of_birth?->format('Y-m-d'),
             // Drives the "1958 – 2019" lifespan on the tree card.

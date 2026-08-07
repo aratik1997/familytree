@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\ImageStore;
 use App\Models\Record;
 use App\Models\RecordMedia;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class RecordMediaController extends Controller
         $nextOrder = $record->media()->max('sort_order') + 1;
 
         foreach ($request->file('photos') as $index => $photo) {
-            $path = $photo->storeAs('record-media', Str::uuid().'.'.$photo->extension(), 'public');
+            $path = ImageStore::put($photo, 'record-media');
             $record->media()->create(['path' => $path, 'sort_order' => $nextOrder + $index]);
         }
 
@@ -33,7 +34,7 @@ class RecordMediaController extends Controller
     {
         $this->authorize('update', $media->record);
 
-        Storage::disk('public')->delete($media->path);
+        ImageStore::delete($media->path);
         $media->delete();
 
         return back()->with('status', 'media-removed');

@@ -32,7 +32,7 @@ $social = $person->social_links ?? [];
                 <form method="POST" action="{{ route('people.photo.update', $person) }}" enctype="multipart/form-data" class="space-y-4">
                     @csrf
                     @method('POST')
-                    <x-image-upload name="photo" :current-url="$person->profile_photo_path ? Storage::disk('public')->url($person->profile_photo_path) : null" />
+                    <x-image-upload name="photo" :current-url="$person->photo_url" />
                     <x-input-error :messages="$errors->get('photo')" />
                     <x-primary-button>{{ __('Upload Photo') }}</x-primary-button>
                 </form>

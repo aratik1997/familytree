@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\ImageStore;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -69,6 +70,16 @@ class Person extends Model
         return $this->belongsToMany(Person::class, 'person_parent', 'parent_id', 'child_id')
             ->withPivot('relationship_type')
             ->withTimestamps();
+    }
+
+    /**
+     * Where this person's picture is actually served from — a Cloudinary
+     * address for anything uploaded since the switch, a path on the public
+     * disk for the ones stored before it.
+     */
+    public function getPhotoUrlAttribute(): ?string
+    {
+        return ImageStore::url($this->profile_photo_path);
     }
 
     public function marriagesAsA(): HasMany

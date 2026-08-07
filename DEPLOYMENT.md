@@ -169,11 +169,21 @@ Port 465 is implicit TLS, which is why `MAIL_SCHEME` is `smtps` rather than
 a From address that is not the authenticated mailbox, and the symptom is
 authenticated sends that vanish rather than an obvious error.
 
-Prove it works before the cron ever runs:
+Prove it works before the cron ever runs. With no shell, sign in as Super
+Admin and open **Admin → Email check** (`/admin/mail-check`): it shows the
+mailer settings actually in force, whether a config cache is masking `.env`,
+and sends a test message to your own address, reporting the exact error.
+
+With a shell:
 
 ```bash
 php artisan app:mail-check you@example.com
 ```
+
+> Do not try to diagnose this by reading `storage/logs/`. `LOG_LEVEL` is
+> `error` here and the log mailer writes at `debug`, so in log mode the
+> messages are discarded without ever being written — an empty log looks
+> identical to a working mailer.
 
 It prints the mailer settings in force, sends one message, and reports the
 exact reason if it fails. "Forgot password" cannot tell you that — the page

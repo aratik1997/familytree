@@ -52,7 +52,7 @@ $show = fn (string $field) => FieldVisibility::canSee($viewer, $person, FieldVis
                     @if ($show('profile_photo_path') && $person->profile_photo_path)
                         <div class="arch-clip shrink-0"
                              style="width: 7rem; height: 7rem; border: 2px {{ $person->isMinor() ? 'dashed' : 'solid' }} var(--gold-500)">
-                            <img src="{{ Storage::disk('public')->url($person->profile_photo_path) }}"
+                            <img src="{{ $person->photo_url }}"
                                  class="w-full h-full object-cover"
                                  style="{{ $person->is_deceased ? 'filter: saturate(.35)' : '' }}"
                                  alt="{{ $person->full_name }}">
@@ -308,7 +308,7 @@ $show = fn (string $field) => FieldVisibility::canSee($viewer, $person, FieldVis
                                 @if ($record->media->isNotEmpty())
                                     <div class="mt-3 grid grid-cols-3 sm:grid-cols-4 gap-2">
                                         @foreach ($record->media as $media)
-                                            <img src="{{ Storage::disk('public')->url($media->path) }}" class="w-full h-24 object-cover rounded-md" alt="">
+                                            <img src="{{ $media->url }}" class="w-full h-24 object-cover rounded-md" alt="">
                                         @endforeach
                                     </div>
                                 @endif

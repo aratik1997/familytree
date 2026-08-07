@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\ImageStore;
 use App\Http\Requests\StoreRecordRequest;
 use App\Http\Requests\UpdateRecordRequest;
 use App\Models\Person;
@@ -19,7 +20,7 @@ class RecordController extends Controller
         ]);
 
         foreach ($request->file('photos', []) as $index => $photo) {
-            $path = $photo->storeAs('record-media', Str::uuid().'.'.$photo->extension(), 'public');
+            $path = ImageStore::put($photo, 'record-media');
             $record->media()->create(['path' => $path, 'sort_order' => $index]);
         }
 
@@ -38,7 +39,7 @@ class RecordController extends Controller
         $this->authorize('delete', $record);
 
         foreach ($record->media as $media) {
-            Storage::disk('public')->delete($media->path);
+            ImageStore::delete($media->path);
         }
 
         $record->delete();

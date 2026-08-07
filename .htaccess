@@ -23,7 +23,16 @@ Options -Indexes
 
     # The application's guts are not web content. Nothing here is served or
     # executed, whatever the request looks like.
-    RewriteRule ^(app|bootstrap|config|database|deploy|node_modules|resources|routes|storage|tests|vendor)(/|$) - [F,L]
+    #
+    # `storage` is deliberately NOT in this list. Profile photos are public
+    # and are served from /storage/…, which the rewrite at the bottom sends to
+    # public/storage — the symlink to storage/app/public. Denying /storage
+    # outright returns 403 for every photo on the site.
+    RewriteRule ^(app|bootstrap|config|database|deploy|node_modules|resources|routes|tests|vendor)(/|$) - [F,L]
+
+    # The parts of storage/ that are genuinely private, in case a request ever
+    # reaches the real directory rather than the symlink beneath public/.
+    RewriteRule ^storage/(app|framework|logs|debugbar)(/|$) - [F,L]
 
     # Neither are the project files that happen to sit next to public/.
     RewriteRule ^(artisan|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|vite\.config\.js|tailwind\.config\.js|postcss\.config\.js|README\.md|DEPLOYMENT\.md)$ - [F,L]

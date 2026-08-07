@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\ImageStore;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -15,6 +16,12 @@ class RecordMedia extends Model
         'caption',
         'sort_order',
     ];
+
+    /** Where this attachment is served from. */
+    public function getUrlAttribute(): ?string
+    {
+        return ImageStore::url($this->path);
+    }
 
     public function record(): BelongsTo
     {
