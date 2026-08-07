@@ -151,6 +151,12 @@ export function computeLayout({ nodes, edges }) {
     }
     width += GENERATION_LABEL_MARGIN;
 
+    // Where the auto-layout left everyone, kept before any override lands on
+    // top of it. The cascade below moves a person's children by how far that
+    // person actually travelled, and it can only know that by comparing
+    // against this.
+    const autoX = new Map(laidOutNodes.map((n) => [n.data.id, n.x]));
+
     // A manually dragged position (saved from a previous session) overrides
     // whatever the layout just computed for that person — the last step, so
     // nothing above accidentally clobbers it.
@@ -178,11 +184,15 @@ export function computeLayout({ nodes, edges }) {
     }
 
     // A moved couple's children should follow underneath them rather than
-    // being left behind at their original spot — centered on the (possibly
-    // just-corrected) parents' midpoint. Processed top-down by row so a
-    // cascade (a moved child who is themselves a parent further down)
-    // propagates to their own children too. Skipped for any child with their
-    // own explicit override — an explicit placement always wins.
+    // being left behind at their original spot — shifted by however far the
+    // parents travelled. Deliberately a shift and not a re-centering: every
+    // sibling moves by the same amount, so the spacing that
+    // centerChildrenUnderParents() laid out between them survives. Pinning
+    // them to the parents' midpoint instead would stack a whole sibling set
+    // on one point, and the de-overlap sweep further down would then fan them
+    // back out in arbitrary order, shoving the rest of the row aside.
+    // Skipped for any child with their own explicit override — an explicit
+    // placement always wins.
     const parentNodeIdsByChild = new Map();
     for (const link of laidOutLinks) {
         const childId = link.target.data.id;
@@ -191,9 +201,12 @@ export function computeLayout({ nodes, edges }) {
         parentNodeIdsByChild.set(childId, list);
     }
 
-    // Ascending y — parents sit above their children, so walking downward is
-    // what lets a move cascade on through the generations.
-    for (const child of [...laidOutNodes].sort((a, b) => a.y - b.y)) {
+    // Ascending generation — parents sit above their children, so walking
+    // downward is what lets a move cascade on through the generations. Sorted
+    // by generation rather than by y: an overridden node is currently carrying
+    // its stored y, which can be a row position from an older shape of the
+    // tree, and sorting on that could visit a child before its own parent.
+    for (const child of [...laidOutNodes].sort((a, b) => a.generation - b.generation)) {
         if (child.data.pos_x != null && child.data.pos_y != null) continue;
         const parentIds = parentNodeIdsByChild.get(child.data.id) ?? [];
         if (parentIds.length === 0 || !parentIds.some((id) => movedIds.has(id))) continue;
@@ -201,7 +214,15 @@ export function computeLayout({ nodes, edges }) {
         const parentNodes = parentIds.map((id) => nodeById.get(id)).filter(Boolean);
         if (parentNodes.length === 0) continue;
 
-        child.x = parentNodes.reduce((sum, p) => sum + p.x, 0) / parentNodes.length;
+        // How far the parents drifted from where the layout had put them,
+        // averaged so a couple that moved together shifts their children by
+        // exactly that much.
+        const shift = parentNodes.reduce(
+            (total, parent) => total + (parent.x - (autoX.get(parent.data.id) ?? parent.x)),
+            0
+        ) / parentNodes.length;
+
+        child.x += shift;
         movedIds.add(child.data.id);
     }
 
@@ -287,57 +308,44 @@ export function computeLayout({ nodes, edges }) {
  * before the layout positions are finalised.
  */
 function computeGenerationById(nodes, links, spouseLinks) {
-    const childIdsByParent = new Map();
-    const parentIdsByChild = new Map();
-    for (const link of links) {
-        const parentId = link.source.data.id;
-        const childId = link.target.data.id;
+    const generationById = new Map(nodes.map((node) => [node.data.id, 1]));
 
-        if (!childIdsByParent.has(parentId)) childIdsByParent.set(parentId, []);
-        childIdsByParent.get(parentId).push(childId);
+    // Two rules have to hold at once: a child sits strictly below every parent,
+    // and a married couple shares a row. They pull against each other — pulling
+    // a married-in spouse down to their partner's row means everyone descended
+    // from that spouse has to come down too, which can deepen another couple
+    // further along, and so on. So neither rule can be applied once and left:
+    // both are relaxed together until a pass changes nothing.
+    //
+    // Doing this in one pass each (the parents settled first, then the spouses)
+    // is what put people in the wrong row — a spouse pulled down took none of
+    // their own descendants with them, leaving a child stranded in the same row
+    // as the parent they descend from.
+    //
+    // Generations only ever increase here, so this always settles. The cap is a
+    // guard against a contradiction in the records — someone recorded as both
+    // an ancestor and a spouse of the same person — not the expected exit.
+    const cap = nodes.length + 2;
+    for (let pass = 0; pass < cap; pass++) {
+        let changed = false;
 
-        if (!parentIdsByChild.has(childId)) parentIdsByChild.set(childId, []);
-        parentIdsByChild.get(childId).push(parentId);
-    }
-
-    const generationById = new Map();
-    const remainingParents = new Map();
-
-    const queue = [];
-    for (const node of nodes) {
-        const parents = parentIdsByChild.get(node.data.id) ?? [];
-        remainingParents.set(node.data.id, parents.length);
-        if (parents.length === 0) {
-            generationById.set(node.data.id, 1);
-            queue.push(node.data.id);
+        for (const link of links) {
+            const parent = generationById.get(link.source.data.id) ?? 1;
+            if ((generationById.get(link.target.data.id) ?? 1) < parent + 1) {
+                generationById.set(link.target.data.id, parent + 1);
+                changed = true;
+            }
         }
-    }
 
-    let head = 0;
-    while (head < queue.length) {
-        const id = queue[head++];
-        const generation = generationById.get(id);
-        for (const childId of childIdsByParent.get(id) ?? []) {
-            generationById.set(childId, Math.max(generationById.get(childId) ?? 0, generation + 1));
-            const remaining = remainingParents.get(childId) - 1;
-            remainingParents.set(childId, remaining);
-            if (remaining === 0) queue.push(childId);
-        }
-    }
-
-    // A spouse with no parents of their own would otherwise default to
-    // generation 1 regardless of how deep their partner is — pull them (and
-    // anyone hanging off of them) up to match instead.
-    let changed = true;
-    while (changed) {
-        changed = false;
         for (const { source, target } of spouseLinks) {
             const a = generationById.get(source.data.id) ?? 1;
             const b = generationById.get(target.data.id) ?? 1;
-            const max = Math.max(a, b);
-            if (a !== max) { generationById.set(source.data.id, max); changed = true; }
-            if (b !== max) { generationById.set(target.data.id, max); changed = true; }
+            const deepest = Math.max(a, b);
+            if (a !== deepest) { generationById.set(source.data.id, deepest); changed = true; }
+            if (b !== deepest) { generationById.set(target.data.id, deepest); changed = true; }
         }
+
+        if (!changed) break;
     }
 
     return generationById;
@@ -378,6 +386,8 @@ function computeGenerationRows(nodes, generationById) {
  * overlap.
  */
 function centerChildrenUnderParents(nodes, links, spouseLinks, generationById) {
+    const familyKey = buildFamilyKeys(links);
+
     const parentsByChild = new Map();
     for (const link of links) {
         const list = parentsByChild.get(link.target.data.id) ?? [];
@@ -430,18 +440,29 @@ function centerChildrenUnderParents(nodes, links, spouseLinks, generationById) {
             units.push({ members, width: unitWidth(members) });
         }
 
-        // Group units by the exact set of parents they descend from, so true
-        // siblings share one centering target. A unit whose members have no
+        // Group units by the family they descend from, so true siblings share
+        // one centering target. Uses the same family key as the birth-date
+        // ordering, so the two can't disagree about who counts as siblings —
+        // otherwise one of them spreads a half-entered family across two
+        // groups and undoes the other's work. A unit whose members have no
         // parents in the tree keeps its current center.
         const groups = new Map();
         for (const unit of units) {
-            const parents = unit.members.flatMap((m) => parentsByChild.get(m.data.id) ?? []);
-            const key = parents.length
-                ? [...new Set(parents.map((p) => p.data.id))].sort().join(',')
+            const memberKeys = unit.members.map((m) => familyKey(m.data.id)).filter(Boolean);
+            const key = memberKeys.length
+                ? [...new Set(memberKeys)].join('+')
                 : `unparented:${unit.members[0].data.id}`;
 
-            if (!groups.has(key)) groups.set(key, { units: [], parents });
-            groups.get(key).units.push(unit);
+            if (!groups.has(key)) groups.set(key, { units: [], parents: [] });
+            const group = groups.get(key);
+            group.units.push(unit);
+
+            // Every parent behind the group, deduplicated — so a family that
+            // was only half linked up still centers on the whole couple rather
+            // than on whichever parent the first child happened to be tied to.
+            for (const parent of unit.members.flatMap((m) => parentsByChild.get(m.data.id) ?? [])) {
+                if (!group.parents.includes(parent)) group.parents.push(parent);
+            }
         }
 
         const placements = [];
@@ -555,20 +576,13 @@ function placeBeside(nodes, anchor, spouse) {
  * among themselves, so overall spacing/centering from the layout is kept.
  */
 function reorderSiblingsByBirthDate(nodes, links) {
-    const parentIdsByChild = new Map();
-    for (const link of links) {
-        const childId = link.target.data.id;
-        const list = parentIdsByChild.get(childId) ?? [];
-        list.push(link.source.data.id);
-        parentIdsByChild.set(childId, list);
-    }
+    const familyKey = buildFamilyKeys(links);
 
     const siblingGroups = new Map();
     for (const node of nodes) {
-        const parentIds = parentIdsByChild.get(node.data.id);
-        if (!parentIds || parentIds.length === 0) continue;
+        const key = familyKey(node.data.id);
+        if (key === null) continue;
 
-        const key = [...parentIds].sort().join(',');
         const group = siblingGroups.get(key) ?? [];
         group.push(node);
         siblingGroups.set(key, group);
@@ -590,6 +604,61 @@ function reorderSiblingsByBirthDate(nodes, links) {
             node.x = xSlots[i];
         });
     }
+}
+
+/**
+ * Works out which family each child belongs to, and returns a lookup from a
+ * person's id to their family's key (null for anyone with no parents in the
+ * records).
+ *
+ * Keying straight off the exact set of parents recorded splits one family in
+ * two the moment the records are half-entered: a child linked to both parents
+ * and their sibling linked only to the father come out as unrelated groups,
+ * which are then ordered and centered independently of each other. That is
+ * what leaves a branch reading as loose individuals rather than one set of
+ * brothers and sisters, and what puts them out of age order.
+ *
+ * So a parent set that is contained in exactly one fuller set is folded into
+ * it. "Exactly one" is the important part: where a father has two wives, a
+ * father-only child could belong to either family, and guessing would be worse
+ * than leaving them in a group of their own.
+ */
+function buildFamilyKeys(links) {
+    const parentIdsByChild = new Map();
+    for (const link of links) {
+        const childId = link.target.data.id;
+        const list = parentIdsByChild.get(childId) ?? [];
+        list.push(link.source.data.id);
+        parentIdsByChild.set(childId, list);
+    }
+
+    const keyOf = (ids) => [...new Set(ids)].sort().join(',');
+
+    // Every distinct parent set the records actually contain.
+    const parentSets = new Map();
+    for (const ids of parentIdsByChild.values()) {
+        const unique = [...new Set(ids)];
+        parentSets.set(keyOf(unique), unique);
+    }
+
+    const canonical = new Map();
+    for (const [key, ids] of parentSets) {
+        const fuller = [...parentSets.entries()].filter(([otherKey, otherIds]) =>
+            otherKey !== key
+            && ids.length < otherIds.length
+            && ids.every((id) => otherIds.includes(id))
+        );
+
+        canonical.set(key, fuller.length === 1 ? fuller[0][0] : key);
+    }
+
+    return (childId) => {
+        const parents = parentIdsByChild.get(childId);
+        if (!parents || parents.length === 0) return null;
+
+        const key = keyOf(parents);
+        return canonical.get(key) ?? key;
+    };
 }
 
 /**

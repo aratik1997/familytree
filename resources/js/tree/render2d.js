@@ -534,6 +534,26 @@ export function render2d(container, data, { onSelectNode, onSelectCouple, editab
         .append('path')
         .attr('d', topRoundedRectPath(-halfW, photoTop, CARD.width, CARD.photoHeight, CARD.radius));
 
+    // Initials on a gender-tinted panel, drawn for everybody and then covered
+    // by the photo where there is one. Painting it underneath rather than only
+    // when photo_url is empty is what stops a card going blank: a picture that
+    // 404s (a file that never made it across a move, a since-deleted upload)
+    // renders as nothing at all, and with no backing panel that left a hole
+    // where the face should be.
+    nodeGroup.append('path')
+        .attr('d', topRoundedRectPath(-halfW, photoTop, CARD.width, CARD.photoHeight, CARD.radius))
+        .attr('fill', (d) => genderColor(d.data.gender, tokens))
+        .attr('fill-opacity', 0.16);
+    nodeGroup.append('text')
+        .attr('x', 0)
+        .attr('y', photoTop + CARD.photoHeight / 2 + 10)
+        .attr('text-anchor', 'middle')
+        .attr('font-size', 28)
+        .attr('font-weight', 600)
+        .attr('fill', (d) => genderColor(d.data.gender, tokens))
+        .attr('fill-opacity', 0.85)
+        .text((d) => (d.data.name ?? '?').split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase());
+
     nodeGroup.filter((d) => !!d.data.photo_url)
         .append('image')
         .attr('href', (d) => d.data.photo_url)
@@ -545,22 +565,6 @@ export function render2d(container, data, { onSelectNode, onSelectCouple, editab
         .attr('preserveAspectRatio', 'xMidYMid slice')
         // Someone who has died is shown desaturated, not hidden.
         .style('filter', (d) => (d.data.is_deceased ? 'saturate(0.35)' : null));
-
-    // Initials on a gender-tinted panel when there is no photo.
-    const withoutPhoto = nodeGroup.filter((d) => !d.data.photo_url);
-    withoutPhoto.append('path')
-        .attr('d', topRoundedRectPath(-halfW, photoTop, CARD.width, CARD.photoHeight, CARD.radius))
-        .attr('fill', (d) => genderColor(d.data.gender, tokens))
-        .attr('fill-opacity', 0.16);
-    withoutPhoto.append('text')
-        .attr('x', 0)
-        .attr('y', photoTop + CARD.photoHeight / 2 + 10)
-        .attr('text-anchor', 'middle')
-        .attr('font-size', 28)
-        .attr('font-weight', 600)
-        .attr('fill', (d) => genderColor(d.data.gender, tokens))
-        .attr('fill-opacity', 0.85)
-        .text((d) => (d.data.name ?? '?').split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase());
 
     // Gold divider between the photo and the caption.
     nodeGroup.append('line')
