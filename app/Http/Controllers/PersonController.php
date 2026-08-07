@@ -103,7 +103,7 @@ class PersonController extends Controller
     {
         $this->authorize('update', $person);
 
-        $person->load(['profileFieldPrivacy', 'customFields']);
+        $person->load(['profileFieldPrivacy', 'customFields', 'parents', 'children']);
 
         return view('people.edit', [
             'person' => $person,

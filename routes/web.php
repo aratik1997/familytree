@@ -49,6 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/people/{person}/children', [PersonController::class, 'storeChild'])->name('people.children.store');
 
     Route::patch('/couples/{couple}', [CoupleController::class, 'update'])->name('couples.update');
+    Route::delete('/couples/{couple}', [CoupleController::class, 'destroy'])->name('couples.destroy');
 
     Route::patch('/people/{person}/field-privacy/{fieldKey}', [FieldPrivacyController::class, 'update'])
         ->name('field-privacy.update');

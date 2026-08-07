@@ -495,16 +495,27 @@ function centerChildrenUnderParents(nodes, links, spouseLinks, generationById) {
                 const nodeIsBlood = familyKey(node.data.id) !== null;
                 const spouseIsBlood = familyKey(spouse.data.id) !== null;
 
+                // Whichever way round the two end up drawn, the unit still
+                // answers to its blood member for the sibling ordering above.
                 if (nodeIsBlood === spouseIsBlood) {
                     // Two blood lines married to each other, or neither side
                     // in the records — nothing to prefer, so keep the order
                     // they already sit in.
-                    members = [node, spouse].sort((a, b) => a.x - b.x);
-                    anchor = members[0];
+                    anchor = [node, spouse].sort((a, b) => a.x - b.x)[0];
                 } else {
                     anchor = nodeIsBlood ? node : spouse;
-                    members = [anchor === node ? spouse : node, anchor];
                 }
+
+                const partner = anchor === node ? spouse : node;
+
+                // Age decides the order inside a couple: the elder is drawn
+                // first, on the left. It only decides where both dates are on
+                // record — with one missing there is nothing to compare, so
+                // the married-in partner falls back to sitting on the left of
+                // the one born into the family.
+                members = anchor.data.birth_date && partner.data.birth_date
+                    ? [anchor, partner].sort((a, b) => a.data.birth_date.localeCompare(b.data.birth_date))
+                    : [partner, anchor];
             }
 
             units.push({ members, anchor, width: unitWidth(members) });

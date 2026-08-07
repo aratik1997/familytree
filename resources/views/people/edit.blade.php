@@ -138,6 +138,89 @@ $social = $person->social_links ?? [];
                 </div>
             </form>
 
+            {{-- Family links. Adding one has always been possible from the
+                 tree or the "Add" pages; removing one had no way in at all,
+                 so a wrong link — most easily made by dropping one card onto
+                 another — stayed on the chart for good. Super Admin only:
+                 these are the family record itself, not this person's own
+                 profile. --}}
+            @if (auth()->user()->is_super_admin)
+                <div class="card p-6 space-y-6">
+                    <div>
+                        <h3 class="font-serif text-xl">{{ __('Family links') }}</h3>
+                        <p class="text-sm measure mt-1" style="color: var(--text-mid)">
+                            {{ __('Who this person descends from and who descends from them. Removing a link only unpicks the connection — it never deletes anybody.') }}
+                        </p>
+                    </div>
+
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <h4 class="font-medium">{{ __('Parents') }}</h4>
+                            <a href="{{ route('admin.people.parents.create', $person) }}" class="btn btn-secondary text-xs">
+                                {{ __('Add parent') }}
+                            </a>
+                        </div>
+
+                        @forelse ($person->parents as $parent)
+                            <div class="hairline p-3 mt-2 flex flex-wrap items-center justify-between gap-2"
+                                 style="border-radius: var(--radius-control)">
+                                <p>
+                                    {{ $parent->full_name }}
+                                    <span class="text-xs" style="color: var(--text-low)">
+                                        {{ $parent->pivot->relationship_type }}
+                                    </span>
+                                </p>
+                                <form method="POST"
+                                      action="{{ route('admin.relationships.detach', [$person, $parent]) }}"
+                                      onsubmit="return confirm('Remove {{ $parent->full_name }} as a parent of {{ $person->full_name }}?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-secondary text-xs">{{ __('Remove') }}</button>
+                                </form>
+                            </div>
+                        @empty
+                            <p class="text-sm mt-2" style="color: var(--text-low)">
+                                {{ __('No parents recorded — this person starts a line.') }}
+                            </p>
+                        @endforelse
+                    </div>
+
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <h4 class="font-medium">{{ __('Children') }}</h4>
+                            <a href="{{ route('people.children.create', $person) }}" class="btn btn-secondary text-xs">
+                                {{ __('Add child') }}
+                            </a>
+                        </div>
+
+                        @forelse ($person->children as $child)
+                            <div class="hairline p-3 mt-2 flex flex-wrap items-center justify-between gap-2"
+                                 style="border-radius: var(--radius-control)">
+                                <p>
+                                    {{ $child->full_name }}
+                                    <span class="text-xs" style="color: var(--text-low)">
+                                        {{ $child->pivot->relationship_type }}
+                                    </span>
+                                </p>
+                                {{-- Same link seen from the other end, so the
+                                     child is the one it hangs off. --}}
+                                <form method="POST"
+                                      action="{{ route('admin.relationships.detach', [$child, $person]) }}"
+                                      onsubmit="return confirm('Remove {{ $child->full_name }} as a child of {{ $person->full_name }}?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-secondary text-xs">{{ __('Remove') }}</button>
+                                </form>
+                            </div>
+                        @empty
+                            <p class="text-sm mt-2" style="color: var(--text-low)">
+                                {{ __('No children recorded.') }}
+                            </p>
+                        @endforelse
+                    </div>
+                </div>
+            @endif
+
             {{-- Marriages: the same kind of life-status record as "deceased"
                  above, but one that belongs to the couple rather than the
                  person, so each is saved on its own. --}}
@@ -197,6 +280,23 @@ $social = $person->social_links ?? [];
                             <x-input-error :messages="$errors->get('status')" />
                             <x-input-error :messages="$errors->get('ended_on')" />
                         </form>
+
+                        {{-- Separate form: a nested one would not be valid
+                             HTML, and this is a different verb on a different
+                             route. Removing is for a marriage entered by
+                             mistake — a real one that ended should be marked
+                             divorced above, so it stays in the record. --}}
+                        @if (auth()->user()->is_super_admin)
+                            <form method="POST" action="{{ route('couples.destroy', $couple) }}"
+                                  class="flex justify-end -mt-2"
+                                  onsubmit="return confirm('Remove the marriage between {{ $person->full_name }} and {{ $marriage['partner']->full_name }} from the record? If the marriage was real but has ended, mark it divorced instead.')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-secondary text-xs">
+                                    {{ __('Remove this marriage') }}
+                                </button>
+                            </form>
+                        @endif
                     @endforeach
                 </div>
             @endif

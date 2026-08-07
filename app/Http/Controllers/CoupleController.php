@@ -27,4 +27,20 @@ class CoupleController extends Controller
 
         return back()->with('status', 'marriage-updated');
     }
+
+    /**
+     * Takes a marriage off the record entirely.
+     *
+     * Distinct from marking it divorced, which is the usual thing to want: a
+     * divorce belongs in the record and is drawn as a broken line. This is for
+     * a marriage that should never have been entered at all, and it is the only
+     * way to undo one — until now there was none, so a mistaken couple stayed
+     * on the chart for good.
+     */
+    public function destroy(Couple $couple)
+    {
+        $couple->delete();
+
+        return back()->with('status', 'marriage-removed');
+    }
 }

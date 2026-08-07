@@ -333,10 +333,18 @@ class AdminController extends Controller
         return response()->json(['message' => 'Linked.']);
     }
 
-    public function detachParent(Person $child, Person $parent)
+    /**
+     * Breaks a parent-and-child link. Answers JSON to the tree, which talks to
+     * this over fetch, and redirects back for the plain form on the edit page.
+     */
+    public function detachParent(Request $request, Person $child, Person $parent)
     {
         $child->parents()->detach($parent->id);
 
-        return response()->json(['message' => 'Unlinked.']);
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Unlinked.']);
+        }
+
+        return back()->with('status', 'relationship-removed');
     }
 }
