@@ -11,7 +11,7 @@
      still the empty placeholder would go on seeing nothing. --}}
 @php($v = '2026-08-07')
 
-<link rel="icon" href="{{ url('favicon.ico?v='.$v) }}" sizes="16x16 32x32 48x48">
+<link rel="icon" href="{{ url('favicon.ico?v='.$v) }}" type="image/x-icon" sizes="16x16 32x32 48x48">
 <link rel="icon" href="{{ url('favicon.svg?v='.$v) }}" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{ url('apple-touch-icon.png?v='.$v) }}">
 <meta name="theme-color" content="#0B3D2E">
