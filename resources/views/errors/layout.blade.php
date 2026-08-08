@@ -14,6 +14,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow">
     <title>@yield('title') &middot; {{ config('app.name') }}</title>
+
+    {{-- Spelled out rather than pulled in as <x-favicon />, to keep the promise
+         made above: this page renders when other things are broken, so it takes
+         on no dependency it does not have to. url() is safe — it reads config,
+         not the build manifest. --}}
+    <link rel="icon" href="{{ url('favicon.ico?v=2026-08-07') }}" sizes="16x16 32x32 48x48">
+    <link rel="icon" href="{{ url('favicon.svg?v=2026-08-07') }}" type="image/svg+xml">
+    <meta name="theme-color" content="#0B3D2E">
     <style>
         :root {
             --ink-900: #071612;

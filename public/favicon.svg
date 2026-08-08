@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+    <title>The Khandani Legacy</title>
+    <!-- The crest from resources/views/components/application-logo.blade.php,
+         filled rather than stroked: at favicon sizes a hairline outline closes
+         up into a smudge, where a solid shape keeps its silhouette. -->
+    <rect width="64" height="64" fill="#0B3D2E"/>
+    <path d="M32 3 8 12v18c0 15 10 24.5 24 31 14-6.5 24-16 24-31V12L32 3Z" fill="#C9A227"/>
+    <g fill="#0B3D2E" stroke="#0B3D2E" stroke-width="2.6" stroke-linecap="round">
+        <path d="M32 21v18M21 39h22"/>
+        <circle cx="32" cy="21" r="6" stroke="none"/>
+        <circle cx="21" cy="39" r="5.2" stroke="none"/>
+        <circle cx="43" cy="39" r="5.2" stroke="none"/>
+    </g>
+</svg>

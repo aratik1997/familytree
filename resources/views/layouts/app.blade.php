@@ -7,6 +7,8 @@
 
         <title>{{ config('app.name') }}</title>
 
+        <x-favicon />
+
         {{-- Theme is resolved before first paint so a light-theme visitor
              never sees a dark flash. --}}
         <script>

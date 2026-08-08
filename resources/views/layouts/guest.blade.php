@@ -7,6 +7,8 @@
 
         <title>{{ config('app.name') }}</title>
 
+        <x-favicon />
+
         <script>
             (function () {
                 var stored = localStorage.getItem('theme');
