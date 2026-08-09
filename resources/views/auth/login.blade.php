@@ -35,9 +35,7 @@
         <!-- Remember Me -->
         <div class="block">
             <label for="remember_me" class="inline-flex items-center gap-2 cursor-pointer">
-                <input id="remember_me" type="checkbox" name="remember"
-                       class="rounded"
-                       style="width: 18px; height: 18px; background: var(--ink-900); border: 1px solid var(--hairline); color: var(--gold-500)">
+                <input id="remember_me" type="checkbox" name="remember" class="checkbox">
                 <span class="text-sm" style="color: var(--text-mid)">{{ __('Remember me') }}</span>
             </label>
         </div>

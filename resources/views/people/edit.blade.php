@@ -124,7 +124,7 @@ $social = $person->social_links ?? [];
                 <div x-data="{ deceased: {{ $person->is_deceased ? 'true' : 'false' }} }" class="space-y-3 pt-2 border-t border-gold-light/20">
                     <label class="inline-flex items-center gap-2">
                         <input type="hidden" name="is_deceased" value="0">
-                        <input type="checkbox" name="is_deceased" value="1" x-model="deceased" class="accent-gold" @if($person->is_deceased) checked @endif>
+                        <input type="checkbox" name="is_deceased" value="1" x-model="deceased" class="checkbox" @if($person->is_deceased) checked @endif>
                         <span class="text-sm text-ink">{{ __('This person is deceased') }}</span>
                     </label>
                     <div x-show="deceased">

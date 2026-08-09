@@ -47,7 +47,15 @@
                 {{ $slot }}
             </div>
 
-            <x-language-toggle class="mt-6" />
+            {{-- The layout has always read the stored theme and applied it
+                 before first paint, but offered nothing to change it with —
+                 the switch lived in the signed-in navigation, which nobody has
+                 reached yet at this point. Somebody who prefers the parchment
+                 theme met the dark one at the door with no way past it. --}}
+            <div class="mt-6 flex items-center gap-2">
+                <x-language-toggle />
+                <x-theme-toggle />
+            </div>
         </div>
     </body>
 </html>

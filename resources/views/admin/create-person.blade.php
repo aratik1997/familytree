@@ -81,7 +81,7 @@
                 <div class="border-t border-gold-light/30 pt-5 space-y-5">
                     <div>
                         <label class="inline-flex items-center gap-2 text-sm text-ink">
-                            <input type="checkbox" x-model="hasChildOf" class="accent-gold">
+                            <input type="checkbox" x-model="hasChildOf" class="checkbox">
                             {{ __('Also make them the parent of someone already in the tree (optional)') }}
                         </label>
                     </div>
