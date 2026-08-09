@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileFieldController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\RecordMediaController;
 use App\Http\Controllers\TreeController;
+use App\Http\Controllers\TreeMembershipController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -45,6 +46,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tree', [TreeController::class, 'index'])->name('tree.index');
     Route::get('/tree/data', [TreeController::class, 'data'])->name('tree.data');
+
+    // Standing in more than one family's tree. Open to any claimed member, not
+    // just an Admin: the answer has to come from the person being asked, and
+    // asking is how a family reaches a relative who was entered elsewhere.
+    Route::get('/memberships', [TreeMembershipController::class, 'index'])->name('memberships.index');
+    Route::post('/memberships', [TreeMembershipController::class, 'store'])->name('memberships.store');
+    Route::post('/memberships/{membership}/accept', [TreeMembershipController::class, 'accept'])->name('memberships.accept');
+    Route::post('/memberships/{membership}/decline', [TreeMembershipController::class, 'decline'])->name('memberships.decline');
+    Route::get('/trees/{tree}/switch', [TreeMembershipController::class, 'switchTree'])->name('trees.switch');
 
     Route::get('/people/{person}', [PersonController::class, 'show'])->name('people.show');
     Route::get('/people/{person}/edit', [PersonController::class, 'edit'])->name('people.edit');

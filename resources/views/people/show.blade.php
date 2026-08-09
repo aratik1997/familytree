@@ -93,6 +93,23 @@ $show = fn (string $field) => FieldVisibility::canSee($viewer, $person, FieldVis
                             @if ($person->isMinor())
                                 <span class="privacy-badge-family">{{ __('Minor — managed by a parent') }}</span>
                             @endif
+
+                            {{-- Shown only to the person themselves and to
+                                 whoever runs this tree. It is how another
+                                 family asks for them, so handing it to every
+                                 visitor would hand out the means to pester
+                                 them. --}}
+                            @if ($viewer->person?->id === $person->id || $viewer->managesTree())
+                                <span class="chip numeric" title="{{ __('Give this to a relative who keeps their own tree') }}">
+                                    {{ $person->public_id }}
+                                </span>
+                            @endif
+
+                            {{-- Lent from another family: their record lives in
+                                 their own tree and is not ours to edit. --}}
+                            @if (! $viewer->ownsRecordTree($person))
+                                <span class="privacy-badge-family">{{ __('From another family') }}</span>
+                            @endif
                         </div>
 
                         @if ($person->is_deceased)

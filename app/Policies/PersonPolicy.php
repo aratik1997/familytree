@@ -44,7 +44,10 @@ class PersonPolicy
      */
     public function update(User $user, Person $person): bool
     {
-        if ($user->managesTree() && $user->sharesTreeWith($person)) {
+        // ownsRecordTree, not sharesTreeWith: somebody lent to this tree from
+        // another family is visible here but not ours to rewrite. Their name,
+        // photo and privacy settings stay with them and their own family.
+        if ($user->managesTree() && $user->ownsRecordTree($person)) {
             return true;
         }
 
@@ -79,16 +82,16 @@ class PersonPolicy
 
     public function delete(User $user, Person $person): bool
     {
-        return $user->managesTree() && $user->sharesTreeWith($person);
+        return $user->managesTree() && $user->ownsRecordTree($person);
     }
 
     public function restore(User $user, Person $person): bool
     {
-        return $user->managesTree() && $user->sharesTreeWith($person);
+        return $user->managesTree() && $user->ownsRecordTree($person);
     }
 
     public function forceDelete(User $user, Person $person): bool
     {
-        return $user->managesTree() && $user->sharesTreeWith($person);
+        return $user->managesTree() && $user->ownsRecordTree($person);
     }
 }

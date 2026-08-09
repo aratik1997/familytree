@@ -27,6 +27,17 @@ trait BelongsToTree
         return $this->belongsTo(Tree::class);
     }
 
+    /**
+     * Whether this kind of record can stand in a tree other than the one it
+     * was created in. True for a person, who can be somebody's son in one
+     * family and somebody's son-in-law in another. False for a marriage, which
+     * belongs to the tree that recorded it and to no other.
+     */
+    public function lendableAcrossTrees(): bool
+    {
+        return false;
+    }
+
     /** Reaches across every tree — for console commands and the claim pages. */
     public function scopeAcrossAllTrees($query)
     {

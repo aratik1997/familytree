@@ -19,6 +19,9 @@
                     <x-nav-link :href="route('tree.index')" :active="request()->routeIs('tree.*')">
                         {{ __('Family tree') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('memberships.index')" :active="request()->routeIs('memberships.*')">
+                        {{ __('Other families') }}
+                    </x-nav-link>
                     @if (Auth::user()->managesTree())
                         <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.*')">
                             {{ __('Admin') }}
@@ -29,6 +32,7 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6 gap-1">
+                <x-tree-switcher class="me-2" />
                 <x-language-toggle class="me-1" />
                 <x-notification-bell />
                 <x-theme-toggle />
