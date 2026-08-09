@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Tree;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -31,10 +30,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            // Every login belongs to a family. Without one the tree scope has
-            // nothing to match on and the policies deny everything, which in a
-            // test reads as a puzzling 403 rather than the missing setup it is.
-            'tree_id' => Tree::factory(),
         ];
     }
 

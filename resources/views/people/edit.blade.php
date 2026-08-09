@@ -144,7 +144,7 @@ $social = $person->social_links ?? [];
                  another — stayed on the chart for good. Super Admin only:
                  these are the family record itself, not this person's own
                  profile. --}}
-            @if (auth()->user()->managesTree())
+            @if (auth()->user()->canManageTree())
                 <div class="card p-6 space-y-6">
                     <div>
                         <h3 class="font-serif text-xl">{{ __('Family links') }}</h3>
@@ -286,7 +286,7 @@ $social = $person->social_links ?? [];
                              route. Removing is for a marriage entered by
                              mistake — a real one that ended should be marked
                              divorced above, so it stays in the record. --}}
-                        @if (auth()->user()->managesTree())
+                        @if (auth()->user()->canManageTree())
                             <form method="POST" action="{{ route('couples.destroy', $couple) }}"
                                   class="flex justify-end -mt-2"
                                   onsubmit="return confirm('Remove the marriage between {{ $person->full_name }} and {{ $marriage['partner']->full_name }} from the record? If the marriage was real but has ended, mark it divorced instead.')">

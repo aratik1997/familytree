@@ -3,9 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Person;
-use App\Models\Tree;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @extends Factory<Person>
@@ -17,11 +15,6 @@ class PersonFactory extends Factory
     public function definition(): array
     {
         return [
-            // The signed-in person's tree where there is one, so a test that
-            // acts as somebody first gets a person they can actually reach.
-            // Otherwise a tree of its own, which is what an isolation test
-            // wants: a person belonging to a family the viewer is not in.
-            'tree_id' => Auth::user()?->tree_id ?? Tree::factory(),
             'user_id' => null,
             'full_name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),

@@ -11,7 +11,7 @@
                   class="card p-6 space-y-5" x-data="{ mode: '{{ old('mode', 'new') }}' }">
                 @csrf
 
-                @if (auth()->user()->managesTree())
+                @if (auth()->user()->canManageTree())
                     <div>
                         <x-input-label :value="__('Child')" />
                         <div class="flex gap-4 mt-1 text-sm">

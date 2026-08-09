@@ -16,38 +16,25 @@ class PersonPolicy
         return true;
     }
 
-    /**
-     * The global tree scope already keeps one family's records out of another
-     * family's queries, so anyone who has got as far as holding a Person here
-     * is in the same tree. Checked again rather than assumed: a route model
-     * bound by id is exactly where that would otherwise slip.
-     */
     public function view(User $user, Person $person): bool
     {
-        return $user->sharesTreeWith($person);
+        return true;
     }
 
     public function create(User $user): bool
     {
-        return $user->managesTree();
+        return $user->canManageTree();
     }
 
     /**
-     * Whoever runs this tree can edit anyone in it. A claimed adult can edit
-     * their own record. A minor's record can only be edited by one of their
-     * linked parents — and "minor" is purely age-based, so this naturally cuts
-     * off the moment the person turns 18, independent of whether they've
-     * claimed their account.
-     *
-     * Running a tree carries no weight in anyone else's: an Admin, and the
-     * Super Admin alike, can only manage the family they belong to.
+     * Super Admin can edit anyone. A claimed adult can edit their own record.
+     * A minor's record can only be edited by one of their linked parents —
+     * and "minor" is purely age-based, so this naturally cuts off the moment
+     * the person turns 18, independent of whether they've claimed their account.
      */
     public function update(User $user, Person $person): bool
     {
-        // ownsRecordTree, not sharesTreeWith: somebody lent to this tree from
-        // another family is visible here but not ours to rewrite. Their name,
-        // photo and privacy settings stay with them and their own family.
-        if ($user->managesTree() && $user->ownsRecordTree($person)) {
+        if ($user->canManageTree()) {
             return true;
         }
 
@@ -82,16 +69,16 @@ class PersonPolicy
 
     public function delete(User $user, Person $person): bool
     {
-        return $user->managesTree() && $user->ownsRecordTree($person);
+        return $user->canManageTree();
     }
 
     public function restore(User $user, Person $person): bool
     {
-        return $user->managesTree() && $user->ownsRecordTree($person);
+        return $user->canManageTree();
     }
 
     public function forceDelete(User $user, Person $person): bool
     {
-        return $user->managesTree() && $user->ownsRecordTree($person);
+        return $user->canManageTree();
     }
 }

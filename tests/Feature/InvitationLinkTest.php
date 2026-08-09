@@ -18,23 +18,13 @@ class InvitationLinkTest extends TestCase
 {
     use RefreshDatabase;
 
-    private ?User $admin = null;
-
-    /** Signed in from the start, so people created here land in their tree. */
     private function admin(): User
     {
-        if ($this->admin === null) {
-            $this->admin = User::factory()->create(['is_super_admin' => true]);
-            $this->actingAs($this->admin);
-        }
-
-        return $this->admin;
+        return User::factory()->create(['is_super_admin' => true]);
     }
 
     private function unclaimedPerson(): Person
     {
-        $this->admin();
-
         return Person::create([
             'full_name' => 'Zaria Ansary Ruhi',
             'email' => 'zaria@example.test',
@@ -118,16 +108,10 @@ class InvitationLinkTest extends TestCase
         Mail::fake();
         $person = $this->unclaimedPerson();
 
-        // In the same family, so what is being tested is the role. From
-        // another tree the person would not be found at all, which is a
-        // different boundary and covered in AccessControlTest.
-        $this->actingAs(User::factory()->create([
-            'is_super_admin' => false,
-            'tree_id' => $person->tree_id,
-        ]))
+        $this->actingAs(User::factory()->create(['is_super_admin' => false]))
             ->post("/admin/people/{$person->id}/resend-invite")
             ->assertForbidden();
 
-        Mail::assertNothingSent();
+        Mail::assertNothingQueued();
     }
 }

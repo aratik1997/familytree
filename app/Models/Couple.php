@@ -2,16 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Concerns\BelongsToTree;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Couple extends Model
 {
-    use BelongsToTree;
-
     protected $fillable = [
-        'tree_id',
         'person_a_id',
         'person_b_id',
         'status',

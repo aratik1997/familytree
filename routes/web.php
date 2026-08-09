@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ClaimInviteController;
 use App\Http\Controllers\CoupleController;
 use App\Http\Controllers\FieldPrivacyController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\MailDiagnosticController;
+use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ProfileController;
@@ -14,7 +14,6 @@ use App\Http\Controllers\ProfileFieldController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\RecordMediaController;
 use App\Http\Controllers\TreeController;
-use App\Http\Controllers\TreeMembershipController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -46,15 +45,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tree', [TreeController::class, 'index'])->name('tree.index');
     Route::get('/tree/data', [TreeController::class, 'data'])->name('tree.data');
-
-    // Standing in more than one family's tree. Open to any claimed member, not
-    // just an Admin: the answer has to come from the person being asked, and
-    // asking is how a family reaches a relative who was entered elsewhere.
-    Route::get('/memberships', [TreeMembershipController::class, 'index'])->name('memberships.index');
-    Route::post('/memberships', [TreeMembershipController::class, 'store'])->name('memberships.store');
-    Route::post('/memberships/{membership}/accept', [TreeMembershipController::class, 'accept'])->name('memberships.accept');
-    Route::post('/memberships/{membership}/decline', [TreeMembershipController::class, 'decline'])->name('memberships.decline');
-    Route::get('/trees/{tree}/switch', [TreeMembershipController::class, 'switchTree'])->name('trees.switch');
 
     Route::get('/people/{person}', [PersonController::class, 'show'])->name('people.show');
     Route::get('/people/{person}/edit', [PersonController::class, 'edit'])->name('people.edit');
@@ -102,20 +92,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/relationships', [AdminController::class, 'attachParent'])->name('relationships.attach');
     Route::delete('/relationships/{child}/{parent}', [AdminController::class, 'detachParent'])->name('relationships.detach');
 
-    // Browser equivalent of `php artisan app:mail-check`, for hosts with no shell.
-    Route::get('/mail-check', [MailDiagnosticController::class, 'show'])->name('mail-check');
-    Route::post('/mail-check', [MailDiagnosticController::class, 'send'])->name('mail-check.send');
-
-    // Managing the Admins is the Super Admin's alone — an Admin passes the
-    // "admin" middleware above but not this one.
+    // Kept back from moderators: appointing them, and the mail diagnostic,
+    // which reports how the server is configured. Both are the Super Admin's.
+    // A moderator passes the "admin" middleware above but not this one.
     Route::middleware('super-admin')->group(function () {
-        Route::get('/admins', [AdminUserController::class, 'index'])->name('admins.index');
-        Route::get('/admins/create', [AdminUserController::class, 'create'])->name('admins.create');
-        Route::post('/admins', [AdminUserController::class, 'store'])->name('admins.store');
-        Route::get('/admins/{admin}/edit', [AdminUserController::class, 'edit'])->name('admins.edit');
-        Route::patch('/admins/{admin}', [AdminUserController::class, 'update'])->name('admins.update');
-        Route::post('/admins/{admin}/resend-invite', [AdminUserController::class, 'resendInvite'])->name('admins.resend-invite');
-        Route::delete('/admins/{admin}', [AdminUserController::class, 'destroy'])->name('admins.destroy');
+        Route::get('/moderators', [ModeratorController::class, 'index'])->name('moderators.index');
+        Route::post('/moderators/{user}', [ModeratorController::class, 'promote'])->name('moderators.promote');
+        Route::delete('/moderators/{user}', [ModeratorController::class, 'demote'])->name('moderators.demote');
+
+        // Browser equivalent of `php artisan app:mail-check`, for hosts with no shell.
+        Route::get('/mail-check', [MailDiagnosticController::class, 'show'])->name('mail-check');
+        Route::post('/mail-check', [MailDiagnosticController::class, 'send'])->name('mail-check.send');
     });
 
     Route::patch('/tree/positions/{person}', [TreeController::class, 'updatePosition'])->name('tree.positions.update');

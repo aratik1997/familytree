@@ -10,7 +10,7 @@ class StoreSpouseRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return (bool) $this->user()?->managesTree();
+        return (bool) $this->user()?->canManageTree();
     }
 
     public function rules(): array

@@ -12,9 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            // "admin" guards the family records — an Admin and the Super Admin
-            // both pass. "super-admin" guards managing the Admins themselves.
-            'admin' => \App\Http\Middleware\EnsureManagesTree::class,
+            // "admin" guards the family records — a moderator passes it too.
+            // "super-admin" guards the one thing kept back from them:
+            // appointing the moderators.
+            'admin' => \App\Http\Middleware\EnsureCanManageTree::class,
             'super-admin' => \App\Http\Middleware\EnsureIsSuperAdmin::class,
         ]);
 

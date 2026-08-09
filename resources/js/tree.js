@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const focusBar = document.getElementById('tree-focus');
     const focusLabel = document.getElementById('tree-focus-label');
     const focusClearBtn = document.getElementById('tree-focus-clear');
-    const editable = window.IS_SUPER_ADMIN === true;
+    const editable = window.CAN_MANAGE_TREE === true;
 
     let treeData;
     // The data actually on screen — the whole tree, or one couple's branch of

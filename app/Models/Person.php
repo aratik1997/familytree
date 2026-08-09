@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Concerns\BelongsToTree;
 use App\Support\ImageStore;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,15 +10,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 class Person extends Model
 {
-    use BelongsToTree, HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'tree_id',
-        'public_id',
         'user_id',
         'full_name',
         'email',
@@ -50,64 +46,6 @@ class Person extends Model
             'invited_at' => 'datetime',
             'claimed_at' => 'datetime',
         ];
-    }
-
-    /**
-     * A person can stand in more than one family's tree — the same record,
-     * lent out, not copied. See CurrentTreeScope.
-     */
-    public function lendableAcrossTrees(): bool
-    {
-        return true;
-    }
-
-    protected static function booted(): void
-    {
-        // Everybody gets a code before they are first saved, so there is always
-        // something to quote when adding them to another family's tree.
-        static::creating(function (Person $person) {
-            $person->public_id ??= static::freshPublicId();
-        });
-    }
-
-    /**
-     * Upper case, and with the vowels and the characters that look like each
-     * other taken out: this gets read down a phone and copied by hand, so an
-     * O that might be a zero costs somebody a failed attempt, and a chance
-     * four-letter word costs more than that.
-     */
-    public static function freshPublicId(): string
-    {
-        do {
-            $code = 'FT-'.preg_replace('/[AEIOU01]/', 'X', Str::upper(Str::random(6)));
-        } while (static::withoutGlobalScopes()->where('public_id', $code)->exists());
-
-        return $code;
-    }
-
-    public function memberships(): HasMany
-    {
-        return $this->hasMany(TreeMembership::class);
-    }
-
-    /** Trees this person stands in besides the one they were entered in. */
-    public function acceptedMemberships(): HasMany
-    {
-        return $this->memberships()->where('status', 'accepted');
-    }
-
-    public function pendingMemberships(): HasMany
-    {
-        return $this->memberships()->where('status', 'pending');
-    }
-
-    /** Every tree this person appears in, their own first. */
-    public function treeIds(): array
-    {
-        return array_values(array_unique(array_merge(
-            [$this->tree_id],
-            $this->acceptedMemberships()->pluck('tree_id')->all()
-        )));
     }
 
     public function user(): BelongsTo

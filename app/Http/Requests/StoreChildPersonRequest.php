@@ -60,7 +60,7 @@ class StoreChildPersonRequest extends FormRequest
     public function withValidator(Validator $validator): void
     {
         $validator->after(function (Validator $validator) {
-            if ($this->input('mode') === 'existing' && ! $this->user()->managesTree()) {
+            if ($this->input('mode') === 'existing' && ! $this->user()->canManageTree()) {
                 $validator->errors()->add('mode', 'Only a Super Admin can link an existing person as a child.');
             }
 

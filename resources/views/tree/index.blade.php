@@ -8,7 +8,7 @@
                 <h2 class="text-2xl mt-1">{{ __('Family tree') }}</h2>
             </div>
             <div class="flex flex-wrap gap-2">
-                @if (auth()->user()->managesTree())
+                @if (auth()->user()->canManageTree())
                     <a href="{{ route('admin.people.create') }}" class="btn btn-secondary">{{ __('Add person') }}</a>
                     <button type="button" id="tree-reset" class="btn btn-secondary">
                         {{ __('Reset tree') }}
@@ -24,7 +24,7 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-4">
             <div class="card p-3 text-xs measure" style="color: var(--text-low)">
-                @if (auth()->user()->managesTree())
+                @if (auth()->user()->canManageTree())
                     {{ __('Drag a person onto another to link them as parent and child, or along their generation to rearrange. Click a branch to pick it out, or a gold marriage line to see just that family.') }}
                 @else
                     {{ __('Drag a person along their generation to rearrange your view, click a branch to pick it out, or a gold marriage line to see just that family. Nothing you do here is saved — only a Super Admin can change the family record.') }}

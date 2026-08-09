@@ -10,16 +10,15 @@ use Symfony\Component\HttpFoundation\Response;
  * Guards the pages that change the family records — adding people, editing
  * relationships, sending invitations.
  *
- * Open to an Admin and to the Super Admin alike: within a tree the two have
- * exactly the same powers. Which tree those powers reach is not decided here
- * but by the global tree scope and the policies, so nothing this lets through
- * can touch another family.
+ * A moderator passes here as readily as the Super Admin: looking after the
+ * records is exactly what the role is for. Only appointing the moderators
+ * themselves is kept back, and that is guarded by EnsureIsSuperAdmin.
  */
-class EnsureManagesTree
+class EnsureCanManageTree
 {
     public function handle(Request $request, Closure $next): Response
     {
-        abort_unless($request->user()?->managesTree(), 403);
+        abort_unless($request->user()?->canManageTree(), 403);
 
         return $next($request);
     }

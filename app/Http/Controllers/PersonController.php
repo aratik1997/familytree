@@ -38,7 +38,7 @@ class PersonController extends Controller
             ->unique(fn (array $marriage) => $marriage['person']->id)
             ->values();
 
-        $existingCandidates = auth()->user()->managesTree()
+        $existingCandidates = auth()->user()->canManageTree()
             ? Person::whereNotIn('id', $person->children->pluck('id')->push($person->id))->orderBy('full_name')->get()
             : collect();
 

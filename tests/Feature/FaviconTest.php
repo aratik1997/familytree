@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Tree;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -57,7 +56,7 @@ class FaviconTest extends TestCase
 
     public function test_the_signed_in_pages_ask_for_the_icon(): void
     {
-        $user = User::factory()->create(['tree_id' => Tree::factory()]);
+        $user = User::factory()->create();
 
         $response = $this->actingAs($user)->get('/dashboard');
 
