@@ -36,6 +36,8 @@ $show = fn (string $field) => FieldVisibility::canSee($viewer, $person, FieldVis
                         @case('spouse-added') {{ __('Spouse added.') }} @break
                         @case('profile-updated') {{ __('Profile updated.') }} @break
                         @case('photo-updated') {{ __('Photo updated.') }} @break
+                        @case('marked-deceased') {{ __('Recorded. They are remembered on the tree rather than removed from it.') }} @break
+                        @case('marked-living') {{ __('Put right.') }} @break
                         @default {{ __(session('status')) }}
                     @endswitch
                 </div>
@@ -104,6 +106,57 @@ $show = fn (string $field) => FieldVisibility::canSee($viewer, $person, FieldVis
                 @if ($show('bio') && $person->bio)
                     <p class="mt-6 measure whitespace-pre-line" style="color: var(--text-mid)">{{ $person->bio }}</p>
                 @endif
+
+                {{-- Recording a death sits here rather than in the profile form
+                     because a moderator may do it for anyone, including the
+                     elders whose profiles are otherwise not theirs to edit —
+                     and it is usually an elder. Hidden from whoever can already
+                     reach it through Edit profile, so the page does not offer
+                     the same thing twice. --}}
+                @can('markDeceased', $person)
+                    @unless ($canEdit)
+                        <div class="mt-6 pt-4 hairline-t"
+                             x-data="{ open: false, deceased: {{ $person->is_deceased ? 'true' : 'false' }} }">
+                            @if ($person->is_deceased)
+                                <form method="POST" action="{{ route('people.deceased.update', $person) }}"
+                                      onsubmit="return confirm('{{ __('Record :name as living again?', ['name' => $person->full_name]) }}')">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="is_deceased" value="0">
+                                    <button type="submit" class="btn btn-secondary text-xs">
+                                        {{ __('Recorded in error — they are living') }}
+                                    </button>
+                                </form>
+                            @else
+                                <button type="button" class="btn btn-secondary text-xs" x-show="! open" @click="open = true">
+                                    {{ __('Record that they have died') }}
+                                </button>
+
+                                <form method="POST" action="{{ route('people.deceased.update', $person) }}"
+                                      x-show="open" x-cloak class="space-y-3">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="hidden" name="is_deceased" value="1">
+
+                                    <div>
+                                        <x-input-label for="death_date" :value="__('Date of Death')" />
+                                        <x-text-input id="death_date" type="date" name="death_date"
+                                                      class="block mt-1 sm:w-64" max="{{ now()->format('Y-m-d') }}" />
+                                        <p class="text-xs mt-1" style="color: var(--text-low)">
+                                            {{ __('Leave blank if the date is not known.') }}
+                                        </p>
+                                        <x-input-error :messages="$errors->get('death_date')" class="mt-1" />
+                                    </div>
+
+                                    <div class="flex gap-2">
+                                        <x-primary-button>{{ __('Save') }}</x-primary-button>
+                                        <button type="button" class="btn btn-secondary" @click="open = false">{{ __('Cancel') }}</button>
+                                    </div>
+                                </form>
+                            @endif
+                        </div>
+                    @endunless
+                @endcan
             </div>
 
             <div class="card p-6">

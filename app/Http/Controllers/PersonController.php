@@ -9,6 +9,7 @@ use App\Models\Couple;
 use App\Models\Person;
 use App\Support\ClaimInvites;
 use App\Support\ImageStore;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 class PersonController extends Controller
@@ -157,6 +158,33 @@ class PersonController extends Controller
         }
 
         return redirect()->route('people.show', $person)->with('status', 'profile-updated');
+    }
+
+    /**
+     * Records that somebody has died, on its own rather than through the
+     * profile form.
+     *
+     * Separate because it is open to a moderator for anyone in the tree, while
+     * the profile form is not: it is usually an elder who has died, which is
+     * exactly the direction a moderator cannot otherwise reach. Nothing else
+     * about the person can be changed here.
+     */
+    public function updateDeceased(Request $request, Person $person)
+    {
+        $this->authorize('markDeceased', $person);
+
+        $validated = $request->validate([
+            'is_deceased' => ['required', 'boolean'],
+            'death_date' => ['nullable', 'date', 'before_or_equal:today'],
+        ]);
+
+        $person->update([
+            'is_deceased' => $validated['is_deceased'],
+            // A date only means anything alongside the fact it belongs to.
+            'death_date' => $validated['is_deceased'] ? ($validated['death_date'] ?? null) : null,
+        ]);
+
+        return back()->with('status', $validated['is_deceased'] ? 'marked-deceased' : 'marked-living');
     }
 
     public function updatePhoto(UpdatePersonPhotoRequest $request, Person $person)

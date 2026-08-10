@@ -75,6 +75,11 @@ class AdminController extends Controller
      */
     public function destroy(Person $person)
     {
+        // The middleware on this route only asks whether they look after the
+        // tree, which a moderator does. Removing somebody from the family
+        // altogether is not theirs, so the policy is asked as well.
+        $this->authorize('delete', $person);
+
         abort_if($person->user?->is_super_admin, 403);
 
         $user = $person->user;
@@ -109,6 +114,13 @@ class AdminController extends Controller
     public function storePerson(StorePersonRequest $request)
     {
         $parents = $this->resolveExistingSelection($request->validated('parent_selection'));
+
+        // A moderator may only extend their own line, so the parents this new
+        // person is hung from have to be people they could add a child to.
+        // Without this the "Add person" form would be a way around the rule.
+        foreach ($parents as $parent) {
+            $this->authorize('addChild', $parent);
+        }
 
         $targetChild = $request->validated('child_person_id')
             ? Person::findOrFail($request->validated('child_person_id'))
@@ -177,6 +189,11 @@ class AdminController extends Controller
 
     public function storeParent(StoreParentRequest $request, Person $person)
     {
+        // Giving somebody a parent changes their record, so it takes the same
+        // standing as editing them. A moderator can do this for their own line
+        // and not for anyone else's.
+        $this->authorize('update', $person);
+
         if ($request->validated('mode') === 'existing') {
             $parents = $this->resolveExistingSelection($request->validated('existing_person_id'));
 
@@ -303,6 +320,10 @@ class AdminController extends Controller
 
         $child = Person::findOrFail($validated['child_id']);
         $parent = Person::findOrFail($validated['parent_id']);
+
+        // Same standing as editing the child, since that is whose record gains
+        // a parent — the drag on the tree must not reach further than the form.
+        $this->authorize('update', $child);
 
         if ($child->isAncestorOf($parent)) {
             return response()->json(['message' => 'That would make them their own ancestor — not allowed.'], 422);

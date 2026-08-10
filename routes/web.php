@@ -51,6 +51,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/people/{person}', [PersonController::class, 'update'])->name('people.update');
     Route::post('/people/{person}/photo', [PersonController::class, 'updatePhoto'])->name('people.photo.update');
 
+    // Its own route rather than part of the profile form: a moderator may
+    // record a death for anyone in the tree, including the elders whose
+    // profiles they cannot otherwise edit.
+    Route::patch('/people/{person}/deceased', [PersonController::class, 'updateDeceased'])->name('people.deceased.update');
+
     Route::get('/people/{person}/children/create', [PersonController::class, 'createChild'])->name('people.children.create');
     Route::post('/people/{person}/children', [PersonController::class, 'storeChild'])->name('people.children.store');
 

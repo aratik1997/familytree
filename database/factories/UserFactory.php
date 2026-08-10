@@ -30,6 +30,14 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            // Spelled out rather than left to the column defaults. Left out,
+            // they are absent from the model the factory hands back — the
+            // insert never mentioned them — so reading one gives null until
+            // something refreshes it from the database. actingAs() uses that
+            // very instance, which turns a plain false into a null and a
+            // typed policy into a TypeError.
+            'is_super_admin' => false,
+            'is_moderator' => false,
         ];
     }
 
