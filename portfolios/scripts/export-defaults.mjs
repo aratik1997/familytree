@@ -1,9 +1,13 @@
-import { writeFileSync } from 'node:fs';
+import { writeFileSync, readFileSync } from 'node:fs';
 import { PEOPLE } from '../src/data.js';
 
 /**
- * Writes what each page says out of the box to src/defaults.json, for the
- * editor in the Laravel app to open its form with.
+ * Writes what each page says out of the box to the Laravel app's
+ * resources/portfolios/, for the owner's editor to open its form with.
+ *
+ * It lands there rather than here because the Laravel app is what reads it and
+ * the portfolios source tree is not deployed alongside it — a file left here
+ * would simply be missing on the live server.
  *
  * Exported rather than retyped in PHP: data.js is where the pages actually get
  * their words, and a second copy would be free to drift from it. Run as part
@@ -41,3 +45,31 @@ for (const [slug, p] of Object.entries(PEOPLE)) {
 
 writeFileSync('src/defaults.json', JSON.stringify(out, null, 2) + '\n');
 console.log(`exported defaults for ${Object.keys(out).length} people`);
+
+/**
+ * The section manifest is written by hand, so check it still describes the
+ * pages. A section added to a page and not listed here would be one the owner
+ * cannot reorder or hide, and one they were never told about — the build
+ * should stop rather than ship an editor that quietly omits it.
+ */
+const manifest = JSON.parse(readFileSync('../resources/portfolios/sections.json', 'utf8'));
+const problems = [];
+
+for (const slug of Object.keys(PEOPLE)) {
+  const source = readFileSync(`src/people/${slug}.jsx`, 'utf8');
+  const onPage = [...source.matchAll(/<Section sectionKey="([^"]+)"/g)].map((m) => m[1]);
+  const listed = (manifest[slug] ?? []).map((s) => s.key);
+
+  if (onPage.join('|') !== listed.join('|')) {
+    problems.push(`  ${slug}
+    page:     ${onPage.join(' → ') || '(none)'}
+    manifest: ${listed.join(' → ') || '(none)'}`);
+  }
+}
+
+if (problems.length) {
+  console.error(['resources/portfolios/sections.json no longer matches the pages:', ...problems].join('\n'));
+  process.exit(1);
+}
+
+console.log('section manifest matches all 8 pages');

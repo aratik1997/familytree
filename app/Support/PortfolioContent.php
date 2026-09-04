@@ -77,13 +77,15 @@ class PortfolioContent
     /**
      * The sections each page has, in the order it was built with.
      *
-     * Read from the portfolios project rather than repeated here: the pages
-     * are the authority on what sections they contain, and a second list would
-     * be free to fall out of step with them.
+     * Exported from the portfolios project at build time rather than repeated
+     * here: the pages are the authority on what sections they contain, and a
+     * second list would be free to fall out of step with them. It lives under
+     * resources/ because that is deployed with the app; the portfolios source
+     * tree is not.
      */
     public static function sectionsFor(string $slug): array
     {
-        $file = base_path('portfolios/src/sections.json');
+        $file = resource_path('portfolios/sections.json');
 
         if (! File::exists($file)) {
             return [];
@@ -201,7 +203,7 @@ class PortfolioContent
      */
     public static function defaultsFor(string $slug): array
     {
-        $file = base_path('portfolios/src/defaults.json');
+        $file = resource_path('portfolios/defaults.json');
 
         if (! File::exists($file)) {
             return ['fields' => [], 'lists' => []];
