@@ -38,7 +38,7 @@ export default function Morsheda({ person }) {
       <ScrollBar />
       <Nav brand={T(person.short)} />
       <Petals />
-      <Falling items={['\u1F9B7']} opacity={0.3} size="text-xl" />
+      <Falling items={['🦷']} opacity={0.3} size="text-xl" />
 
       {/* soft wash behind the top of the page */}
       <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[70vh] bg-gradient-to-b from-primary/12 to-transparent" aria-hidden />

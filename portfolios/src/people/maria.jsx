@@ -47,7 +47,7 @@ export default function Maria({ person }) {
   return (
     <div className="ink-grid min-h-screen bg-base-100 text-base-content [--grid:20px]">
       <ScrollBar />
-      <Falling items={['\u25B3', '\u25A1', '\u25CB', '\u2715']} opacity={0.2} />
+      <Falling items={['△', '□', '○', '✕']} opacity={0.2} />
       <Nav brand={<span className="font-mono2 uppercase tracking-[0.2em]">{T(person.name)}</span>} />
 
       <header id="top" className="relative z-10 mx-auto grid w-[92vw] max-w-6xl items-end gap-10 pb-10 pt-28 sm:pt-32 lg:grid-cols-[1fr_auto] lg:gap-16">

@@ -43,7 +43,7 @@ export default function Ashik({ person }) {
       <div className="pointer-events-none fixed inset-y-0 left-1/2 z-0 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-primary/20 to-transparent" aria-hidden />
 
       <header id="top" className="relative z-10 mx-auto w-[92vw] max-w-4xl pb-10 pt-28 text-center sm:pt-32">
-        <Falling items={['\u2696\uFE0F', '\u25C6', '\u1F4DC']} opacity={0.16} />
+        <Falling items={['⚖️', '◆', '📜']} opacity={0.16} />
       <Scales />
         <Reveal>
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.34em] text-primary">{T(person.role)}</p>

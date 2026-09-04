@@ -190,7 +190,7 @@ export default function Atik({ person }) {
                   <span className="badge badge-outline font-mono2 text-xs">{pr.lang}</span>
                 </div>
                 <p className="mt-3 text-sm leading-relaxed opacity-75">{T(pr.note)}</p>
-                <span className="mt-4 font-mono2 text-xs text-primary">github \u2197</span>
+                <span className="mt-4 font-mono2 text-xs text-primary">github ↗</span>
               </motion.a>
             </Reveal>
           ))}
@@ -211,7 +211,7 @@ export default function Atik({ person }) {
                 <motion.li key={i} className="flex gap-3 text-sm leading-relaxed opacity-80"
                   initial={{ opacity: 0, x: 14 }} whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.08 }}>
-                  <span className="font-mono2 text-primary">\u2192</span>{T(b)}
+                  <span className="font-mono2 text-primary">→</span>{T(b)}
                 </motion.li>
               ))}
             </ul>

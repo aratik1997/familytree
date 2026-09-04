@@ -54,7 +54,7 @@ export default function Anas({ person }) {
       <ScrollBar />
       <Nav brand={<span className="uppercase tracking-[0.2em]">{T(person.name)}</span>} />
       <Clouds />
-      <Falling items={['\u2708\uFE0F', '\u2601\uFE0F', '\u2726']} opacity={0.2} />
+      <Falling items={['✈️', '☁️', '✦']} opacity={0.2} />
       <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[60vh] bg-gradient-to-b from-secondary/20 to-transparent" aria-hidden />
 
       <header id="top" className="relative z-10 mx-auto grid w-[92vw] max-w-6xl items-center gap-10 pb-10 pt-28 sm:pt-32 lg:grid-cols-[1fr_auto] lg:gap-14">

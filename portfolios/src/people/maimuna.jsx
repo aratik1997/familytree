@@ -42,7 +42,7 @@ export default function Maimuna({ person }) {
   return (
     <div className="rule-paper min-h-screen bg-base-100 text-base-content">
       <ScrollBar />
-      <Falling items={['0', '1', '\u03A3', '%', '\u00B5']} opacity={0.18} size="text-lg" />
+      <Falling items={['0', '1', 'Σ', '%', 'µ']} opacity={0.18} size="text-lg" />
       <Nav brand={<span className="font-display italic">{T(person.name)}</span>} />
 
       <header id="top" className="relative z-10 mx-auto grid w-[92vw] max-w-6xl items-center gap-10 pb-10 pt-28 sm:pt-32 lg:grid-cols-[auto_1fr] lg:gap-16">

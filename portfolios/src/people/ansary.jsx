@@ -47,7 +47,7 @@ export default function Ansary({ person }) {
       <ScrollBar />
       <Nav brand={T(person.short)} />
       <Steam />
-      <Falling items={['\u2615', '\u1F950', '\u2666']} opacity={0.22} />
+      <Falling items={['☕', '🥐', '♦']} opacity={0.22} />
 
       {/* ── hero ── */}
       <header id="top" ref={heroRef} className="relative z-10 mx-auto grid w-[92vw] max-w-6xl items-center gap-10 pb-10 pt-28 sm:pt-32 lg:grid-cols-[1fr_auto] lg:gap-16">
@@ -151,7 +151,7 @@ export default function Ansary({ person }) {
                   initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.07 }}
                 >
-                  <span className="text-xl">{['\u2615', '\u1F950', '\u1F35D', '\u1F379'][i]}</span>
+                  <span className="text-xl">{['☕', '🥐', '🍝', '🍹'][i]}</span>
                   <span className="text-sm leading-relaxed opacity-80">{T(m)}</span>
                 </motion.li>
               ))}
