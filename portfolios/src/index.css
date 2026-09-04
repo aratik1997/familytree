@@ -29,9 +29,18 @@ html[lang="bn"] {
   --font-body: "Hind Siliguri", sans-serif;
 }
 
+/* Decoration must never make the page scroll sideways.
+   A rotating square's bounding box grows toward its diagonal as it turns, so
+   an ornament that fits when still can push past the edge mid-animation. clip
+   rather than hidden: hidden on the root makes a scroll container and can trap
+   position:sticky, clip just refuses the overflow. */
+html {
+  overflow-x: clip;
+}
+
 body {
   font-family: var(--font-body);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 .font-display { font-family: var(--font-display); }
 .font-mono2 { font-family: var(--font-mono); }

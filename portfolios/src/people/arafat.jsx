@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Chips, useT } from '../lib/shell.jsx';
 
 /* ═══ ARAFAT · the smallholding ═══════════════════════════════════════════
    Nothing on this page is a straight line if it can help it. The portrait is
@@ -69,7 +69,7 @@ export default function Arafat({ person }) {
           <Reveal>
             <span className="badge badge-primary badge-lg font-semibold">{T(person.role)}</span>
           </Reveal>
-          <h1 className="mt-5 font-display text-6xl font-black leading-[1] sm:text-7xl lg:text-8xl">
+          <h1 className="font-display font-bold leading-[1.02] tracking-tight [font-size:clamp(1.9rem,7vw,3.6rem)] text-balance break-words">
             <Words text={T(person.name)} />
           </h1>
           <Reveal delay={0.35}>
@@ -169,6 +169,11 @@ export default function Arafat({ person }) {
             {T({ en: 'Bikku Bikku · freshly baked', bn: 'বিক্কু বিক্কু · তাজা বেক করা' })}
           </motion.a>
         </Reveal>
+      </Section>
+
+      {/* ── focus ── */}
+      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What the work involves', bn: 'কাজে যা যা থাকে' })}>
+        <Chips items={person.focus.map(T)} />
       </Section>
 
       <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Schooling', bn: 'পড়াশোনা' })}>

@@ -36,7 +36,19 @@ for (const p of PEOPLE) {
 
   const ok = kids > 0 && switched && errs.length === 0;
   if (!ok) bad++;
-  console.log(`${p.padEnd(9)} ${ok ? 'PASS' : 'FAIL'}  root:${kids}  theme-switch:${switched ? 'y' : 'n'}  errors:${errs.length}  h1:"${h1}"`);
+  // Phone pass: the thing that actually breaks on a long name is the page
+  // growing wider than the screen, which no amount of rendering checks catch.
+  await page.setViewportSize({ width: 375, height: 780 });
+  await page.waitForTimeout(500);
+  const overflow = await page.evaluate(() =>
+    Math.max(0, document.documentElement.scrollWidth - document.documentElement.clientWidth));
+  await page.screenshot({ path: `shots/${p}-phone.png`, fullPage: false });
+
+  const fits = overflow <= 1;
+  const allOk = ok && fits;
+  if (!allOk && ok) bad++;
+
+  console.log(`${p.padEnd(9)} ${allOk ? 'PASS' : 'FAIL'}  root:${kids}  theme-switch:${switched ? 'y' : 'n'}  errors:${errs.length}  phone-overflow:${overflow}px  h1:"${h1.slice(0,34)}"`);
   errs.slice(0, 2).forEach((e) => console.log(`   ! ${e.slice(0, 150)}`));
   await page.close();
 }

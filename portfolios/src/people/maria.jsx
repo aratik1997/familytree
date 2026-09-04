@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Falling, Chips, Steps, useT } from '../lib/shell.jsx';
 
 /* ═══ MARIA · the drafting table ══════════════════════════════════════════
    Not one rounded corner on the page — the radius tokens are set to zero, so
@@ -47,6 +47,7 @@ export default function Maria({ person }) {
   return (
     <div className="ink-grid min-h-screen bg-base-100 text-base-content [--grid:20px]">
       <ScrollBar />
+      <Falling items={['\u25B3', '\u25A1', '\u25CB', '\u2715']} opacity={0.2} />
       <Nav brand={<span className="font-mono2 uppercase tracking-[0.2em]">{T(person.name)}</span>} />
 
       <header id="top" className="relative z-10 mx-auto grid w-[92vw] max-w-6xl items-end gap-10 pb-10 pt-28 sm:pt-32 lg:grid-cols-[1fr_auto] lg:gap-16">
@@ -54,7 +55,7 @@ export default function Maria({ person }) {
           <Reveal>
             <p className="font-mono2 text-xs uppercase tracking-[0.24em] text-primary">{T(person.role)}</p>
           </Reveal>
-          <h1 className="mt-4 font-display text-6xl font-bold leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
+          <h1 className="font-display font-bold leading-[1.02] tracking-tight [font-size:clamp(1.9rem,7vw,3.6rem)] text-balance break-words">
             <Words text={T(person.name)} />
           </h1>
           <Reveal delay={0.35}>
@@ -126,6 +127,16 @@ export default function Maria({ person }) {
             {T({ en: 'Bikku Bikku · baked fresh', bn: 'বিক্কু বিক্কু · তাজা বেকিং' })}
           </motion.a>
         </Reveal>
+      </Section>
+
+      {/* ── how a drawing gets made ── */}
+      <Section kicker={T({ en: 'Method', bn: 'পদ্ধতি' })} title={T({ en: 'How a drawing gets made', bn: 'একটি নকশা যেভাবে তৈরি হয়' })}>
+        <Steps items={person.method.map((m) => ({ n: m.n, title: T(m.title), note: T(m.note) }))} mono />
+      </Section>
+
+      {/* ── focus ── */}
+      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What she works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
+        <Chips items={person.focus.map(T)} mono />
       </Section>
 
       <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Schooling', bn: 'পড়াশোনা' })}>

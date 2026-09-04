@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, LevelBar, Photo, Section, Footer, FactBand, useShell, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, LevelBar, Photo, Section, Footer, FactBand, useShell, Chips, useT } from '../lib/shell.jsx';
 
 /* ═══ ATIK · the terminal ═════════════════════════════════════════════════
    Monospace wherever it can be. The hero is a shell that answers `whoami` by
@@ -85,12 +85,15 @@ export default function Atik({ person }) {
       <Rain />
 
       <header id="top" className="relative z-10 mx-auto grid w-[92vw] max-w-6xl items-center gap-10 pb-10 pt-28 sm:pt-32 lg:grid-cols-[1fr_auto] lg:gap-14">
-        <div>
+        {/* min-w-0: a grid child defaults to min-width:auto and will not shrink
+            below its content, and the terminal's `pre` lines do not wrap — so
+            without this the column forces the page wider than a phone. */}
+        <div className="min-w-0">
           <Reveal>
             <p className="font-mono2 text-sm text-secondary">// {T(person.role)}</p>
           </Reveal>
           <motion.h1
-            className="mt-4 text-5xl font-extrabold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl"
+            className="mt-4 font-display font-extrabold leading-[1.04] tracking-tight [font-size:clamp(1.9rem,7vw,3.6rem)] text-balance break-words"
             initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           >
@@ -104,7 +107,7 @@ export default function Atik({ person }) {
           </Reveal>
 
           <Reveal delay={0.5}>
-            <div className="mockup-code mt-8 max-w-xl border border-base-content/12 bg-base-200 text-base-content shadow-xl">
+            <div className="mockup-code mt-8 max-w-full overflow-x-auto border border-base-content/12 bg-base-200 text-base-content shadow-xl">
               <pre data-prefix="$" className="text-secondary"><code className="text-base-content">whoami</code></pre>
               <pre data-prefix=">" className="text-primary"><code><Typer /></code></pre>
               <pre data-prefix="→"><code className="opacity-70">php · mysql · js · react · flutter · docker</code></pre>
@@ -170,6 +173,77 @@ export default function Atik({ person }) {
             <span key={s} className="badge badge-outline badge-lg font-mono2 text-xs">{s}</span>
           ))}
         </Reveal>
+      </Section>
+
+      {/* ── what he has actually shipped ── */}
+      <Section kicker={T({ en: 'Projects', bn: 'প্রকল্প' })} title={T({ en: 'Things he has shipped', bn: 'যা তিনি বানিয়েছেন' })}>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {person.projects.map((pr, i) => (
+            <Reveal key={pr.name} delay={i * 0.09}>
+              <motion.a
+                href={pr.url} target="_blank" rel="noopener noreferrer"
+                whileHover={{ y: -6 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className="flex h-full flex-col rounded-box border border-base-content/12 bg-base-200/40 p-6 transition-colors hover:border-primary/60"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="font-mono2 text-lg font-bold text-primary">{pr.name}</h3>
+                  <span className="badge badge-outline font-mono2 text-xs">{pr.lang}</span>
+                </div>
+                <p className="mt-3 text-sm leading-relaxed opacity-75">{T(pr.note)}</p>
+                <span className="mt-4 font-mono2 text-xs text-primary">github \u2197</span>
+              </motion.a>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── the day job, in bullets ── */}
+      <Section kicker={T({ en: 'Experience', bn: 'অভিজ্ঞতা' })} title={T({ en: 'The day job', bn: 'প্রতিদিনের কাজ' })}>
+        <Reveal>
+          <div className="rounded-box border border-base-content/12 bg-base-200/40 p-7">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h3 className="font-display text-xl font-bold">{T(person.experience.role)}</h3>
+              <span className="font-mono2 text-xs opacity-55">{person.experience.period}</span>
+            </div>
+            <p className="mt-1 text-sm text-primary">{person.experience.org}</p>
+            <ul className="mt-5 grid gap-3">
+              {person.experience.bullets.map((b, i) => (
+                <motion.li key={i} className="flex gap-3 text-sm leading-relaxed opacity-80"
+                  initial={{ opacity: 0, x: 14 }} whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.08 }}>
+                  <span className="font-mono2 text-primary">\u2192</span>{T(b)}
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      </Section>
+
+      {/* ── focus, hobbies, and where he has been ── */}
+      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'Beyond the stack', bn: 'কোডের বাইরে' })}>
+        <Chips items={person.focus.map(T)} mono />
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <Reveal>
+            <div className="h-full rounded-box border border-base-content/12 bg-base-200/40 p-6">
+              <p className="font-mono2 text-xs text-primary">{T({ en: 'off the clock', bn: 'কাজের বাইরে' })}</p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {person.hobbies.map((h, i) => (
+                  <span key={i} className="badge badge-ghost">{T(h)}</span>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="h-full rounded-box border border-base-content/12 bg-base-200/40 p-6">
+              <p className="font-mono2 text-xs text-primary">{T({ en: 'countries visited', bn: 'যেসব দেশে গেছেন' })}</p>
+              <div className="mt-3 flex flex-wrap gap-2 text-2xl">
+                {person.travel.map((f, i) => (
+                  <motion.span key={i} whileHover={{ y: -5, scale: 1.15 }}>{f}</motion.span>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
       </Section>
 
       <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Madrasa to CSE', bn: 'মাদ্রাসা থেকে সিএসই' })}>

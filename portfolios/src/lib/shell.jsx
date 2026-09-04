@@ -327,6 +327,88 @@ export function FactBand({ items, className = '', mono = false }) {
   );
 }
 
+
+/**
+ * A field of things drifting down the page.
+ *
+ * Every portfolio has one, and what falls is what that person's day is made
+ * of — coffee beans, teeth, blueprint marks, leaves. Kept to the margins by
+ * default so nothing lands on top of a headline and reads as a fault.
+ */
+export function Falling({ items, columns, opacity = 0.35, size = 'text-base' }) {
+  const still = useReducedMotion();
+  if (still) return null;
+
+  const cols = columns || ['4%', '17%', '31%', '68%', '83%', '95%'];
+
+  return (
+    <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden>
+      {cols.map((left, i) => (
+        <motion.span
+          key={i}
+          className={`absolute ${size}`}
+          style={{ left, top: '-8%', opacity }}
+          animate={{ y: ['0vh', '115vh'], x: [0, i % 2 ? 60 : -60], rotate: [0, i % 2 ? 400 : -400] }}
+          transition={{
+            duration: 14 + (i % 4) * 3,
+            delay: -(i * 3.5),
+            repeat: Infinity,
+            ease: 'linear',
+          }}
+        >
+          {items[i % items.length]}
+        </motion.span>
+      ))}
+    </div>
+  );
+}
+
+/** Row of small labelled pills — what somebody is actually good at. */
+export function Chips({ items, className = '', mono = false }) {
+  return (
+    <div className={`flex flex-wrap gap-2 ${className}`}>
+      {items.map((c, i) => (
+        <motion.span
+          key={i}
+          className={`badge badge-outline badge-lg h-auto whitespace-normal py-2 text-xs ${mono ? 'font-mono2' : ''}`}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: i * 0.05 }}
+          whileHover={{ y: -3 }}
+        >
+          {c}
+        </motion.span>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Numbered steps. Used where a person's work has an order to it — a method, a
+ * checklist, a journey — which is most of them, and it fills the space a bare
+ * list of nouns would leave.
+ */
+export function Steps({ items, mono = false }) {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {items.map((it, i) => (
+        <Reveal key={it.n || i} delay={i * 0.08}>
+          <motion.div
+            whileHover={{ y: -6 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            className="h-full rounded-box border border-base-content/12 bg-base-200/50 p-6"
+          >
+            <span className={`text-xs text-primary ${mono ? 'font-mono2' : 'font-semibold'}`}>{it.n}</span>
+            <h3 className="mt-3 font-display text-lg font-bold">{it.title}</h3>
+            <p className="mt-1.5 text-sm leading-relaxed opacity-70">{it.note}</p>
+          </motion.div>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
 /** Footer, identical in structure everywhere, themed by the tokens. */
 export function Footer({ name, role, links = [] }) {
   return (

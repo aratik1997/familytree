@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, Counter, FactBand, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, Counter, FactBand, Falling, Chips, Steps, useT } from '../lib/shell.jsx';
 
 /* ═══ ANAS · the flight deck ══════════════════════════════════════════════
    Condensed capitals, like the placards in a cockpit. An attitude indicator
@@ -54,6 +54,7 @@ export default function Anas({ person }) {
       <ScrollBar />
       <Nav brand={<span className="uppercase tracking-[0.2em]">{T(person.name)}</span>} />
       <Clouds />
+      <Falling items={['\u2708\uFE0F', '\u2601\uFE0F', '\u2726']} opacity={0.2} />
       <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[60vh] bg-gradient-to-b from-secondary/20 to-transparent" aria-hidden />
 
       <header id="top" className="relative z-10 mx-auto grid w-[92vw] max-w-6xl items-center gap-10 pb-10 pt-28 sm:pt-32 lg:grid-cols-[1fr_auto] lg:gap-14">
@@ -61,7 +62,7 @@ export default function Anas({ person }) {
           <Reveal>
             <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">{T(person.role)}</p>
           </Reveal>
-          <h1 className="mt-3 font-display text-7xl font-bold uppercase leading-[0.9] sm:text-8xl lg:text-9xl">
+          <h1 className="font-display font-bold leading-[1.02] tracking-tight [font-size:clamp(1.9rem,7vw,3.6rem)] text-balance break-words uppercase">
             <Words text={T(person.name)} />
           </h1>
           <Reveal delay={0.35}>
@@ -150,6 +151,16 @@ export default function Anas({ person }) {
             </Reveal>
           ))}
         </div>
+      </Section>
+
+      {/* ── the checklist, which is the whole job ── */}
+      <Section kicker={T({ en: 'Checklist', bn: 'চেকলিস্ট' })} title={T({ en: 'Every flight, in order', bn: 'প্রতিটি ফ্লাইট, ক্রম অনুসারে' })}>
+        <Steps items={person.checklist.map((c) => ({ n: c.n, title: T(c.title), note: T(c.note) }))} mono />
+      </Section>
+
+      {/* ── focus ── */}
+      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What he works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
+        <Chips items={person.focus.map(T)} mono />
       </Section>
 
       <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Training', bn: 'প্রশিক্ষণ' })}>

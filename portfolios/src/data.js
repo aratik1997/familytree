@@ -15,7 +15,9 @@ const t = (en, bn) => ({ en, bn });
 export const PEOPLE = {
   ansary: {
     slug: 'ansary',
-    name: t('Ansary', 'আনসারী'),
+    called: t('Robin', 'রবিন'),
+    short: t('Ansary', 'আনসারী'),
+    name: t('Mohammed Abdur Rahman Ansary', 'মোহাম্মদ আব্দুর রহমান আনসারী'),
     role: t('Chairman · Khandani Legacy', 'চেয়ারম্যান · খানদানি লিগ্যাসি'),
     profession: t('Businessman', 'ব্যবসায়ী'),
     tagline: t(
@@ -49,12 +51,29 @@ export const PEOPLE = {
       { name: t('Hindi', 'হিন্দি'), level: t('Understands', 'বোঝেন'), v: 45 },
       { name: t('Arabic', 'আরবি'), level: t('Basic', 'প্রাথমিক'), v: 35 },
     ],
+    focus: [
+      t('Hospitality', 'আতিথেয়তা'), t('Insurance', 'বিমা'), t('Technology', 'প্রযুক্তি'),
+      t('Investment', 'বিনিয়োগ'), t('Brand building', 'ব্র্যান্ড গঠন'), t('Team building', 'দল গঠন'),
+    ],
+    venue: {
+      name: 'Al-Wawah',
+      kind: t('Cafe · Bistro · Bakery', 'ক্যাফে · বিস্ট্রো · বেকারি'),
+      where: t('Canyon Tower, Sonargaon Janapath Road, Uttara, Dhaka 1230', 'ক্যানিয়ন টাওয়ার, সোনারগাঁও জনপথ রোড, উত্তরা, ঢাকা ১২৩০'),
+      line: t('A new experience awaits you — great food, rich flavours and unforgettable moments.', 'এক নতুন অভিজ্ঞতা অপেক্ষা করছে — দারুণ খাবার, গভীর স্বাদ আর অবিস্মরণীয় মুহূর্ত।'),
+      menu: [
+        t('Espresso and specialty coffee', 'এসপ্রেসো ও স্পেশালটি কফি'),
+        t('Freshly baked breads and pastries', 'তাজা বেক করা রুটি ও পেস্ট্রি'),
+        t('Pasta, sliders and all-day breakfast', 'পাস্তা, স্লাইডার ও সারাদিনের ব্রেকফাস্ট'),
+        t('Fresh juices', 'তাজা জুস'),
+      ],
+    },
     links: [{ label: 'alwawah.com', href: 'https://alwawah.com' }],
   },
 
   ashik: {
     slug: 'ashik',
     name: t('Mohammed Ashikur Rahman', 'মোহাম্মদ আশিকুর রহমান'),
+    called: t('Riyad', 'রিয়াদ'),
     short: t('M. A. Rahman', 'এম. এ. রহমান'),
     role: t('Director · Khandani Legacy', 'পরিচালক · খানদানি লিগ্যাসি'),
     profession: t('Advocate & Philanthropist', 'আইনজীবী ও সমাজসেবী'),
@@ -93,12 +112,34 @@ export const PEOPLE = {
       { name: t('Hindi', 'হিন্দি'), level: t('Understands', 'বোঝেন'), v: 45 },
       { name: t('Arabic', 'আরবি'), level: t('Quran reading', 'কুরআন পাঠ'), v: 40 },
     ],
+    focus: [
+      t('Accounting', 'হিসাবরক্ষণ'), t('Market analysis', 'বাজার বিশ্লেষণ'), t('Market research', 'বাজার গবেষণা'),
+      t('Investment management', 'বিনিয়োগ ব্যবস্থাপনা'), t('Export and import', 'আমদানি-রপ্তানি'),
+      t('Economic analysis', 'অর্থনৈতিক বিশ্লেষণ'), t('Statistics', 'পরিসংখ্যান'), t('Juvenile law', 'কিশোর আইন'),
+    ],
+    companies: [
+      { role: t('Managing Director', 'ব্যবস্থাপনা পরিচালক'), org: 'Provati Courier Limited', sector: t('Courier and logistics', 'কুরিয়ার ও লজিস্টিকস') },
+      { role: t('Managing Director', 'ব্যবস্থাপনা পরিচালক'), org: 'M.R. Traders', sector: t('Import and export', 'আমদানি-রপ্তানি') },
+      { role: t('Chairman', 'চেয়ারম্যান'), org: 'Bhaiya Agro, Dairy and Fisheries', sector: t('Agriculture and food', 'কৃষি ও খাদ্য') },
+      { role: t('Director', 'পরিচালক'), org: 'Bhaiya Group of Industries', sector: t('Industrial conglomerate', 'শিল্প গোষ্ঠী') },
+      { role: t('Director', 'পরিচালক'), org: 'Sattar Match Works', sector: t('Manufacturing', 'উৎপাদন') },
+      { role: t('Director', 'পরিচালক'), org: 'Hac Securities Limited', sector: t('Securities and finance', 'সিকিউরিটিজ ও অর্থ') },
+      { role: t('Proprietor', 'স্বত্বাধিকারী'), org: 'Khandani Traders', sector: t('Trading', 'বাণিজ্য') },
+      { role: t('Proprietor', 'স্বত্বাধিকারী'), org: 'Ayesha Enterprise', sector: t('Enterprise', 'এন্টারপ্রাইজ') },
+    ],
+    memberships: [
+      { icon: '🎖️', name: 'Cadet College Club', note: t('Member', 'সদস্য') },
+      { icon: '🌐', name: 'Junior Chamber International', note: t('Member', 'সদস্য') },
+      { icon: '🌱', name: 'Ayesha Foundation', note: t('Founding board member', 'প্রতিষ্ঠাতা বোর্ড সদস্য') },
+    ],
+    home: t('Laksam, Cumilla, Bangladesh', 'লাকসাম, কুমিল্লা, বাংলাদেশ'),
     links: [],
   },
 
   morsheda: {
     slug: 'morsheda',
-    name: t('Dr. Morsheda', 'ডা. মোরশেদা'),
+    short: t('Dr. Morsheda', 'ডা. মোরশেদা'),
+    name: t('Mosammat Morsheda Khatun', 'মোসাম্মৎ মোরশেদা খাতুন'),
     role: t('Director · Khandani Legacy', 'পরিচালক · খানদানি লিগ্যাসি'),
     profession: t('Dentist', 'দন্তচিকিৎসক'),
     tagline: t(
@@ -129,12 +170,23 @@ export const PEOPLE = {
       { name: t('Arabic', 'আরবি'), level: t('Quran reading', 'কুরআন পাঠ'), v: 40 },
       { name: t('Japanese', 'জাপানি'), level: t('Basic', 'প্রাথমিক'), v: 30 },
     ],
+    focus: [
+      t('Clinical dentistry', 'ক্লিনিক্যাল ডেন্টিস্ট্রি'), t('Oral health', 'মুখগহ্বরের স্বাস্থ্য'),
+      t('Preventive care', 'প্রতিরোধমূলক সেবা'), t('Dental research', 'দন্ত গবেষণা'),
+      t('Patient communication', 'রোগীর সঙ্গে যোগাযোগ'), t('Academic writing', 'একাডেমিক লেখা'),
+    ],
+    journey: [
+      { n: '01', place: 'Pioneer Dental College', what: t('Dental surgery, Dhaka', 'দন্তশল্য, ঢাকা') },
+      { n: '02', place: 'North South University', what: t('Further study, Dhaka', 'উচ্চতর পড়াশোনা, ঢাকা') },
+      { n: '03', place: 'Hokkaido University', what: t('Doctoral research, Japan', 'ডক্টরাল গবেষণা, জাপান') },
+    ],
     links: [],
   },
 
   atik: {
     slug: 'atik',
-    name: t('Atikur Rahman', 'আতিকুর রহমান'),
+    short: t('Atikur Rahman', 'আতিকুর রহমান'),
+    name: t('Mohammed Atikur Rahman', 'মোহাম্মদ আতিকুর রহমান'),
     role: t('Director · Khandani Legacy', 'পরিচালক · খানদানি লিগ্যাসি'),
     profession: t('Full-Stack Developer & DevOps', 'ফুল-স্ট্যাক ডেভেলপার ও ডেভঅপস'),
     tagline: t(
@@ -172,12 +224,37 @@ export const PEOPLE = {
       { name: t('English', 'ইংরেজি'), level: t('Fluent', 'সাবলীল'), v: 95 },
       { name: t('Arabic', 'আরবি'), level: t('Quran reading', 'কুরআন পাঠ'), v: 45 },
     ],
+    focus: [
+      t('Security updates', 'নিরাপত্তা হালনাগাদ'), t('Database manipulation', 'ডেটাবেজ ব্যবস্থাপনা'),
+      t('Problem solving', 'সমস্যা সমাধান'), t('Backend coding', 'ব্যাকএন্ড কোডিং'),
+      t('System architecture', 'সিস্টেম আর্কিটেকচার'), t('Excel expertise', 'এক্সেল দক্ষতা'),
+    ],
+    projects: [
+      { name: 'poker', lang: 'PHP',
+        note: t('Multiplayer Texas hold-em for 2 to 8 players — host controls, live chat, spectator mode and a full side-pot betting engine.', '২ থেকে ৮ জনের মাল্টিপ্লেয়ার টেক্সাস হোল্ড-এম — হোস্ট নিয়ন্ত্রণ, লাইভ চ্যাট, দর্শক মোড আর পূর্ণাঙ্গ সাইড-পট বেটিং ইঞ্জিন।'),
+        url: 'https://github.com/aratik1997/poker' },
+      { name: 'twentynine', lang: 'PHP',
+        note: t('Real-time multiplayer 29 — the South Asian trick-taking game. Fixed partnerships, secret trump, bidding, live table with chat and sound.', 'রিয়েল-টাইম মাল্টিপ্লেয়ার ২৯ — দক্ষিণ এশিয়ার জনপ্রিয় তাসের খেলা। নির্দিষ্ট জুটি, গোপন তুরুপ, ডাক, লাইভ টেবিল, চ্যাট ও শব্দ।'),
+        url: 'https://github.com/aratik1997/twentynine' },
+    ],
+    experience: {
+      role: t('Backend Developer', 'ব্যাকএন্ড ডেভেলপার'), org: '8 Bit (Pvt) Limited', period: '2024 — present',
+      bullets: [
+        t('Update all of the company websites in an efficient, maintainable way.', 'কোম্পানির সব ওয়েবসাইট দক্ষ ও রক্ষণাবেক্ষণযোগ্য উপায়ে হালনাগাদ করা।'),
+        t('Ship security updates that keep company data and information secure.', 'নিরাপত্তা হালনাগাদ প্রকাশ, যা কোম্পানির তথ্য নিরাপদ রাখে।'),
+        t('Maintain the company database, servers and other information sources.', 'কোম্পানির ডেটাবেজ, সার্ভার ও অন্যান্য তথ্যভাণ্ডার রক্ষণাবেক্ষণ।'),
+      ],
+    },
+    travel: ['🇧🇩', '🇮🇳', '🇲🇾', '🇸🇦', '🇦🇪', '🇸🇬', '🇹🇭'],
+    hobbies: [t('Gaming', 'গেমিং'), t('Coding', 'কোডিং'), t('Traveling', 'ভ্রমণ'), t('Movies', 'সিনেমা')],
+    home: t('Uttara, Dhaka, Bangladesh', 'উত্তরা, ঢাকা, বাংলাদেশ'),
     links: [{ label: 'github.com/aratik1997', href: 'https://github.com/aratik1997' }],
   },
 
   maria: {
     slug: 'maria',
-    name: t('Maria', 'মারিয়া'),
+    short: t('Maria', 'মারিয়া'),
+    name: t('Mosammat Maria Khatun', 'মোসাম্মৎ মারিয়া খাতুন'),
     role: t('Director · Khandani Legacy', 'পরিচালক · খানদানি লিগ্যাসি'),
     profession: t('Architect', 'স্থপতি'),
     tagline: t(
@@ -205,12 +282,24 @@ export const PEOPLE = {
       { name: t('French', 'ফরাসি'), level: t('Intermediate', 'মাধ্যমিক'), v: 60 },
       { name: t('Arabic', 'আরবি'), level: t('Quran reading', 'কুরআন পাঠ'), v: 45 },
     ],
+    focus: [
+      t('Architectural design', 'স্থাপত্য নকশা'), t('Technical drawing', 'কারিগরি অঙ্কন'),
+      t('Space planning', 'স্থান পরিকল্পনা'), t('Detailing', 'খুঁটিনাটি নকশা'),
+      t('Material selection', 'উপকরণ নির্বাচন'), t('Recipe development', 'রেসিপি উন্নয়ন'),
+    ],
+    method: [
+      { n: '01', title: t('Survey', 'জরিপ'), note: t('What is there, measured before anything is imagined.', 'কী আছে — কল্পনার আগেই মেপে নেওয়া।') },
+      { n: '02', title: t('Sketch', 'স্কেচ'), note: t('The argument between what is wanted and what will stand.', 'যা চাওয়া হয় আর যা দাঁড়াবে — তার তর্ক।') },
+      { n: '03', title: t('Draw', 'অঙ্কন'), note: t('Millimetres. The promise is kept here or nowhere.', 'মিলিমিটার। প্রতিশ্রুতি এখানেই রক্ষা হয়, নয়তো কোথাও নয়।') },
+      { n: '04', title: t('Build', 'নির্মাণ'), note: t('Where the drawing meets weather and people.', 'যেখানে নকশা আবহাওয়া আর মানুষের মুখোমুখি হয়।') },
+    ],
     links: [{ label: 'Bikku Bikku', href: 'https://www.facebook.com/bikkubikkucookies/' }],
   },
 
   maimuna: {
     slug: 'maimuna',
-    name: t('Maimuna', 'মাইমুনা'),
+    short: t('Maimuna', 'মাইমুনা'),
+    name: t('Mosammat Maimuna Khatun', 'মোসাম্মৎ মাইমুনা খাতুন'),
     role: t('Director · Khandani Legacy', 'পরিচালক · খানদানি লিগ্যাসি'),
     profession: t('Researcher · Economics', 'গবেষক · অর্থনীতি'),
     tagline: t(
@@ -246,12 +335,24 @@ export const PEOPLE = {
       { name: t('French', 'ফরাসি'), level: t('Intermediate', 'মাধ্যমিক'), v: 60 },
       { name: t('Arabic', 'আরবি'), level: t('Quran reading', 'কুরআন পাঠ'), v: 45 },
     ],
+    focus: [
+      t('Economic analysis', 'অর্থনৈতিক বিশ্লেষণ'), t('Statistics', 'পরিসংখ্যান'),
+      t('Survey design', 'জরিপ নকশা'), t('Data cleaning', 'উপাত্ত পরিশোধন'),
+      t('Academic writing', 'একাডেমিক লেখা'), t('Field research', 'মাঠ গবেষণা'),
+    ],
+    method: [
+      { n: '01', title: t('Question', 'প্রশ্ন'), note: t('Narrow enough that an answer would mean something.', 'এতটা নির্দিষ্ট, যেন উত্তরটির অর্থ থাকে।') },
+      { n: '02', title: t('Collect', 'সংগ্রহ'), note: t('The slow part nobody puts in the paper.', 'ধীর অংশটি, যা কেউ গবেষণাপত্রে লেখে না।') },
+      { n: '03', title: t('Test', 'পরীক্ষা'), note: t('Let the numbers say no.', 'সংখ্যাকে না বলতে দিন।') },
+      { n: '04', title: t('Publish', 'প্রকাশ'), note: t('Say it out loud, including when you were wrong.', 'প্রকাশ্যে বলুন — ভুল ছিলেন তখনও।') },
+    ],
     links: [{ label: 'Bikku Bikku', href: 'https://www.facebook.com/bikkubikkucookies/' }],
   },
 
   anas: {
     slug: 'anas',
-    name: t('Anas', 'আনাস'),
+    short: t('Anas', 'আনাস'),
+    name: t('Mohammed Azizur Rahman Anas', 'মোহাম্মদ আজিজুর রহমান আনাস'),
     role: t('Director · Khandani Legacy', 'পরিচালক · খানদানি লিগ্যাসি'),
     profession: t('Pilot', 'পাইলট'),
     tagline: t(
@@ -278,12 +379,24 @@ export const PEOPLE = {
       { name: t('Arabic', 'আরবি'), level: t('Quran reading', 'কুরআন পাঠ'), v: 45 },
       { name: t('Malay', 'মালয়'), level: t('Basic', 'প্রাথমিক'), v: 30 },
     ],
+    focus: [
+      t('Flight operations', 'ফ্লাইট পরিচালনা'), t('Navigation', 'নেভিগেশন'),
+      t('Standard procedures', 'প্রমিত প্রক্রিয়া'), t('Crew coordination', 'ক্রু সমন্বয়'),
+      t('Brand marketing', 'ব্র্যান্ড মার্কেটিং'), t('Customer outreach', 'গ্রাহক সংযোগ'),
+    ],
+    checklist: [
+      { n: '01', title: t('Preflight', 'প্রি-ফ্লাইট'), note: t('Walk the aircraft. Trust nothing you have not seen.', 'উড়োজাহাজ ঘুরে দেখুন। যা নিজে দেখেননি, তাতে ভরসা নয়।') },
+      { n: '02', title: t('Departure', 'উড্ডয়ন'), note: t('The same words, in the same order, every time.', 'একই শব্দ, একই ক্রমে, প্রতিবার।') },
+      { n: '03', title: t('Cruise', 'ক্রুজ'), note: t('Watch the instruments, not the view.', 'দৃশ্য নয়, যন্ত্রের দিকে তাকান।') },
+      { n: '04', title: t('Approach', 'অবতরণ'), note: t('Stabilised, or go around. There is no third option.', 'স্থিতিশীল, নয়তো আবার ঘুরে আসা। তৃতীয় কোনো পথ নেই।') },
+    ],
     links: [{ label: 'alwawah.com', href: 'https://alwawah.com' }],
   },
 
   arafat: {
     slug: 'arafat',
-    name: t('Arafat', 'আরাফাত'),
+    short: t('Arafat', 'আরাফাত'),
+    name: t('Mohammed Ahmadur Rahman Arafat', 'মোহাম্মদ আহমাদুর রহমান আরাফাত'),
     role: t('Director · Khandani Legacy', 'পরিচালক · খানদানি লিগ্যাসি'),
     profession: t('Homesteader', 'হোমস্টেডার'),
     tagline: t(
@@ -316,6 +429,10 @@ export const PEOPLE = {
       { name: t('English', 'ইংরেজি'), level: t('Fluent', 'সাবলীল'), v: 95 },
       { name: t('French', 'ফরাসি'), level: t('Intermediate', 'মাধ্যমিক'), v: 60 },
       { name: t('Arabic', 'আরবি'), level: t('Quran reading', 'কুরআন পাঠ'), v: 45 },
+    ],
+    focus: [
+      t('Growing', 'চাষ'), t('Animal keeping', 'পশুপালন'), t('Preserving', 'সংরক্ষণ'),
+      t('Repair and maintenance', 'মেরামত ও রক্ষণাবেক্ষণ'), t('Baking', 'বেকিং'), t('Small-batch production', 'অল্প পরিমাণে উৎপাদন'),
     ],
     links: [{ label: 'Bikku Bikku', href: 'https://www.facebook.com/bikkubikkucookies/' }],
   },

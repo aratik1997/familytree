@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, Counter, FactBand, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, Counter, FactBand, Falling, Chips, useT } from '../lib/shell.jsx';
 
 /* ═══ ASHIK · the chamber ═════════════════════════════════════════════════
    Symmetrical and squared off, the way a courtroom is. Everything is centred
@@ -43,14 +43,16 @@ export default function Ashik({ person }) {
       <div className="pointer-events-none fixed inset-y-0 left-1/2 z-0 w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-primary/20 to-transparent" aria-hidden />
 
       <header id="top" className="relative z-10 mx-auto w-[92vw] max-w-4xl pb-10 pt-28 text-center sm:pt-32">
-        <Scales />
+        <Falling items={['\u2696\uFE0F', '\u25C6', '\u1F4DC']} opacity={0.16} />
+      <Scales />
         <Reveal>
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.34em] text-primary">{T(person.role)}</p>
         </Reveal>
-        <h1 className="font-display text-4xl font-black leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
+        <h1 className="font-display font-bold leading-[1.02] tracking-tight [font-size:clamp(1.9rem,7vw,3.6rem)] text-balance break-words">
           <Words text={T(person.name)} />
         </h1>
         <Reveal delay={0.4}>
+          <p className="mt-3 font-display text-xl italic text-primary/80">{T({ en: 'known as', bn: 'পরিচিত' })} {T(person.called)}</p>
           <div className="mx-auto my-7 h-0.5 w-16 bg-primary" />
           <p className="mx-auto max-w-2xl text-base leading-relaxed opacity-75 sm:text-lg">{T(person.tagline)}</p>
         </Reveal>
@@ -137,6 +139,44 @@ export default function Ashik({ person }) {
             </Reveal>
           ))}
         </div>
+      </Section>
+
+      {/* ── the wider register of companies ── */}
+      <Section kicker={T({ en: 'Companies', bn: 'প্রতিষ্ঠান' })} title={T({ en: 'The wider register', bn: 'বৃহত্তর তালিকা' })}
+        className="max-w-5xl text-center" kickerClass="text-center">
+        <div className="grid gap-px border border-base-content/15 bg-base-content/15 text-left sm:grid-cols-2">
+          {person.companies.map((c, i) => (
+            <Reveal key={c.org} delay={i * 0.05}>
+              <div className="h-full bg-base-100 p-5 transition-colors hover:bg-base-200">
+                <p className="text-xs uppercase tracking-[0.14em] text-primary">{T(c.role)}</p>
+                <p className="mt-1.5 font-display text-base font-bold">{c.org}</p>
+                <p className="mt-0.5 text-xs opacity-55">{T(c.sector)}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── memberships ── */}
+      <Section kicker={T({ en: 'Memberships', bn: 'সদস্যপদ' })} title={T({ en: 'Where he serves', bn: 'যেখানে যুক্ত' })}
+        className="max-w-4xl text-center" kickerClass="text-center">
+        <div className="grid gap-4 text-left sm:grid-cols-3">
+          {person.memberships.map((m, i) => (
+            <Reveal key={m.name} delay={i * 0.08}>
+              <div className="h-full border border-base-content/12 bg-base-200/40 p-6">
+                <span className="text-2xl">{m.icon}</span>
+                <h3 className="mt-3 font-display text-base font-bold">{m.name}</h3>
+                <p className="mt-1 text-xs opacity-55">{T(m.note)}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* ── core expertise ── */}
+      <Section kicker={T({ en: 'Expertise', bn: 'দক্ষতা' })} title={T({ en: 'Core expertise', bn: 'মূল দক্ষতা' })}
+        className="max-w-4xl text-center" kickerClass="text-center">
+        <Chips items={person.focus.map(T)} className="justify-center" />
       </Section>
 
       <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Where he read', bn: 'যেখানে পড়েছেন' })}

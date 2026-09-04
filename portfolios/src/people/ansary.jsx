@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { useRef } from 'react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, TiltCard, FactBand, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, TiltCard, FactBand, Falling, Chips, useT } from '../lib/shell.jsx';
 
 /* ═══ ANSARY · the cafe ═══════════════════════════════════════════════════
    Warm, unhurried, serif. The hero is a cup: a round portrait inside a ring
@@ -45,8 +45,9 @@ export default function Ansary({ person }) {
   return (
     <div className="grain min-h-screen bg-base-100 text-base-content">
       <ScrollBar />
-      <Nav brand={T(person.name)} />
+      <Nav brand={T(person.short)} />
       <Steam />
+      <Falling items={['\u2615', '\u1F950', '\u2666']} opacity={0.22} />
 
       {/* ── hero ── */}
       <header id="top" ref={heroRef} className="relative z-10 mx-auto grid w-[92vw] max-w-6xl items-center gap-10 pb-10 pt-28 sm:pt-32 lg:grid-cols-[1fr_auto] lg:gap-16">
@@ -57,11 +58,12 @@ export default function Ansary({ person }) {
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">{T(person.role)}</p>
             </div>
           </Reveal>
-          <h1 className="font-display text-6xl font-bold leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
+          <h1 className="font-display font-bold leading-[1.02] tracking-tight [font-size:clamp(1.9rem,7vw,3.6rem)] text-balance break-words">
             <Words text={T(person.name)} className="text-primary" />
           </h1>
-          <Reveal delay={0.35}>
-            <p className="mt-7 max-w-xl text-lg leading-relaxed opacity-75">{T(person.tagline)}</p>
+          <Reveal delay={0.3}>
+            <p className="mt-3 font-display text-xl italic text-primary/80">{T({ en: 'known as', bn: 'পরিচিত' })} {T(person.called)}</p>
+            <p className="mt-5 max-w-xl text-base leading-relaxed opacity-75 sm:text-lg">{T(person.tagline)}</p>
           </Reveal>
           <Reveal delay={0.5} className="mt-9 flex flex-wrap gap-3">
             <a href="https://alwawah.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
@@ -107,23 +109,6 @@ export default function Ansary({ person }) {
         </Reveal>
       </Section>
 
-      {/* ── a slow marquee of what he runs ── */}
-      <div className="relative z-10 overflow-hidden border-y border-base-content/10 py-5">
-        <motion.div
-          className="flex w-max gap-10 whitespace-nowrap"
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: 32, repeat: Infinity, ease: 'linear' }}
-          aria-hidden
-        >
-          {[0, 1].map((dup) => (
-            <div key={dup} className="flex gap-10">
-              {['Al-Wawah Cafe', 'Provati Insurance', '8 Bit Private Ltd', 'Khandani Legacy', 'Uttara · Dhaka'].map((w) => (
-                <span key={w} className="font-display text-2xl opacity-40">{w} <span className="text-primary">◆</span></span>
-              ))}
-            </div>
-          ))}
-        </motion.div>
-      </div>
 
       {/* ── positions ── */}
       <Section id="work" kicker={T({ en: 'Positions', bn: 'দায়িত্ব' })} title={T({ en: 'Where he sits', bn: 'যেখানে তিনি আছেন' })}>
@@ -143,6 +128,41 @@ export default function Ansary({ person }) {
             </Reveal>
           ))}
         </div>
+      </Section>
+
+      {/* ── the cafe he built, in its own words ── */}
+      <Section kicker={T({ en: 'Al-Wawah', bn: 'আল-ওয়াওয়াহ' })} title={T({ en: 'The room he built', bn: 'যে ঘরটি তিনি গড়েছেন' })}>
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
+          <Reveal>
+            <div className="h-full rounded-box border border-base-content/10 bg-base-200/50 p-7 sm:p-9">
+              <p className="font-display text-2xl text-primary sm:text-3xl">{person.venue.name}</p>
+              <p className="mt-1 text-sm opacity-60">{T(person.venue.kind)}</p>
+              <p className="mt-5 font-display text-lg italic leading-relaxed sm:text-xl">{T(person.venue.line)}</p>
+              <p className="mt-5 text-sm opacity-60">{T(person.venue.where)}</p>
+              <a href="https://alwawah.com" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm mt-6">alwawah.com</a>
+            </div>
+          </Reveal>
+          <Reveal delay={0.12}>
+            <ul className="grid h-full content-start gap-3">
+              {person.venue.menu.map((m, i) => (
+                <motion.li
+                  key={i}
+                  className="flex items-start gap-3 rounded-box border border-base-content/10 bg-base-200/40 p-4"
+                  initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.07 }}
+                >
+                  <span className="text-xl">{['\u2615', '\u1F950', '\u1F35D', '\u1F379'][i]}</span>
+                  <span className="text-sm leading-relaxed opacity-80">{T(m)}</span>
+                </motion.li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* ── what he works in ── */}
+      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What he works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
+        <Chips items={person.focus.map(T)} />
       </Section>
 
       {/* ── education, as a timeline ── */}

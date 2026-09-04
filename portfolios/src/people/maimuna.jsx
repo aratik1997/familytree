@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Falling, Chips, Steps, useT } from '../lib/shell.jsx';
 
 /* ═══ MAIMUNA · the working paper ═════════════════════════════════════════
    Set like something printed: ruled paper, a serif face, and figures that are
@@ -42,6 +42,7 @@ export default function Maimuna({ person }) {
   return (
     <div className="rule-paper min-h-screen bg-base-100 text-base-content">
       <ScrollBar />
+      <Falling items={['0', '1', '\u03A3', '%', '\u00B5']} opacity={0.18} size="text-lg" />
       <Nav brand={<span className="font-display italic">{T(person.name)}</span>} />
 
       <header id="top" className="relative z-10 mx-auto grid w-[92vw] max-w-6xl items-center gap-10 pb-10 pt-28 sm:pt-32 lg:grid-cols-[auto_1fr] lg:gap-16">
@@ -59,7 +60,7 @@ export default function Maimuna({ person }) {
           <Reveal>
             <p className="text-xs font-semibold uppercase tracking-[0.26em] text-primary">{T(person.role)}</p>
           </Reveal>
-          <h1 className="mt-4 font-display text-5xl font-semibold leading-[1.04] sm:text-6xl lg:text-7xl">
+          <h1 className="font-display font-bold leading-[1.02] tracking-tight [font-size:clamp(1.9rem,7vw,3.6rem)] text-balance break-words">
             <Words text={T(person.name)} />
           </h1>
           <Reveal delay={0.35}>
@@ -117,6 +118,16 @@ export default function Maimuna({ person }) {
       </Section>
 
       {/* three degrees from one university — a footnote-ish list */}
+      {/* ── how a finding gets made ── */}
+      <Section kicker={T({ en: 'Method', bn: 'পদ্ধতি' })} title={T({ en: 'How a finding gets made', bn: 'একটি সিদ্ধান্ত যেভাবে আসে' })}>
+        <Steps items={person.method.map((m) => ({ n: m.n, title: T(m.title), note: T(m.note) }))} mono />
+      </Section>
+
+      {/* ── focus ── */}
+      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What she works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
+        <Chips items={person.focus.map(T)} />
+      </Section>
+
       <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'One university, three degrees', bn: 'এক বিশ্ববিদ্যালয়, তিন ডিগ্রি' })}>
         <ol className="max-w-3xl border-t border-base-content/15">
           {person.education.map((e, i) => (

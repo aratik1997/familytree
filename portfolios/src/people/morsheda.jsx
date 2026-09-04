@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Falling, Chips, Steps, useT } from '../lib/shell.jsx';
 
 /* ═══ MORSHEDA · the clinic ═══════════════════════════════════════════════
    Bright, rounded, nothing sharp anywhere — a room you are not frightened of.
@@ -36,8 +36,9 @@ export default function Morsheda({ person }) {
   return (
     <div className="min-h-screen bg-base-100 text-base-content">
       <ScrollBar />
-      <Nav brand={T(person.name)} />
+      <Nav brand={T(person.short)} />
       <Petals />
+      <Falling items={['\u1F9B7']} opacity={0.3} size="text-xl" />
 
       {/* soft wash behind the top of the page */}
       <div className="pointer-events-none fixed inset-x-0 top-0 z-0 h-[70vh] bg-gradient-to-b from-primary/12 to-transparent" aria-hidden />
@@ -62,7 +63,7 @@ export default function Morsheda({ person }) {
           <Reveal>
             <span className="badge badge-primary badge-lg font-semibold">{T(person.role)}</span>
           </Reveal>
-          <h1 className="mt-5 font-display text-5xl font-bold leading-[1.02] sm:text-6xl lg:text-7xl">
+          <h1 className="font-display font-bold leading-[1.02] tracking-tight [font-size:clamp(1.9rem,7vw,3.6rem)] text-balance break-words">
             <Words text={T(person.name)} />
           </h1>
           <Reveal delay={0.35}>
@@ -125,6 +126,16 @@ export default function Morsheda({ person }) {
             </Reveal>
           ))}
         </div>
+      </Section>
+
+      {/* ── the road to a doctorate ── */}
+      <Section kicker={T({ en: 'Journey', bn: 'পথচলা' })} title={T({ en: 'Dhaka to Sapporo', bn: 'ঢাকা থেকে সাপ্পোরো' })}>
+        <Steps items={person.journey.map((j) => ({ n: j.n, title: j.place, note: T(j.what) }))} mono />
+      </Section>
+
+      {/* ── focus ── */}
+      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What she works on', bn: 'যেসব নিয়ে কাজ করেন' })}>
+        <Chips items={person.focus.map(T)} />
       </Section>
 
       <Section kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Five tongues', bn: 'পাঁচটি ভাষা' })}>
