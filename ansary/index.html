@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ansary — Chairman, Khandani Legacy</title>
+<meta name="description" content="Chairman of Khandani Legacy. Founder of Al-Wawah Cafe. Director at Provati Insurance and 8 Bit Private Limited.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%E2%98%95%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══ AL-WAWAH ESPRESSO ══ roasted coffee, crema, warm brass.
+   The room this page is meant to feel like is the cafe he built. */
+:root{
+  --bean:#2A1810; --bean2:#3D2418; --crema:#C89F6B; --crema2:#E3C49A;
+  --milk:#F6EDE1; --brass:#B8860B;
+  --bg:#1A0F0A; --bg2:#241610; --card:rgba(255,255,255,.04);
+  --line:rgba(200,159,107,.18); --line2:rgba(200,159,107,.42);
+  --tx:#F3E7D8; --tx2:#C9B49B; --tx3:#8E7A64;
+  --shadow:0 24px 60px rgba(0,0,0,.5);
+}
+html[data-theme=light]{
+  --bg:#F7F1E8; --bg2:#EFE4D5; --card:rgba(42,24,16,.035);
+  --line:rgba(120,80,40,.20); --line2:rgba(120,80,40,.45);
+  --tx:#241610; --tx2:#4E382A; --tx3:#7A6250;
+  --crema:#8B5E2A; --crema2:#A97A42; --milk:#2A1810;
+  --shadow:0 24px 60px rgba(90,60,30,.14);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--tx);
+  font:400 16px/1.65 Inter,system-ui,sans-serif;
+  overflow-x:hidden;transition:background .5s,color .5s;
+}
+body.bn{font-family:'Hind Siliguri',Inter,sans-serif}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',Georgia,serif}
+body.bn h1,body.bn h2,body.bn h3{font-family:'Hind Siliguri',serif}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1100px,92vw);margin-inline:auto}
+
+/* steam drifting up behind the hero — the one motif everything else defers to */
+.steam{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.steam i{
+  position:absolute;bottom:-10%;width:min(46vw,320px);height:min(46vw,320px);
+  border-radius:50%;filter:blur(60px);opacity:.16;
+  background:radial-gradient(circle,var(--crema),transparent 70%);
+  animation:rise linear infinite;
+}
+@keyframes rise{
+  0%{transform:translateY(0) scale(.7);opacity:0}
+  18%{opacity:.18}
+  100%{transform:translateY(-125vh) scale(1.5);opacity:0}
+}
+
+/* ── nav ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px clamp(16px,5vw,56px);
+  transition:background .4s,padding .4s,border-color .4s;
+  border-bottom:1px solid transparent;
+}
+nav.stuck{
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(18px);border-bottom-color:var(--line);padding-block:12px;
+}
+.brand{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;letter-spacing:.05em;color:var(--crema)}
+.tools{display:flex;gap:8px;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--card);border:1px solid var(--line);color:var(--tx2);
+  border-radius:999px;padding:7px 14px;font-size:.72rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+  transition:border-color .25s,color .25s,background .25s;
+  font-family:inherit;
+}
+.btn:hover{border-color:var(--line2);color:var(--crema)}
+
+/* ── hero ── */
+header{position:relative;z-index:1;padding:clamp(110px,17vh,180px) 0 clamp(60px,9vh,110px)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(28px,5vw,64px);align-items:center}
+@media(max-width:820px){.hero{grid-template-columns:1fr;text-align:center;justify-items:center}}
+.eyebrow{
+  font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--crema);
+  display:flex;align-items:center;gap:10px;margin-bottom:16px
+}
+.eyebrow::before{content:'';width:36px;height:1px;background:var(--crema)}
+@media(max-width:820px){.eyebrow{justify-content:center}}
+h1{font-size:clamp(2.6rem,8vw,5rem);line-height:1.02;font-weight:700;letter-spacing:-.01em}
+h1 span{display:block;color:var(--crema)}
+.role{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--tx2);margin-top:18px;max-width:46ch}
+.cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+@media(max-width:820px){.cta{justify-content:center}}
+.cta a{
+  border:1px solid var(--line2);border-radius:999px;padding:12px 26px;
+  font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+  transition:background .3s,color .3s
+}
+.cta a.solid{background:var(--crema);color:var(--bg);border-color:var(--crema)}
+.cta a:hover{background:var(--crema);color:var(--bg)}
+
+/* photo — a cup saucer shape, because of course it is */
+.shot{position:relative;width:clamp(210px,30vw,300px);aspect-ratio:1;flex:none}
+.shot .ring{
+  position:absolute;inset:-14px;border-radius:50%;
+  border:1px dashed var(--line2);animation:spin 34s linear infinite
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shot .pic{
+  position:absolute;inset:0;border-radius:50%;overflow:hidden;
+  border:2px solid var(--crema);box-shadow:var(--shadow);
+  background:linear-gradient(150deg,var(--bg2),var(--bean2));
+  display:grid;place-items:center;text-align:center;padding:22px
+}
+.shot .pic img{width:100%;height:100%;object-fit:cover}
+.ph{color:var(--tx3);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;line-height:1.9}
+.ph b{display:block;font-size:2.4rem;margin-bottom:6px}
+
+/* ── sections ── */
+section{position:relative;z-index:1;padding:clamp(56px,9vh,100px) 0}
+.sh{margin-bottom:38px}
+.sh .k{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--crema);margin-bottom:10px}
+.sh h2{font-size:clamp(1.9rem,4.6vw,3rem);font-weight:600;line-height:1.1}
+
+.speech{
+  background:var(--card);border:1px solid var(--line);border-left:3px solid var(--crema);
+  border-radius:0 16px 16px 0;padding:clamp(24px,4vw,44px);position:relative
+}
+.speech::before{
+  content:'\201C';position:absolute;top:-6px;left:14px;
+  font-family:'Cormorant Garamond',serif;font-size:6rem;color:var(--crema);opacity:.22;line-height:1
+}
+.speech p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.15rem,2.6vw,1.6rem);line-height:1.6;font-style:italic}
+body.bn .speech p{font-family:'Hind Siliguri',sans-serif;font-style:normal}
+.speech .by{margin-top:18px;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--crema);font-style:normal;font-family:Inter,sans-serif}
+
+.grid{display:grid;gap:16px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:26px;transition:transform .35s,border-color .35s,background .35s
+}
+.card:hover{transform:translateY(-5px);border-color:var(--line2)}
+.card .ic{font-size:1.6rem;margin-bottom:12px;display:block}
+.card h3{font-size:1.2rem;margin-bottom:6px;color:var(--crema)}
+.card .meta{font-size:.78rem;color:var(--tx3);letter-spacing:.06em}
+.card p{color:var(--tx2);font-size:.92rem;margin-top:8px}
+
+/* language bars — one score per language, as asked */
+.lang{display:grid;gap:20px;max-width:720px}
+.lrow .lt{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.lrow .ln{font-weight:600;letter-spacing:.02em}
+.lrow .lv{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--crema)}
+.bar{height:7px;border-radius:99px;background:color-mix(in srgb,var(--tx3) 26%,transparent);overflow:hidden}
+.bar i{
+  display:block;height:100%;border-radius:99px;width:0;
+  background:linear-gradient(90deg,var(--crema),var(--crema2));
+  transition:width 1.5s cubic-bezier(.22,1,.36,1)
+}
+
+.tl{position:relative;padding-left:30px}
+.tl::before{content:'';position:absolute;left:7px;top:6px;bottom:6px;width:1px;background:var(--line2)}
+.tl .it{position:relative;padding-bottom:26px}
+.tl .it::before{
+  content:'';position:absolute;left:-27px;top:7px;width:11px;height:11px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--crema)
+}
+.tl .it h3{font-size:1.05rem;color:var(--tx)}
+.tl .it .meta{font-size:.8rem;color:var(--tx3);margin-top:3px}
+
+footer{
+  position:relative;z-index:1;border-top:1px solid var(--line);
+  padding:44px 0;text-align:center;color:var(--tx3);font-size:.84rem
+}
+footer a{color:var(--crema)}
+
+/* reveal on scroll */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s,transform .8s}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .steam i,.shot .ring{animation:none}
+  .bar i{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="steam" aria-hidden="true">
+  <i style="left:6%;animation-duration:19s"></i>
+  <i style="left:38%;animation-duration:25s;animation-delay:-7s"></i>
+  <i style="left:70%;animation-duration:22s;animation-delay:-13s"></i>
+</div>
+
+<nav id="nav">
+  <a class="brand" href="#top">Ansary</a>
+  <div class="tools">
+    <button class="btn" id="lang" type="button"><span id="langLabel">বাংলা</span></button>
+    <button class="btn" id="theme" type="button"><span id="themeIcon">☾</span><span id="themeLabel">Dark</span></button>
+  </div>
+</nav>
+
+<header id="top"><div class="wrap hero">
+  <div>
+    <p class="eyebrow" data-en="Chairman · Khandani Legacy" data-bn="চেয়ারম্যান · খানদানি লিগ্যাসি">Chairman · Khandani Legacy</p>
+    <h1><span data-en="Ansary" data-bn="আনসারী">Ansary</span></h1>
+    <p class="role" data-en="Founder of Al-Wawah Cafe. Director at Provati Insurance Company Limited and 8 Bit Private Limited. A businessman who builds places where people want to sit down." data-bn="আল-ওয়াওয়াহ ক্যাফের প্রতিষ্ঠাতা। প্রভাতী ইন্স্যুরেন্স কোম্পানি লিমিটেড ও ৮ বিট প্রাইভেট লিমিটেডের পরিচালক। একজন ব্যবসায়ী, যিনি এমন জায়গা গড়েন যেখানে মানুষ বসতে চায়।">Founder of Al-Wawah Cafe. Director at Provati Insurance Company Limited and 8 Bit Private Limited. A businessman who builds places where people want to sit down.</p>
+    <div class="cta">
+      <a class="solid" href="https://alwawah.com" target="_blank" rel="noopener" data-en="Visit Al-Wawah" data-bn="আল-ওয়াওয়াহ দেখুন">Visit Al-Wawah</a>
+      <a href="#work" data-en="His Work" data-bn="তাঁর কাজ">His Work</a>
+    </div>
+  </div>
+  <div class="shot">
+    <div class="ring"></div>
+    <div class="pic">
+      <!-- Drop ansary.jpg into this folder's img/ and the placeholder gives way. -->
+      <img src="img/ansary.jpg" alt="Ansary" onerror="this.remove()">
+      <div class="ph"><b>☕</b><span data-en="Add photo<br>img/ansary.jpg" data-bn="ছবি দিন<br>img/ansary.jpg">Add photo<br>img/ansary.jpg</span></div>
+    </div>
+  </div>
+</div></header>
+
+<section class="wrap rv">
+  <div class="sh"><p class="k" data-en="In his words" data-bn="তাঁর ভাষায়">In his words</p></div>
+  <blockquote class="speech">
+    <p data-en="A cafe is not sold in cups. It is sold in the hour someone chooses to spend with you instead of anywhere else. Build the hour properly and the cup takes care of itself — and that is true of every business I have ever put my name to." data-bn="ক্যাফে কাপে বিক্রি হয় না। বিক্রি হয় সেই ঘণ্টাটিতে, যেটি কেউ অন্য কোথাও না গিয়ে আপনার সঙ্গে কাটাতে বেছে নেয়। ঘণ্টাটি ঠিকভাবে গড়ুন, কাপ নিজের যত্ন নিজেই নেবে — আর আমি যত ব্যবসায় নাম দিয়েছি, সবগুলোর ক্ষেত্রেই কথাটি সত্যি।">A cafe is not sold in cups. It is sold in the hour someone chooses to spend with you instead of anywhere else. Build the hour properly and the cup takes care of itself — and that is true of every business I have ever put my name to.</p>
+    <div class="by">— Ansary</div>
+  </blockquote>
+</section>
+
+<section class="wrap rv" id="work">
+  <div class="sh">
+    <p class="k" data-en="Positions" data-bn="দায়িত্ব">Positions</p>
+    <h2 data-en="Where he sits" data-bn="যেখানে তিনি আছেন">Where he sits</h2>
+  </div>
+  <div class="grid g3">
+    <article class="card"><span class="ic">🏛️</span><h3 data-en="Chairman" data-bn="চেয়ারম্যান">Chairman</h3><p class="meta">Khandani Legacy</p><p data-en="Head of the family's collective business interests." data-bn="পরিবারের সম্মিলিত ব্যবসায়িক স্বার্থের প্রধান।">Head of the family's collective business interests.</p></article>
+    <article class="card"><span class="ic">☕</span><h3 data-en="Owner & Founder" data-bn="স্বত্বাধিকারী ও প্রতিষ্ঠাতা">Owner &amp; Founder</h3><p class="meta">Al-Wawah Cafe · Uttara, Dhaka</p><p data-en="Cafe, bistro and bakery — premium coffee, fresh bakes, and a room worth staying in." data-bn="ক্যাফে, বিস্ট্রো ও বেকারি — প্রিমিয়াম কফি, তাজা বেকারি, আর বসে থাকার মতো এক পরিবেশ।">Cafe, bistro and bakery — premium coffee, fresh bakes, and a room worth staying in.</p></article>
+    <article class="card"><span class="ic">🛡️</span><h3 data-en="Director" data-bn="পরিচালক">Director</h3><p class="meta">Provati Insurance Company Limited</p><p data-en="On the board of one of the country's insurance houses." data-bn="দেশের অন্যতম বিমা প্রতিষ্ঠানের পরিচালনা পর্ষদে।">On the board of one of the country's insurance houses.</p></article>
+    <article class="card"><span class="ic">💻</span><h3 data-en="Director" data-bn="পরিচালক">Director</h3><p class="meta">8 Bit Private Limited</p><p data-en="Technology arm of the family's holdings." data-bn="পরিবারের প্রতিষ্ঠানসমূহের প্রযুক্তি শাখা।">Technology arm of the family's holdings.</p></article>
+  </div>
+</section>
+
+<section class="wrap rv">
+  <div class="sh">
+    <p class="k" data-en="Education" data-bn="শিক্ষা">Education</p>
+    <h2 data-en="Madrasa to boardroom" data-bn="মাদ্রাসা থেকে বোর্ডরুম">Madrasa to boardroom</h2>
+  </div>
+  <div class="tl">
+    <div class="it"><h3>Sarsina Madrasa</h3><p class="meta" data-en="Barisal" data-bn="বরিশাল">Barisal</p></div>
+    <div class="it"><h3>Darun Najat Siddikia Kamil Madrasa</h3><p class="meta" data-en="Demra, Dhaka" data-bn="ডেমরা, ঢাকা">Demra, Dhaka</p></div>
+    <div class="it"><h3>Daulatganj Gajimura Kamil Madrasa</h3><p class="meta" data-en="Laksam, Cumilla" data-bn="লাকসাম, কুমিল্লা">Laksam, Cumilla</p></div>
+    <div class="it"><h3>Green University of Bangladesh</h3><p class="meta" data-en="Dhaka" data-bn="ঢাকা">Dhaka</p></div>
+  </div>
+</section>
+
+<section class="wrap rv">
+  <div class="sh">
+    <p class="k" data-en="Languages" data-bn="ভাষা">Languages</p>
+    <h2 data-en="Five tongues" data-bn="পাঁচটি ভাষা">Five tongues</h2>
+  </div>
+  <div class="lang" id="langbars">
+    <div class="lrow"><div class="lt"><span class="ln" data-en="Bangla" data-bn="বাংলা">Bangla</span><span class="lv" data-en="Mother tongue" data-bn="মাতৃভাষা">Mother tongue</span></div><div class="bar"><i data-v="100"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln" data-en="English" data-bn="ইংরেজি">English</span><span class="lv" data-en="Fluent" data-bn="সাবলীল">Fluent</span></div><div class="bar"><i data-v="95"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln" data-en="Farsi" data-bn="ফারসি">Farsi</span><span class="lv" data-en="Conversational" data-bn="কথোপকথন">Conversational</span></div><div class="bar"><i data-v="55"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln" data-en="Hindi" data-bn="হিন্দি">Hindi</span><span class="lv" data-en="Understands" data-bn="বোঝেন">Understands</span></div><div class="bar"><i data-v="45"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln" data-en="Arabic" data-bn="আরবি">Arabic</span><span class="lv" data-en="Basic" data-bn="প্রাথমিক">Basic</span></div><div class="bar"><i data-v="35"></i></div></div>
+  </div>
+</section>
+
+<footer class="rv">
+  <p data-en="Ansary · Chairman, Khandani Legacy" data-bn="আনসারী · চেয়ারম্যান, খানদানি লিগ্যাসি">Ansary · Chairman, Khandani Legacy</p>
+  <p style="margin-top:8px"><a href="https://alwawah.com" target="_blank" rel="noopener">alwawah.com</a> · <a href="https://khandanilegacy.com">khandanilegacy.com</a></p>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, body=document.body;
+
+  /* theme — remembered per visitor, applied before they notice */
+  function setTheme(t){
+    root.setAttribute('data-theme',t);
+    try{localStorage.setItem('theme',t)}catch(e){}
+    document.getElementById('themeIcon').textContent = t==='dark'?'☾':'☀';
+    document.getElementById('themeLabel').textContent = t==='dark'?'Dark':'Light';
+  }
+  try{var st=localStorage.getItem('theme'); if(st) setTheme(st); else setTheme('dark');}catch(e){setTheme('dark');}
+  document.getElementById('theme').onclick=function(){
+    setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');
+  };
+
+  /* language — swaps every data-en/data-bn node in place */
+  function setLang(l){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      var v=el.getAttribute(l==='bn'?'data-bn':'data-en');
+      if(v!=null) el.innerHTML=v;
+    });
+    root.lang = l==='bn'?'bn':'en';
+    body.classList.toggle('bn', l==='bn');
+    document.getElementById('langLabel').textContent = l==='bn'?'English':'বাংলা';
+    try{localStorage.setItem('lang',l)}catch(e){}
+  }
+  var cur='en';
+  try{cur=localStorage.getItem('lang')||'en'}catch(e){}
+  setLang(cur);
+  document.getElementById('lang').onclick=function(){
+    cur = cur==='bn'?'en':'bn'; setLang(cur);
+  };
+
+  /* nav shadow */
+  addEventListener('scroll',function(){
+    document.getElementById('nav').classList.toggle('stuck', scrollY>24);
+  },{passive:true});
+
+  /* reveal, and fill the language bars only once they are actually looked at */
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting) return;
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.bar i').forEach(function(b){
+        b.style.width=b.getAttribute('data-v')+'%';
+      });
+      io.unobserve(e.target);
+    });
+  },{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+})();
+</script>
+</body>
+</html>

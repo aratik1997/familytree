@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mohammed Ashikur Rahman — Advocate & Philanthropist</title>
+<meta name="description" content="Director of Khandani Legacy. Lawyer, philanthropist, founder of Ayesha Foundation. Managing Director at 8 Bit Private Limited.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%E2%9A%96%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Source+Sans+3:wght@300;400;600&family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══ CHAMBER ══ court navy, brass, cut marble.
+   Squared off and symmetrical, the way a courtroom is. */
+:root{
+  --navy:#0B1B2B; --navy2:#132A42; --brass:#C9A227; --brass2:#E7CE79;
+  --bg:#08131F; --bg2:#0E2033; --card:rgba(255,255,255,.045);
+  --line:rgba(201,162,39,.20); --line2:rgba(201,162,39,.48);
+  --tx:#EAF0F6; --tx2:#B4C4D4; --tx3:#7C8FA2;
+}
+html[data-theme=light]{
+  --bg:#F2F5F8; --bg2:#E4EAF1; --card:rgba(11,27,43,.04);
+  --line:rgba(30,60,95,.18); --line2:rgba(30,60,95,.42);
+  --tx:#0B1B2B; --tx2:#2E4459; --tx3:#5F7488;
+  --brass:#8A6D12; --brass2:#A98A2A;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--tx);
+  font:400 16px/1.68 'Source Sans 3',system-ui,sans-serif;
+  overflow-x:hidden;transition:background .5s,color .5s
+}
+body.bn{font-family:'Hind Siliguri','Source Sans 3',sans-serif}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif}
+body.bn h1,body.bn h2,body.bn h3{font-family:'Hind Siliguri',serif}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1120px,92vw);margin-inline:auto}
+
+/* veined marble, very faint — a courthouse wall, not a pattern */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background:
+    radial-gradient(1200px 600px at 15% -10%, color-mix(in srgb,var(--brass) 9%,transparent), transparent 60%),
+    radial-gradient(900px 500px at 105% 110%, color-mix(in srgb,var(--navy2) 60%,transparent), transparent 60%);
+}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;display:flex;
+  align-items:center;justify-content:space-between;
+  padding:18px clamp(16px,5vw,56px);border-bottom:1px solid transparent;
+  transition:background .4s,padding .4s,border-color .4s
+}
+nav.stuck{background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(18px);border-bottom-color:var(--line);padding-block:12px}
+.brand{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+.tools{display:flex;gap:8px}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;background:var(--card);
+  border:1px solid var(--line);color:var(--tx2);border-radius:4px;
+  padding:8px 14px;font:600 .7rem/1 'Source Sans 3',sans-serif;letter-spacing:.14em;
+  text-transform:uppercase;cursor:pointer;transition:border-color .25s,color .25s
+}
+.btn:hover{border-color:var(--line2);color:var(--brass)}
+
+/* the scales — hero motif, tipping gently and settling */
+.scales{width:clamp(150px,20vw,210px);margin:0 auto 26px;display:block}
+.scales .beam{transform-origin:100px 34px;animation:tip 7s ease-in-out infinite}
+.scales .pan{animation:pan 7s ease-in-out infinite}
+.scales .panR{animation:panR 7s ease-in-out infinite}
+@keyframes tip{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+@keyframes pan{0%,100%{transform:translateY(-9px)}50%{transform:translateY(9px)}}
+@keyframes panR{0%,100%{transform:translateY(9px)}50%{transform:translateY(-9px)}}
+
+header{position:relative;z-index:1;padding:clamp(112px,16vh,170px) 0 clamp(50px,8vh,90px);text-align:center}
+.eyebrow{font:600 .68rem/1 'Source Sans 3',sans-serif;letter-spacing:.34em;text-transform:uppercase;color:var(--brass);margin-bottom:18px}
+h1{font-size:clamp(2.3rem,7vw,4.4rem);line-height:1.06;font-weight:900;letter-spacing:-.015em}
+.rule{width:70px;height:2px;background:var(--brass);margin:24px auto}
+.role{color:var(--tx2);max-width:60ch;margin:0 auto;font-size:clamp(1rem,2vw,1.13rem)}
+
+/* photo — squared with cut corners, like a framed portrait in chambers */
+.shot{width:clamp(190px,26vw,250px);margin:38px auto 0;position:relative}
+.shot .pic{
+  aspect-ratio:4/5;border:1px solid var(--line2);background:var(--bg2);
+  display:grid;place-items:center;text-align:center;padding:20px;overflow:hidden;
+  clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px)
+}
+.shot .pic img{width:100%;height:100%;object-fit:cover}
+.shot::after{
+  content:'';position:absolute;inset:10px -10px -10px 10px;border:1px solid var(--line);z-index:-1
+}
+.ph{color:var(--tx3);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;line-height:1.9}
+.ph b{display:block;font-size:2.2rem;margin-bottom:8px}
+
+section{position:relative;z-index:1;padding:clamp(54px,9vh,96px) 0}
+.sh{text-align:center;margin-bottom:40px}
+.sh .k{font:600 .68rem/1 'Source Sans 3',sans-serif;letter-spacing:.32em;text-transform:uppercase;color:var(--brass);margin-bottom:12px}
+.sh h2{font-size:clamp(1.8rem,4.4vw,2.9rem);font-weight:700}
+
+.speech{
+  border:1px solid var(--line);border-top:3px solid var(--brass);
+  background:var(--card);padding:clamp(26px,4.5vw,50px);text-align:center;max-width:840px;margin-inline:auto
+}
+.speech p{font-family:'Playfair Display',serif;font-size:clamp(1.15rem,2.7vw,1.65rem);line-height:1.55;font-style:italic}
+body.bn .speech p{font-family:'Hind Siliguri',sans-serif;font-style:normal}
+.speech .by{margin-top:20px;font:600 .7rem/1 'Source Sans 3',sans-serif;letter-spacing:.24em;text-transform:uppercase;color:var(--brass)}
+
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);padding:24px;transition:border-color .3s,transform .3s}
+.card:hover{border-color:var(--line2);transform:translateY(-4px)}
+.card h3{font-size:1.08rem;color:var(--brass);margin-bottom:4px}
+.card .meta{font-size:.78rem;color:var(--tx3);letter-spacing:.06em}
+.card p{color:var(--tx2);font-size:.9rem;margin-top:8px}
+
+.lang{display:grid;gap:20px;max-width:700px;margin-inline:auto}
+.lrow .lt{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.lrow .ln{font-weight:600}
+.lrow .lv{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass)}
+.bar{height:6px;background:color-mix(in srgb,var(--tx3) 26%,transparent);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brass),var(--brass2));transition:width 1.5s cubic-bezier(.22,1,.36,1)}
+
+.chips{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+.chip{border:1px solid var(--line);padding:8px 15px;font-size:.78rem;color:var(--tx2);letter-spacing:.04em;transition:border-color .25s,color .25s}
+.chip:hover{border-color:var(--line2);color:var(--brass)}
+
+footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:42px 0;text-align:center;color:var(--tx3);font-size:.84rem}
+footer a{color:var(--brass)}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.scales *{animation:none}.bar i{transition:none}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="brand" href="#top">M. A. Rahman</a>
+  <div class="tools">
+    <button class="btn" id="lang" type="button"><span id="langLabel">বাংলা</span></button>
+    <button class="btn" id="theme" type="button"><span id="themeIcon">☾</span><span id="themeLabel">Dark</span></button>
+  </div>
+</nav>
+
+<header id="top"><div class="wrap">
+  <svg class="scales" viewBox="0 0 200 120" fill="none" stroke="currentColor" style="color:var(--brass)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+    <path d="M100 18v88M74 106h52"/>
+    <circle cx="100" cy="14" r="4.5" fill="currentColor" stroke="none"/>
+    <g class="beam">
+      <path d="M40 34h120"/>
+      <g class="pan"><path d="M40 34v14M24 48h32l-16 20z"/></g>
+      <g class="panR"><path d="M160 34v14M144 48h32l-16 20z"/></g>
+    </g>
+  </svg>
+
+  <p class="eyebrow" data-en="Director · Khandani Legacy" data-bn="পরিচালক · খানদানি লিগ্যাসি">Director · Khandani Legacy</p>
+  <h1 data-en="Mohammed Ashikur Rahman" data-bn="মোহাম্মদ আশিকুর রহমান">Mohammed Ashikur Rahman</h1>
+  <div class="rule"></div>
+  <p class="role" data-en="Advocate and philanthropist. Managing Director at 8 Bit Private Limited, proprietor of Octate Construction &amp; Supplies, founder of Ayesha Foundation. Uses a legal training not for profit but for purpose — child rights and juvenile justice." data-bn="আইনজীবী ও সমাজসেবী। ৮ বিট প্রাইভেট লিমিটেডের ব্যবস্থাপনা পরিচালক, অক্টেট কনস্ট্রাকশন অ্যান্ড সাপ্লাইজের স্বত্বাধিকারী, আয়েশা ফাউন্ডেশনের প্রতিষ্ঠাতা। আইনের শিক্ষা মুনাফার জন্য নয়, উদ্দেশ্যের জন্য — শিশু অধিকার ও কিশোর ন্যায়বিচার।">Advocate and philanthropist. Managing Director at 8 Bit Private Limited, proprietor of Octate Construction &amp; Supplies, founder of Ayesha Foundation. Uses a legal training not for profit but for purpose — child rights and juvenile justice.</p>
+
+  <div class="shot"><div class="pic">
+    <img src="img/ashik.jpg" alt="Mohammed Ashikur Rahman" onerror="this.remove()">
+    <div class="ph"><b>⚖️</b><span data-en="Add photo<br>img/ashik.jpg" data-bn="ছবি দিন<br>img/ashik.jpg">Add photo<br>img/ashik.jpg</span></div>
+  </div></div>
+</div></header>
+
+<section class="wrap rv">
+  <div class="sh"><p class="k" data-en="In his words" data-bn="তাঁর ভাষায়">In his words</p></div>
+  <blockquote class="speech">
+    <p data-en="Representing a child who has no one is not a case on a list. It is the difference between a life that gets a second chance and one that does not. True success lies in giving back to the community and fulfilling our shared human responsibilities." data-bn="যে শিশুর কেউ নেই, তার পক্ষে দাঁড়ানো কেবল তালিকার একটি মামলা নয়। এটি এমন এক জীবনের পার্থক্য গড়ে দেয়, যে দ্বিতীয় সুযোগ পায় আর যে পায় না। প্রকৃত সাফল্য সমাজকে ফিরিয়ে দেওয়ার মধ্যে, আমাদের অভিন্ন মানবিক দায়িত্ব পালনের মধ্যে।">Representing a child who has no one is not a case on a list. It is the difference between a life that gets a second chance and one that does not. True success lies in giving back to the community and fulfilling our shared human responsibilities.</p>
+    <div class="by">— Mohammed Ashikur Rahman</div>
+  </blockquote>
+</section>
+
+<section class="wrap rv">
+  <div class="sh"><p class="k" data-en="Positions" data-bn="দায়িত্ব">Positions</p><h2 data-en="Directorships" data-bn="পরিচালনার দায়িত্ব">Directorships</h2></div>
+  <div class="grid g3">
+    <article class="card"><h3 data-en="Director" data-bn="পরিচালক">Director</h3><p class="meta">Khandani Legacy</p></article>
+    <article class="card"><h3 data-en="Managing Director" data-bn="ব্যবস্থাপনা পরিচালক">Managing Director</h3><p class="meta">8 Bit Private Limited</p></article>
+    <article class="card"><h3 data-en="Proprietor" data-bn="স্বত্বাধিকারী">Proprietor</h3><p class="meta">Octate Construction &amp; Supplies</p></article>
+    <article class="card"><h3 data-en="Founder & Chairman" data-bn="প্রতিষ্ঠাতা ও চেয়ারম্যান">Founder &amp; Chairman</h3><p class="meta">Ayesha Foundation</p><p data-en="Non-profit for community welfare across Bangladesh." data-bn="বাংলাদেশজুড়ে সমাজকল্যাণে নিবেদিত অলাভজনক সংস্থা।">Non-profit for community welfare across Bangladesh.</p></article>
+  </div>
+</section>
+
+<section class="wrap rv">
+  <div class="sh"><p class="k" data-en="Practice" data-bn="পেশা">Practice</p><h2 data-en="Law, and what it is for" data-bn="আইন, এবং তার উদ্দেশ্য">Law, and what it is for</h2></div>
+  <div class="grid g3">
+    <article class="card"><h3 data-en="Juvenile Justice" data-bn="কিশোর ন্যায়বিচার">Juvenile Justice</h3><p data-en="Advocacy for child rights, ensuring vulnerable children get fair representation." data-bn="শিশু অধিকারের পক্ষে ওকালতি — যেন অসহায় শিশুরা ন্যায্য প্রতিনিধিত্ব পায়।">Advocacy for child rights, ensuring vulnerable children get fair representation.</p></article>
+    <article class="card"><h3 data-en="Legal Documents" data-bn="আইনি দলিল">Legal Documents</h3><p data-en="Drafting, review and diligence — the paperwork a business stands or falls on." data-bn="খসড়া, পর্যালোচনা ও যাচাই — যে কাগজপত্রের উপর ব্যবসা দাঁড়ায় বা পড়ে।">Drafting, review and diligence — the paperwork a business stands or falls on.</p></article>
+    <article class="card"><h3 data-en="Charity Work" data-bn="দাতব্য কাজ">Charity Work</h3><p data-en="A family legacy of welfare in Laksam, Cumilla spanning generations." data-bn="লাকসাম, কুমিল্লায় প্রজন্মের পর প্রজন্ম ধরে চলা পারিবারিক কল্যাণকর্মের ধারা।">A family legacy of welfare in Laksam, Cumilla spanning generations.</p></article>
+  </div>
+</section>
+
+<section class="wrap rv">
+  <div class="sh"><p class="k" data-en="Education" data-bn="শিক্ষা">Education</p><h2 data-en="Where he read" data-bn="যেখানে পড়েছেন">Where he read</h2></div>
+  <div class="chips">
+    <span class="chip">Abdul Malek Institution, Laksam</span>
+    <span class="chip">Cumilla Cadet College</span>
+    <span class="chip">London College of Legal Studies</span>
+    <span class="chip">International Islamic University Malaysia</span>
+  </div>
+</section>
+
+<section class="wrap rv">
+  <div class="sh"><p class="k" data-en="Languages" data-bn="ভাষা">Languages</p><h2 data-en="Four tongues" data-bn="চারটি ভাষা">Four tongues</h2></div>
+  <div class="lang">
+    <div class="lrow"><div class="lt"><span class="ln" data-en="Bangla" data-bn="বাংলা">Bangla</span><span class="lv" data-en="Mother tongue" data-bn="মাতৃভাষা">Mother tongue</span></div><div class="bar"><i data-v="100"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln" data-en="English" data-bn="ইংরেজি">English</span><span class="lv" data-en="Fluent" data-bn="সাবলীল">Fluent</span></div><div class="bar"><i data-v="95"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln" data-en="Hindi" data-bn="হিন্দি">Hindi</span><span class="lv" data-en="Understands" data-bn="বোঝেন">Understands</span></div><div class="bar"><i data-v="45"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln" data-en="Arabic" data-bn="আরবি">Arabic</span><span class="lv" data-en="Quran reading" data-bn="কুরআন পাঠ">Quran reading</span></div><div class="bar"><i data-v="40"></i></div></div>
+  </div>
+</section>
+
+<footer class="rv">
+  <p data-en="Mohammed Ashikur Rahman · Director, Khandani Legacy" data-bn="মোহাম্মদ আশিকুর রহমান · পরিচালক, খানদানি লিগ্যাসি">Mohammed Ashikur Rahman · Director, Khandani Legacy</p>
+  <p style="margin-top:8px"><a href="https://khandanilegacy.com">khandanilegacy.com</a></p>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, body=document.body;
+  function setTheme(t){
+    root.setAttribute('data-theme',t);
+    try{localStorage.setItem('theme',t)}catch(e){}
+    document.getElementById('themeIcon').textContent=t==='dark'?'☾':'☀';
+    document.getElementById('themeLabel').textContent=t==='dark'?'Dark':'Light';
+  }
+  try{var st=localStorage.getItem('theme');setTheme(st||'dark')}catch(e){setTheme('dark')}
+  document.getElementById('theme').onclick=function(){setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark')};
+
+  function setLang(l){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      var v=el.getAttribute(l==='bn'?'data-bn':'data-en'); if(v!=null) el.innerHTML=v;
+    });
+    root.lang=l; body.classList.toggle('bn',l==='bn');
+    document.getElementById('langLabel').textContent=l==='bn'?'English':'বাংলা';
+    try{localStorage.setItem('lang',l)}catch(e){}
+  }
+  var cur='en'; try{cur=localStorage.getItem('lang')||'en'}catch(e){}
+  setLang(cur);
+  document.getElementById('lang').onclick=function(){cur=cur==='bn'?'en':'bn';setLang(cur)};
+
+  addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('stuck',scrollY>24)},{passive:true});
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.bar i').forEach(function(b){b.style.width=b.getAttribute('data-v')+'%'});
+      io.unobserve(e.target);
+    });
+  },{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+})();
+</script>
+</body>
+</html>

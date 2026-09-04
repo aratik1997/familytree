@@ -1,0 +1,7 @@
+# These portfolios are plain static pages, not part of the Laravel app they
+# happen to sit next to. The project's root .htaccess rewrites every request
+# into public/, which swallows this folder — switching the engine off here
+# stops that. Harmless once the folder is a subdomain's own document root.
+RewriteEngine Off
+Options -Indexes
+DirectoryIndex index.html

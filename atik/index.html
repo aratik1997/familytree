@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Atikur Rahman — Full-Stack Developer &amp; DevOps</title>
+<meta name="description" content="Director of Khandani Legacy. CEO of 8 Bit Private Limited. Full-stack developer and DevOps engineer.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='24'%3E%E2%8C%A8%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;600;800&family=Hind+Siliguri:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══ TERMINAL ══ cyan, violet, near-black.
+   Monospace everywhere it can be. The page reads like his editor. */
+:root{
+  --cy:#22D3EE; --vi:#8B5CF6; --bl:#3B82F6; --gr:#34D399;
+  --bg:#080B12; --bg2:#0D1117; --bg3:#141B26; --card:rgba(255,255,255,.035);
+  --line:rgba(34,211,238,.18); --line2:rgba(34,211,238,.46);
+  --tx:#E6EDF3; --tx2:#9FB1C4; --tx3:#6B7E92;
+}
+html[data-theme=light]{
+  --bg:#F4F7FB; --bg2:#E8EEF6; --bg3:#FFFFFF; --card:rgba(13,17,23,.035);
+  --line:rgba(20,90,140,.18); --line2:rgba(20,90,140,.44);
+  --tx:#0D1117; --tx2:#33475C; --tx3:#63788D;
+  --cy:#0B87A0; --vi:#6D3FD4; --bl:#1D5FD4;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font:400 16px/1.7 Inter,system-ui,sans-serif;overflow-x:hidden;transition:background .5s,color .5s}
+body.bn{font-family:'Hind Siliguri',Inter,sans-serif}
+code,.mono,.bar-l,.chip{font-family:'JetBrains Mono',ui-monospace,monospace}
+h1,h2,h3{font-weight:800;letter-spacing:-.02em}
+body.bn h1,body.bn h2,body.bn h3{font-family:'Hind Siliguri',sans-serif}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1100px,92vw);margin-inline:auto}
+
+/* faint grid + falling glyphs, kept low enough to read over */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:48px 48px;mask-image:radial-gradient(ellipse 90% 60% at 50% 0,#000,transparent 75%)
+}
+.rain{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.rain i{
+  position:absolute;top:-12%;font:500 12px/1 'JetBrains Mono',monospace;color:var(--cy);
+  opacity:.16;animation:drop linear infinite;white-space:pre
+}
+@keyframes drop{0%{transform:translateY(-12vh)}100%{transform:translateY(115vh)}}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(16px,5vw,52px);border-bottom:1px solid transparent;transition:background .4s,padding .4s,border-color .4s}
+nav.stuck{background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(16px);border-bottom-color:var(--line);padding-block:11px}
+.brand{font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:var(--cy)}
+.brand::before{content:'$ ';color:var(--vi)}
+.tools{display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);color:var(--tx2);border-radius:6px;padding:8px 14px;font:500 .72rem/1 'JetBrains Mono',monospace;cursor:pointer;transition:border-color .25s,color .25s}
+.btn:hover{border-color:var(--line2);color:var(--cy)}
+
+header{position:relative;z-index:1;padding:clamp(104px,15vh,160px) 0 clamp(48px,8vh,86px)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(26px,5vw,56px);align-items:center}
+@media(max-width:880px){.hero{grid-template-columns:1fr;justify-items:start}}
+
+/* terminal window — the hero, and the thing that says "developer" fastest */
+.term{border:1px solid var(--line);border-radius:12px;background:var(--bg2);overflow:hidden;box-shadow:0 26px 60px rgba(0,0,0,.4);max-width:640px}
+.term .top{display:flex;align-items:center;gap:7px;padding:11px 14px;background:var(--bg3);border-bottom:1px solid var(--line)}
+.term .top i{width:11px;height:11px;border-radius:50%;display:block}
+.term .top i:nth-child(1){background:#FF5F57}.term .top i:nth-child(2){background:#FEBC2E}.term .top i:nth-child(3){background:#28C840}
+.term .top span{margin-left:8px;font:500 .72rem/1 'JetBrains Mono',monospace;color:var(--tx3)}
+.term .body{padding:20px;font:400 .88rem/1.85 'JetBrains Mono',monospace}
+.term .p{color:var(--vi)}
+.term .c{color:var(--cy)}
+.term .g{color:var(--gr)}
+.term .d{color:var(--tx3)}
+#typed{color:var(--tx)}
+#typed::after{content:'▋';color:var(--cy);animation:blink 1.05s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+.eyebrow{font:500 .74rem/1 'JetBrains Mono',monospace;color:var(--vi);margin-bottom:16px}
+h1{font-size:clamp(2.2rem,6.4vw,3.9rem);line-height:1.04;margin-bottom:14px}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--cy),var(--vi));-webkit-background-clip:text;background-clip:text;color:transparent}
+.role{color:var(--tx2);max-width:50ch}
+
+.shot{width:clamp(190px,25vw,242px);flex:none}
+.shot .pic{aspect-ratio:1;border-radius:12px;border:1px solid var(--line2);background:var(--bg2);overflow:hidden;display:grid;place-items:center;text-align:center;padding:20px;position:relative}
+.shot .pic::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,color-mix(in srgb,var(--cy) 12%,transparent),transparent 60%)}
+.shot .pic img{width:100%;height:100%;object-fit:cover}
+.ph{color:var(--tx3);font:500 .72rem/1.9 'JetBrains Mono',monospace;position:relative}
+.ph b{display:block;font-size:2.1rem;margin-bottom:6px}
+
+section{position:relative;z-index:1;padding:clamp(50px,8vh,90px) 0}
+.sh{margin-bottom:32px}
+.sh .k{font:500 .74rem/1 'JetBrains Mono',monospace;color:var(--cy);margin-bottom:10px}
+.sh .k::before{content:'// '}
+.sh h2{font-size:clamp(1.7rem,4.2vw,2.7rem)}
+
+.speech{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:clamp(22px,4vw,40px);position:relative;overflow:hidden}
+.speech::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--cy),var(--vi))}
+.speech p{font-size:clamp(1.05rem,2.3vw,1.35rem);line-height:1.65}
+.speech .by{margin-top:16px;font:500 .74rem/1 'JetBrains Mono',monospace;color:var(--cy)}
+
+.grid{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;transition:transform .3s,border-color .3s}
+.card:hover{transform:translateY(-4px);border-color:var(--line2)}
+.card h3{font-size:1.05rem;color:var(--cy);margin-bottom:4px}
+.card .meta{font:500 .76rem/1.5 'JetBrains Mono',monospace;color:var(--tx3)}
+.card p{color:var(--tx2);font-size:.9rem;margin-top:8px}
+
+.lang{display:grid;gap:18px;max-width:700px}
+.lrow .lt{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.lrow .ln{font-weight:600}
+.lrow .lv{font:500 .74rem/1 'JetBrains Mono',monospace;color:var(--cy)}
+.bar{height:6px;border-radius:3px;background:color-mix(in srgb,var(--tx3) 24%,transparent);overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,var(--cy),var(--vi));transition:width 1.5s cubic-bezier(.22,1,.36,1)}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);border-radius:6px;padding:7px 12px;font-size:.76rem;color:var(--tx2);transition:border-color .25s,color .25s}
+.chip:hover{border-color:var(--line2);color:var(--cy)}
+
+footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:40px 0;text-align:center;color:var(--tx3);font-size:.84rem}
+footer a{color:var(--cy)}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.rain i{animation:none;display:none}#typed::after{animation:none}.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="rain" aria-hidden="true">
+  <i style="left:5%;animation-duration:11s">01001100
+10110010
+00111001</i>
+  <i style="left:28%;animation-duration:15s;animation-delay:-5s">SELECT *
+FROM tree
+WHERE ok</i>
+  <i style="left:57%;animation-duration:13s;animation-delay:-8s">git push
+--force-
+with-lease</i>
+  <i style="left:82%;animation-duration:17s;animation-delay:-3s">docker
+compose
+up -d</i>
+</div>
+
+<nav id="nav">
+  <a class="brand" href="#top">atik</a>
+  <div class="tools">
+    <button class="btn" id="lang" type="button"><span id="langLabel">বাংলা</span></button>
+    <button class="btn" id="theme" type="button"><span id="themeIcon">☾</span><span id="themeLabel">Dark</span></button>
+  </div>
+</nav>
+
+<header id="top"><div class="wrap hero">
+  <div>
+    <p class="eyebrow" data-en="// Director · Khandani Legacy" data-bn="// পরিচালক · খানদানি লিগ্যাসি">// Director · Khandani Legacy</p>
+    <h1><span data-en="Atikur" data-bn="আতিকুর">Atikur</span> <em data-en="Rahman" data-bn="রহমান">Rahman</em></h1>
+    <p class="role" data-en="CEO of 8 Bit Private Limited. Full-stack developer and DevOps engineer — backend first, from the database up to the pixel." data-bn="৮ বিট প্রাইভেট লিমিটেডের সিইও। ফুল-স্ট্যাক ডেভেলপার ও ডেভঅপস ইঞ্জিনিয়ার — ব্যাকএন্ড আগে, ডেটাবেজ থেকে পিক্সেল পর্যন্ত।">CEO of 8 Bit Private Limited. Full-stack developer and DevOps engineer — backend first, from the database up to the pixel.</p>
+
+    <div class="term" style="margin-top:28px">
+      <div class="top"><i></i><i></i><i></i><span>~/khandani-legacy</span></div>
+      <div class="body">
+        <div><span class="p">atik@8bit</span><span class="d">:</span><span class="c">~</span><span class="d">$</span> whoami</div>
+        <div><span id="typed"></span></div>
+        <div style="margin-top:6px"><span class="d">→</span> <span class="g">stack</span> php · mysql · javascript · react · flutter · docker</div>
+        <div><span class="d">→</span> <span class="g">based</span> Uttara, Dhaka, Bangladesh</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="shot"><div class="pic">
+    <img src="img/atik.jpg" alt="Atikur Rahman" onerror="this.remove()">
+    <div class="ph"><b>⌨️</b><span data-en="Add photo<br>img/atik.jpg" data-bn="ছবি দিন<br>img/atik.jpg">Add photo<br>img/atik.jpg</span></div>
+  </div></div>
+</div></header>
+
+<section class="wrap rv">
+  <div class="sh"><p class="k" data-en="In his words" data-bn="তাঁর ভাষায়">In his words</p></div>
+  <blockquote class="speech">
+    <p data-en="Code that works is the low bar. Code someone can still read a year from now, when I have forgotten why I wrote it and the person fixing it has never met me — that is the actual job. Everything else is typing." data-bn="কোড কাজ করলেই হলো — এটা সবচেয়ে সহজ শর্ত। এক বছর পরেও যেন কেউ পড়ে বুঝতে পারে, যখন আমি নিজেই ভুলে গেছি কেন লিখেছিলাম আর যে ঠিক করছে সে আমাকে কোনোদিন দেখেনি — সেটাই আসল কাজ। বাকিটা শুধু টাইপ করা।">Code that works is the low bar. Code someone can still read a year from now, when I have forgotten why I wrote it and the person fixing it has never met me — that is the actual job. Everything else is typing.</p>
+    <div class="by">— Atikur Rahman</div>
+  </blockquote>
+</section>
+
+<section class="wrap rv">
+  <div class="sh"><p class="k" data-en="Roles" data-bn="দায়িত্ব">Roles</p><h2 data-en="What he runs" data-bn="যা তিনি চালান">What he runs</h2></div>
+  <div class="grid g3">
+    <article class="card"><h3>CEO</h3><p class="meta">8 Bit Private Limited</p><p data-en="Leads the technology company end to end." data-bn="প্রযুক্তি প্রতিষ্ঠানটির সম্পূর্ণ নেতৃত্ব দেন।">Leads the technology company end to end.</p></article>
+    <article class="card"><h3 data-en="Director" data-bn="পরিচালক">Director</h3><p class="meta">Khandani Legacy</p></article>
+    <article class="card"><h3 data-en="Backend & DevOps" data-bn="ব্যাকএন্ড ও ডেভঅপস">Backend &amp; DevOps</h3><p data-en="Databases, servers, security updates, and keeping the lights on." data-bn="ডেটাবেজ, সার্ভার, নিরাপত্তা হালনাগাদ — আর সবকিছু সচল রাখা।">Databases, servers, security updates, and keeping the lights on.</p></article>
+  </div>
+</section>
+
+<section class="wrap rv">
+  <div class="sh"><p class="k" data-en="Stack" data-bn="প্রযুক্তি">Stack</p><h2 data-en="Tools of the trade" data-bn="কাজের হাতিয়ার">Tools of the trade</h2></div>
+  <div class="lang">
+    <div class="lrow"><div class="lt"><span class="ln">Backend Engineering</span><span class="lv">90</span></div><div class="bar"><i data-v="90"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln">REST API Development</span><span class="lv">88</span></div><div class="bar"><i data-v="88"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln">Database Design</span><span class="lv">85</span></div><div class="bar"><i data-v="85"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln">Frontend · React / Next.js</span><span class="lv">82</span></div><div class="bar"><i data-v="82"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln">System Design</span><span class="lv">78</span></div><div class="bar"><i data-v="78"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln">Mobile · Flutter / Dart</span><span class="lv">75</span></div><div class="bar"><i data-v="75"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln">Cloud &amp; DevOps</span><span class="lv">70</span></div><div class="bar"><i data-v="70"></i></div></div>
+  </div>
+  <div class="chips" style="margin-top:26px">
+    <span class="chip">PHP</span><span class="chip">MySQL</span><span class="chip">JavaScript</span><span class="chip">Laravel</span>
+    <span class="chip">React</span><span class="chip">Flutter</span><span class="chip">Docker</span><span class="chip">Security</span>
+  </div>
+</section>
+
+<section class="wrap rv">
+  <div class="sh"><p class="k" data-en="Education" data-bn="শিক্ষা">Education</p><h2 data-en="Madrasa to CSE" data-bn="মাদ্রাসা থেকে সিএসই">Madrasa to CSE</h2></div>
+  <div class="grid g3">
+    <article class="card"><h3>Dakhil</h3><p class="meta">Daulatganj Gazimura Kamil Madrasah · GPA 4.22</p></article>
+    <article class="card"><h3>HSC</h3><p class="meta">Eminence College, Dhaka · GPA 3.92</p></article>
+    <article class="card"><h3 data-en="BSc · Computer Science" data-bn="বিএসসি · কম্পিউটার সায়েন্স">BSc · Computer Science</h3><p class="meta">North South University, Dhaka</p></article>
+  </div>
+</section>
+
+<section class="wrap rv">
+  <div class="sh"><p class="k" data-en="Languages" data-bn="ভাষা">Languages</p><h2 data-en="Three tongues" data-bn="তিনটি ভাষা">Three tongues</h2></div>
+  <div class="lang">
+    <div class="lrow"><div class="lt"><span class="ln" data-en="Bangla" data-bn="বাংলা">Bangla</span><span class="lv" data-en="Mother tongue" data-bn="মাতৃভাষা">Mother tongue</span></div><div class="bar"><i data-v="100"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln" data-en="English" data-bn="ইংরেজি">English</span><span class="lv" data-en="Fluent" data-bn="সাবলীল">Fluent</span></div><div class="bar"><i data-v="95"></i></div></div>
+    <div class="lrow"><div class="lt"><span class="ln" data-en="Arabic" data-bn="আরবি">Arabic</span><span class="lv" data-en="Quran reading" data-bn="কুরআন পাঠ">Quran reading</span></div><div class="bar"><i data-v="45"></i></div></div>
+  </div>
+</section>
+
+<footer class="rv">
+  <p data-en="Atikur Rahman · Director, Khandani Legacy" data-bn="আতিকুর রহমান · পরিচালক, খানদানি লিগ্যাসি">Atikur Rahman · Director, Khandani Legacy</p>
+  <p style="margin-top:8px"><a href="https://github.com/aratik1997" target="_blank" rel="noopener">github.com/aratik1997</a> · <a href="https://khandanilegacy.com">khandanilegacy.com</a></p>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, body=document.body;
+  function setTheme(t){
+    root.setAttribute('data-theme',t);
+    try{localStorage.setItem('theme',t)}catch(e){}
+    document.getElementById('themeIcon').textContent=t==='dark'?'☾':'☀';
+    document.getElementById('themeLabel').textContent=t==='dark'?'Dark':'Light';
+  }
+  try{var st=localStorage.getItem('theme');setTheme(st||'dark')}catch(e){setTheme('dark')}
+  document.getElementById('theme').onclick=function(){setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark')};
+
+  var TYPED={en:'Full-Stack Developer · DevOps Engineer',bn:'ফুল-স্ট্যাক ডেভেলপার · ডেভঅপস ইঞ্জিনিয়ার'};
+  var typeTimer=null;
+  function typeIt(l){
+    var el=document.getElementById('typed'), s=TYPED[l]||TYPED.en, i=0;
+    clearInterval(typeTimer); el.textContent='';
+    typeTimer=setInterval(function(){
+      el.textContent=s.slice(0,++i);
+      if(i>=s.length) clearInterval(typeTimer);
+    },42);
+  }
+
+  function setLang(l){
+    document.querySelectorAll('[data-en]').forEach(function(el){
+      var v=el.getAttribute(l==='bn'?'data-bn':'data-en'); if(v!=null) el.innerHTML=v;
+    });
+    root.lang=l; body.classList.toggle('bn',l==='bn');
+    document.getElementById('langLabel').textContent=l==='bn'?'English':'বাংলা';
+    try{localStorage.setItem('lang',l)}catch(e){}
+    typeIt(l);
+  }
+  var cur='en'; try{cur=localStorage.getItem('lang')||'en'}catch(e){}
+  setLang(cur);
+  document.getElementById('lang').onclick=function(){cur=cur==='bn'?'en':'bn';setLang(cur)};
+
+  addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('stuck',scrollY>24)},{passive:true});
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(!e.isIntersecting)return;
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.bar i').forEach(function(b){b.style.width=b.getAttribute('data-v')+'%'});
+      io.unobserve(e.target);
+    });
+  },{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+})();
+</script>
+</body>
+</html>
