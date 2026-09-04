@@ -10,6 +10,7 @@
                     <a href="{{ route('admin.moderators.index') }}" class="btn btn-secondary">{{ __('Moderators') }}</a>
                     <a href="{{ route('admin.mail-check') }}" class="btn btn-secondary">{{ __('Email check') }}</a>
                 @endif
+                <a href="{{ route('admin.portfolios.index') }}" class="btn btn-secondary">{{ __('Portfolios') }}</a>
                 <a href="{{ route('admin.people.create') }}" class="btn btn-primary">{{ __('Add person') }}</a>
             </div>
         </div>

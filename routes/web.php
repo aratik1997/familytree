@@ -9,6 +9,7 @@ use App\Http\Controllers\MailDiagnosticController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileFieldController;
 use App\Http\Controllers\RecordController;
@@ -23,6 +24,12 @@ Route::get('/', function () {
 // Outside every auth group: the language has to be changeable from the sign-in
 // and claim pages, which is where it matters most.
 Route::get('/locale/{locale}', [LocaleController::class, 'update'])->name('locale.update');
+
+// The address asked for by name. Same page as admin/portfolios, so there is
+// one implementation and two ways in rather than two things to keep in step.
+Route::middleware(['auth', 'admin'])
+    ->get('/portfolio/admin', [PortfolioController::class, 'index'])
+    ->name('portfolio.admin');
 
 Route::middleware('guest')->group(function () {
     Route::get('/claim/{token}', [ClaimInviteController::class, 'show'])->name('claim.show');
@@ -96,6 +103,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::post('/relationships', [AdminController::class, 'attachParent'])->name('relationships.attach');
     Route::delete('/relationships/{child}/{parent}', [AdminController::class, 'detachParent'])->name('relationships.detach');
+
+    // The eight family portfolios. Open to moderators as well as the Super
+    // Admin: it is a list of links, and finding a relative's page is part of
+    // looking after the tree rather than a privilege.
+    Route::get('/portfolios', [PortfolioController::class, 'index'])->name('portfolios.index');
 
     // Kept back from moderators: appointing them, and the mail diagnostic,
     // which reports how the server is configured. Both are the Super Admin's.
