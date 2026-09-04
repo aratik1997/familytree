@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Falling, Chips, Steps, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Counter, Falling, Chips, Steps, useT } from '../lib/shell.jsx';
 
 /* ═══ MAIMUNA · the working paper ═════════════════════════════════════════
    Set like something printed: ruled paper, a serif face, and figures that are
@@ -8,28 +8,29 @@ import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBa
    the chart grows when you reach it.
    ══════════════════════════════════════════════════════════════════════════ */
 
-function WeekChart({ bars, t }) {
+function Figures({ items, t }) {
   const ref = useRef(null);
   const seen = useInView(ref, { once: true, margin: '-15% 0px' });
-  const still = useReducedMotion();
 
   return (
     <figure ref={ref} className="mt-8 max-w-lg border border-base-content/12 bg-base-100 p-6 shadow-sm">
       <figcaption className="mb-5 text-[11px] font-semibold uppercase tracking-[0.16em] opacity-55">
-        {t({ en: 'Fig. 2 — What the week holds', bn: 'চিত্র ২ — সপ্তাহে যা থাকে' })}
+        {t({ en: 'Fig. 2 — What she holds', bn: 'চিত্র ২ — যা তাঁর রয়েছে' })}
       </figcaption>
-      <div className="flex h-32 items-end gap-3">
-        {bars.map((b, i) => (
-          <div key={b.label.en} className="flex flex-1 flex-col items-center gap-2">
-            <motion.div
-              className="w-full rounded-t bg-gradient-to-t from-primary to-accent"
-              initial={still ? false : { height: 0 }}
-              animate={seen || still ? { height: `${b.v}%` } : {}}
-              transition={{ duration: 1.1, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] }}
-              style={{ minHeight: 4 }}
-            />
-            <span className="font-mono2 text-[10px] opacity-55">{t(b.label)}</span>
-          </div>
+      <div className="grid grid-cols-2 gap-x-6 gap-y-5">
+        {items.map((f, i) => (
+          <motion.div
+            key={f.label.en}
+            initial={{ opacity: 0, y: 12 }}
+            animate={seen ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <p className="font-display text-4xl font-semibold leading-none text-primary">
+              <Counter to={f.n} />
+            </p>
+            <p className="mt-1.5 text-sm font-semibold">{t(f.label)}</p>
+            <p className="text-xs leading-snug opacity-55">{t(f.sub)}</p>
+          </motion.div>
         ))}
       </div>
     </figure>
@@ -67,7 +68,7 @@ export default function Maimuna({ person }) {
             <p className="mt-3 font-display text-xl italic text-primary sm:text-2xl">{T(person.profession)}</p>
             <p className="mt-4 max-w-xl leading-relaxed opacity-75">{T(person.tagline)}</p>
           </Reveal>
-          <Reveal delay={0.45}><WeekChart bars={person.week} t={T} /></Reveal>
+          <Reveal delay={0.45}><Figures items={person.figures} t={T} /></Reveal>
         </div>
       </header>
 

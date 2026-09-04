@@ -317,12 +317,11 @@ export const PEOPLE = {
         note: t('Baked fresh, from scratch, every time.', 'প্রতিবারই একেবারে শুরু থেকে, তাজা বেক করা।') },
       { icon: '🏛️', title: t('Director', 'পরিচালক'), org: 'Khandani Legacy' },
     ],
-    week: [
-      { label: t('Read', 'পাঠ'), v: 82 },
-      { label: t('Data', 'উপাত্ত'), v: 95 },
-      { label: t('Write', 'লেখা'), v: 70 },
-      { label: t('Field', 'মাঠ'), v: 55 },
-      { label: t('Bake', 'বেকিং'), v: 40 },
+    figures: [
+      { n: 3, label: t('Degrees', 'ডিগ্রি'), sub: t('One bachelor, two masters', 'এক স্নাতক, দুই স্নাতকোত্তর') },
+      { n: 4, label: t('Languages', 'ভাষা'), sub: t('Bangla, English, French, Arabic', 'বাংলা, ইংরেজি, ফরাসি, আরবি') },
+      { n: 6, label: t('Research skills', 'গবেষণা দক্ষতা'), sub: t('Analysis to fieldwork', 'বিশ্লেষণ থেকে মাঠকর্ম') },
+      { n: 2, label: t('Roles held', 'দায়িত্ব'), sub: t('Researcher and co-founder', 'গবেষক ও সহ-প্রতিষ্ঠাতা') },
     ],
     education: [
       { school: 'Independent University, Bangladesh', where: t('Bachelor · Economics', 'স্নাতক · অর্থনীতি') },
