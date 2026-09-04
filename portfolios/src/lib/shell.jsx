@@ -20,9 +20,46 @@ export function useT() {
   return (v) => (v && typeof v === 'object' && 'en' in v ? v[lang] : v);
 }
 
-export function Shell({ person, children }) {
+export function Shell({ person: built, children }) {
   const [lang, setLang] = useState('en');
-  const [theme, setTheme] = useState(person.defaultTheme || 'dark');
+  const [theme, setTheme] = useState(built.defaultTheme || 'dark');
+  const [person, setPerson] = useState(built);
+
+  /**
+   * Wording edited in the admin area, laid beside the page as data.json.
+   *
+   * Fetched relative to the page, never from the main site: each portfolio is
+   * its own subdomain and a cross-origin request would simply be refused. If
+   * the file is absent — nothing has been published yet — the page keeps the
+   * words it was built with, so it is always complete either way.
+   */
+  useEffect(() => {
+    // Opened straight from disk there is nothing to fetch from, and asking
+    // anyway logs an error the catch cannot swallow — these pages are checked
+    // by double-clicking them, so that noise would be the normal case.
+    if (!/^https?:$/.test(location.protocol)) return;
+
+    let live = true;
+    fetch('data.json', { cache: 'no-cache' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((edits) => {
+        if (!live || !edits || typeof edits !== 'object') return;
+        const next = { ...built };
+        for (const [field, value] of Object.entries(edits)) {
+          if (!value || typeof value !== 'object') continue;
+          // Only fields the page already has, and only languages actually
+          // filled in — a blank box in the form must not erase a line.
+          if (!(field in next)) continue;
+          next[field] = {
+            en: value.en?.trim() || next[field]?.en,
+            bn: value.bn?.trim() || next[field]?.bn,
+          };
+        }
+        setPerson(next);
+      })
+      .catch(() => { /* no file, or offline: the built words stand */ });
+    return () => { live = false; };
+  }, [built]);
 
   // Restored before first paint in index.html would be better still, but these
   // are single pages behind a fade-in, so a frame of the default is invisible.

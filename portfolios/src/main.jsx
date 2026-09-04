@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import { PEOPLE } from './data.js';
-import { Shell } from './lib/shell.jsx';
+import { Shell, useShell } from './lib/shell.jsx';
 
 import Ansary from './people/ansary.jsx';
 import Ashik from './people/ashik.jsx';
@@ -27,10 +27,22 @@ const person = PEOPLE[slug];
 
 document.title = `${person.name.en} — ${person.profession.en}`;
 
+/**
+ * Reads the person back out of the Shell rather than closing over the built
+ * data, so an edit published from the admin area actually reaches the page.
+ * Without this the Shell would merge the change and the page would carry on
+ * rendering the copy it was handed at start-up.
+ */
+function Bound() {
+  const { person } = useShell();
+
+  return <Page person={person} />;
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Shell person={{ ...person, defaultTheme: Page.defaultTheme || 'dark' }}>
-      <Page person={person} />
+      <Bound />
     </Shell>
   </StrictMode>
 );

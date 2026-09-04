@@ -66,6 +66,7 @@ export default function Anas({ person }) {
             <Words text={T(person.name)} />
           </h1>
           <Reveal delay={0.35}>
+            <p className="mt-3 font-display text-lg font-semibold text-primary sm:text-xl">{T(person.profession)}</p>
             <p className="mt-5 max-w-lg leading-relaxed opacity-75">{T(person.tagline)}</p>
           </Reveal>
 

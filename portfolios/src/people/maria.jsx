@@ -64,6 +64,7 @@ export default function Maria({ person }) {
               <span>Architect · B.Arch · NSU</span>
               <span className="h-px flex-1 bg-base-content/35" />
             </div>
+            <p className="mt-3 font-display text-lg font-semibold text-primary sm:text-xl">{T(person.profession)}</p>
             <p className="max-w-xl leading-relaxed opacity-75">{T(person.tagline)}</p>
           </Reveal>
           <Plan />

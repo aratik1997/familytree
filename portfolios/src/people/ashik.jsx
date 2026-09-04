@@ -54,6 +54,7 @@ export default function Ashik({ person }) {
         <Reveal delay={0.4}>
           <p className="mt-3 font-display text-xl italic text-primary/80">{T({ en: 'known as', bn: 'পরিচিত' })} {T(person.called)}</p>
           <div className="mx-auto my-7 h-0.5 w-16 bg-primary" />
+          <p className="mt-3 font-display text-lg font-semibold text-primary sm:text-xl">{T(person.profession)}</p>
           <p className="mx-auto max-w-2xl text-base leading-relaxed opacity-75 sm:text-lg">{T(person.tagline)}</p>
         </Reveal>
 

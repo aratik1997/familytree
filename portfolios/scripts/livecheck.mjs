@@ -16,7 +16,10 @@ for (const p of PEOPLE) {
   const errs = [];
   page.on('pageerror', (e) => errs.push(String(e)));
   page.on('console', (m) => {
-    if (m.type() === 'error' && !(m.location()?.url || '').includes('/img/')) errs.push(m.text());
+    // A missing portrait and a missing data.json are both expected states:
+    // one means no photograph yet, the other means nothing published yet.
+    const u = m.location()?.url || '';
+    if (m.type() === 'error' && !u.includes('/img/') && !u.includes('data.json')) errs.push(m.text());
   });
 
   let status = 0;

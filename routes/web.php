@@ -108,6 +108,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Admin: it is a list of links, and finding a relative's page is part of
     // looking after the tree rather than a privilege.
     Route::get('/portfolios', [PortfolioController::class, 'index'])->name('portfolios.index');
+    Route::get('/portfolios/{slug}/edit', [PortfolioController::class, 'edit'])->name('portfolios.edit');
+    Route::patch('/portfolios/{slug}', [PortfolioController::class, 'update'])->name('portfolios.update');
+    // Publishing is its own step so several edits go out together, and so a
+    // half-finished sentence is not live the moment it is typed.
+    Route::post('/portfolios/publish', [PortfolioController::class, 'publish'])->name('portfolios.publish');
 
     // Kept back from moderators: appointing them, and the mail diagnostic,
     // which reports how the server is configured. Both are the Super Admin's.

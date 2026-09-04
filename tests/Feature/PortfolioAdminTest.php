@@ -69,12 +69,25 @@ class PortfolioAdminTest extends TestCase
         $this->get('/portfolio/admin')->assertRedirect('/login');
     }
 
-    /** The page has to say how a change actually reaches the pages. */
-    public function test_it_explains_that_a_rebuild_is_needed(): void
+    /**
+     * The page has to be honest about the line between the two: wording is
+     * editable here, anything structural still needs the project rebuilt.
+     */
+    public function test_it_says_what_still_needs_a_rebuild(): void
     {
         $this->actingAs(User::factory()->create(['is_super_admin' => true]))
             ->get('/admin/portfolios')
-            ->assertSee('portfolios/src/data.js')
+            ->assertSee('What needs a rebuild')
             ->assertSee('scripts/deploy.sh');
+    }
+
+    public function test_every_portfolio_offers_an_edit_link(): void
+    {
+        $response = $this->actingAs(User::factory()->create(['is_super_admin' => true]))
+            ->get('/admin/portfolios');
+
+        foreach (self::EIGHT as $slug) {
+            $response->assertSee("/admin/portfolios/{$slug}/edit");
+        }
     }
 }
