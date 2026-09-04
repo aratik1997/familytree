@@ -1,0 +1,205 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Eight identities, expressed as daisyUI token overrides.
+
+   daisyUI's themes are just CSS variables, so a person is a palette plus a
+   corner radius plus a typeface — and every daisyUI component on the page
+   (btn, card, badge, progress, timeline, stat) picks all of that up without
+   being restyled one by one.
+
+   Radius is doing as much work here as colour. Arafat's world is rounded,
+   Maria's is square to the millimetre, and neither reads as the other even
+   in greyscale.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --font-display: Inter, system-ui, sans-serif;
+  --font-body: Inter, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* Bangla replaces the display face wholesale — a Latin display font with
+   Bengali fallback glyphs looks like two fonts fighting. */
+html[lang="bn"] {
+  --font-display: "Hind Siliguri", sans-serif;
+  --font-body: "Hind Siliguri", sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+.font-display { font-family: var(--font-display); }
+.font-mono2 { font-family: var(--font-mono); }
+
+/* ── ANSARY · espresso, crema, brass ─────────────────────────────────── */
+[data-person="ansary"] {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --radius-box: 1rem; --radius-field: 2rem; --radius-selector: 2rem;
+  --color-primary: oklch(72% 0.09 65); --color-primary-content: oklch(20% 0.03 45);
+  --color-secondary: oklch(58% 0.11 45); --color-accent: oklch(78% 0.11 80);
+}
+[data-person="ansary"][data-theme="dark"] {
+  --color-base-100: oklch(17% 0.02 45); --color-base-200: oklch(21% 0.025 45);
+  --color-base-300: oklch(26% 0.03 45); --color-base-content: oklch(93% 0.02 70);
+}
+[data-person="ansary"][data-theme="light"] {
+  --color-base-100: oklch(97% 0.014 75); --color-base-200: oklch(94% 0.02 75);
+  --color-base-300: oklch(89% 0.03 75); --color-base-content: oklch(24% 0.03 45);
+  --color-primary: oklch(48% 0.09 60);
+}
+
+/* ── ASHIK · court navy, brass, squared off ──────────────────────────── */
+[data-person="ashik"] {
+  --font-display: "Playfair Display", Georgia, serif;
+  --radius-box: 0.125rem; --radius-field: 0.125rem; --radius-selector: 0.125rem;
+  --color-primary: oklch(75% 0.12 90); --color-primary-content: oklch(18% 0.04 250);
+  --color-secondary: oklch(45% 0.09 250); --color-accent: oklch(82% 0.11 92);
+}
+[data-person="ashik"][data-theme="dark"] {
+  --color-base-100: oklch(16% 0.03 250); --color-base-200: oklch(21% 0.04 250);
+  --color-base-300: oklch(27% 0.045 250); --color-base-content: oklch(94% 0.015 250);
+}
+[data-person="ashik"][data-theme="light"] {
+  --color-base-100: oklch(97% 0.008 250); --color-base-200: oklch(93% 0.014 250);
+  --color-base-300: oklch(88% 0.02 250); --color-base-content: oklch(20% 0.04 250);
+  --color-primary: oklch(48% 0.09 88);
+}
+
+/* ── MORSHEDA · enamel, mint, rounded and clinical ───────────────────── */
+[data-person="morsheda"] {
+  --font-display: Fraunces, Georgia, serif;
+  --radius-box: 1.6rem; --radius-field: 2rem; --radius-selector: 2rem;
+  --color-primary: oklch(66% 0.12 190); --color-primary-content: oklch(99% 0 0);
+  --color-secondary: oklch(78% 0.09 350); --color-accent: oklch(80% 0.1 195);
+}
+[data-person="morsheda"][data-theme="light"] {
+  --color-base-100: oklch(99% 0.008 195); --color-base-200: oklch(96% 0.02 195);
+  --color-base-300: oklch(92% 0.035 195); --color-base-content: oklch(27% 0.04 195);
+}
+[data-person="morsheda"][data-theme="dark"] {
+  --color-base-100: oklch(19% 0.03 195); --color-base-200: oklch(23% 0.04 195);
+  --color-base-300: oklch(29% 0.05 195); --color-base-content: oklch(95% 0.02 195);
+  --color-primary: oklch(78% 0.12 190);
+}
+
+/* ── ATIK · terminal, cyan and violet, tight radii ───────────────────── */
+[data-person="atik"] {
+  --font-display: Inter, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius-box: 0.6rem; --radius-field: 0.4rem; --radius-selector: 0.4rem;
+  --color-primary: oklch(78% 0.14 200); --color-primary-content: oklch(15% 0.03 250);
+  --color-secondary: oklch(60% 0.2 295); --color-accent: oklch(72% 0.16 255);
+}
+[data-person="atik"][data-theme="dark"] {
+  --color-base-100: oklch(14% 0.02 260); --color-base-200: oklch(18% 0.025 260);
+  --color-base-300: oklch(24% 0.03 260); --color-base-content: oklch(93% 0.015 250);
+}
+[data-person="atik"][data-theme="light"] {
+  --color-base-100: oklch(98% 0.006 250); --color-base-200: oklch(95% 0.012 250);
+  --color-base-300: oklch(90% 0.02 250); --color-base-content: oklch(20% 0.03 260);
+  --color-primary: oklch(52% 0.13 215);
+}
+
+/* ── MARIA · drafting paper, graphite, red pencil, no curves ─────────── */
+[data-person="maria"] {
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --radius-box: 0rem; --radius-field: 0rem; --radius-selector: 0rem;
+  --color-primary: oklch(58% 0.19 30); --color-primary-content: oklch(99% 0 0);
+  --color-secondary: oklch(42% 0.11 255); --color-accent: oklch(66% 0.17 32);
+}
+[data-person="maria"][data-theme="light"] {
+  --color-base-100: oklch(97% 0.008 85); --color-base-200: oklch(94% 0.013 85);
+  --color-base-300: oklch(88% 0.02 85); --color-base-content: oklch(19% 0.01 85);
+}
+[data-person="maria"][data-theme="dark"] {
+  /* cyanotype */
+  --color-base-100: oklch(27% 0.07 245); --color-base-200: oklch(32% 0.08 245);
+  --color-base-300: oklch(38% 0.09 245); --color-base-content: oklch(95% 0.02 240);
+  --color-primary: oklch(74% 0.15 40);
+}
+
+/* ── MAIMUNA · journal cream, deep plum, ruled paper ─────────────────── */
+[data-person="maimuna"] {
+  --font-display: Lora, Georgia, serif;
+  --radius-box: 0.25rem; --radius-field: 0.25rem; --radius-selector: 0.25rem;
+  --color-primary: oklch(44% 0.13 340); --color-primary-content: oklch(99% 0 0);
+  --color-secondary: oklch(62% 0.11 85); --color-accent: oklch(58% 0.15 340);
+}
+[data-person="maimuna"][data-theme="light"] {
+  --color-base-100: oklch(98% 0.012 80); --color-base-200: oklch(95% 0.018 80);
+  --color-base-300: oklch(90% 0.025 80); --color-base-content: oklch(21% 0.02 340);
+}
+[data-person="maimuna"][data-theme="dark"] {
+  --color-base-100: oklch(17% 0.03 340); --color-base-200: oklch(21% 0.04 340);
+  --color-base-300: oklch(27% 0.05 340); --color-base-content: oklch(95% 0.02 340);
+  --color-primary: oklch(78% 0.11 340);
+}
+
+/* ── ANAS · daylight sky, instrument amber, cockpit placards ─────────── */
+[data-person="anas"] {
+  --font-display: "Barlow Condensed", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --radius-box: 0.2rem; --radius-field: 0.2rem; --radius-selector: 0.2rem;
+  --color-primary: oklch(70% 0.15 60); --color-primary-content: oklch(18% 0.03 250);
+  --color-secondary: oklch(60% 0.13 245); --color-accent: oklch(78% 0.13 62);
+}
+[data-person="anas"][data-theme="light"] {
+  --color-base-100: oklch(97% 0.015 235); --color-base-200: oklch(93% 0.03 235);
+  --color-base-300: oklch(87% 0.045 235); --color-base-content: oklch(22% 0.04 245);
+}
+[data-person="anas"][data-theme="dark"] {
+  --color-base-100: oklch(14% 0.025 245); --color-base-200: oklch(18% 0.035 245);
+  --color-base-300: oklch(24% 0.045 245); --color-base-content: oklch(93% 0.02 235);
+}
+
+/* ── ARAFAT · kraft, olive, terracotta, everything rounded ───────────── */
+[data-person="arafat"] {
+  --font-display: Fraunces, Georgia, serif;
+  --radius-box: 1.75rem; --radius-field: 2rem; --radius-selector: 2rem;
+  --color-primary: oklch(56% 0.11 140); --color-primary-content: oklch(99% 0 0);
+  --color-secondary: oklch(58% 0.15 45); --color-accent: oklch(78% 0.13 80);
+}
+[data-person="arafat"][data-theme="light"] {
+  --color-base-100: oklch(97% 0.018 90); --color-base-200: oklch(94% 0.028 90);
+  --color-base-300: oklch(89% 0.04 90); --color-base-content: oklch(22% 0.03 130);
+}
+[data-person="arafat"][data-theme="dark"] {
+  --color-base-100: oklch(17% 0.025 135); --color-base-200: oklch(21% 0.035 135);
+  --color-base-300: oklch(27% 0.045 135); --color-base-content: oklch(94% 0.025 110);
+  --color-primary: oklch(74% 0.13 140);
+}
+
+/* ── shared bits of atmosphere ────────────────────────────────────────── */
+.grain::before {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.ink-grid::before {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(color-mix(in oklab, currentColor 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, currentColor 7%, transparent) 1px, transparent 1px);
+  background-size: var(--grid, 24px) var(--grid, 24px);
+}
+.rule-paper::before {
+  content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: repeating-linear-gradient(
+    180deg, transparent 0 33px,
+    color-mix(in oklab, currentColor 10%, transparent) 33px 34px);
+  mask-image: linear-gradient(180deg, #000, transparent 72%);
+}
+
+/* Anything that must not be animated for people who asked not to be. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
