@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, Counter, FactBand, Falling, Chips, Steps, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, Counter, FactBand, Falling, Chips, Steps, Ordered, useT } from '../lib/shell.jsx';
 
 /* ═══ ANAS · the flight deck ══════════════════════════════════════════════
    Condensed capitals, like the placards in a cockpit. An attitude indicator
@@ -110,7 +110,8 @@ export default function Anas({ person }) {
       ]} />
 
 
-      <Section kicker={T({ en: 'In his words', bn: 'তাঁর ভাষায়' })}>
+      <Ordered person={person}>
+      <Section sectionKey="speech" kicker={T({ en: 'In his words', bn: 'তাঁর ভাষায়' })}>
         <Reveal>
           <blockquote className="border border-base-content/12 border-t-4 border-t-primary bg-base-200/50 p-8 shadow-lg sm:p-12">
             <p className="text-xl leading-relaxed sm:text-2xl">{T(person.speech)}</p>
@@ -120,7 +121,7 @@ export default function Anas({ person }) {
       </Section>
 
       {/* an instrument row */}
-      <Section className="!py-10">
+      <Section sectionKey="roles" className="!py-10">
         <div className="grid gap-px border border-base-content/15 bg-base-content/15 sm:grid-cols-3">
           {[
             { n: 118, s: '°', l: 'HEADING' },
@@ -137,7 +138,7 @@ export default function Anas({ person }) {
         </div>
       </Section>
 
-      <Section kicker={T({ en: 'Roles', bn: 'দায়িত্ব' })} title={T({ en: 'On duty', bn: 'দায়িত্বে' })}>
+      <Section sectionKey="instruments" kicker={T({ en: 'Roles', bn: 'দায়িত্ব' })} title={T({ en: 'On duty', bn: 'দায়িত্বে' })}>
         <div className="grid gap-4 sm:grid-cols-3">
           {person.roles.map((r, i) => (
             <Reveal key={r.title.en} delay={i * 0.08}>
@@ -155,16 +156,16 @@ export default function Anas({ person }) {
       </Section>
 
       {/* ── the checklist, which is the whole job ── */}
-      <Section kicker={T({ en: 'Checklist', bn: 'চেকলিস্ট' })} title={T({ en: 'Every flight, in order', bn: 'প্রতিটি ফ্লাইট, ক্রম অনুসারে' })}>
+      <Section sectionKey="checklist" kicker={T({ en: 'Checklist', bn: 'চেকলিস্ট' })} title={T({ en: 'Every flight, in order', bn: 'প্রতিটি ফ্লাইট, ক্রম অনুসারে' })}>
         <Steps items={person.checklist.map((c) => ({ n: c.n, title: T(c.title), note: T(c.note) }))} mono />
       </Section>
 
       {/* ── focus ── */}
-      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What he works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
+      <Section sectionKey="focus" kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What he works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
         <Chips items={person.focus.map(T)} mono />
       </Section>
 
-      <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Training', bn: 'প্রশিক্ষণ' })}>
+      <Section sectionKey="education" kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Training', bn: 'প্রশিক্ষণ' })}>
         <div className="grid gap-4 sm:grid-cols-2">
           {person.education.map((e, i) => (
             <Reveal key={e.school} delay={i * 0.09}>
@@ -178,7 +179,7 @@ export default function Anas({ person }) {
         </div>
       </Section>
 
-      <Section kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Four tongues', bn: 'চারটি ভাষা' })}>
+      <Section sectionKey="languages" kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Four tongues', bn: 'চারটি ভাষা' })}>
         <div className="grid max-w-2xl gap-6">
           {person.languages.map((l, i) => (
             <LevelBar key={l.name.en} name={<span className="font-display uppercase tracking-wide">{T(l.name)}</span>}
@@ -186,6 +187,7 @@ export default function Anas({ person }) {
           ))}
         </div>
       </Section>
+      </Ordered>
 
       <Footer name={T(person.name)} role={T(person.role)} links={person.links} />
     </div>

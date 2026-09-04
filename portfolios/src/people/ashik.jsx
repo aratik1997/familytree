@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, Counter, FactBand, Falling, Chips, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, Counter, FactBand, Falling, Chips, Ordered, useT } from '../lib/shell.jsx';
 
 /* ═══ ASHIK · the chamber ═════════════════════════════════════════════════
    Symmetrical and squared off, the way a courtroom is. Everything is centred
@@ -78,7 +78,8 @@ export default function Ashik({ person }) {
       ]} />
 
 
-      <Section kicker={T({ en: 'In his words', bn: 'তাঁর ভাষায়' })} className="max-w-4xl text-center"
+      <Ordered person={person}>
+      <Section sectionKey="speech" kicker={T({ en: 'In his words', bn: 'তাঁর ভাষায়' })} className="max-w-4xl text-center"
         kickerClass="text-center">
         <Reveal>
           <blockquote className="border border-base-content/10 border-t-4 border-t-primary bg-base-200/50 p-8 sm:p-12">
@@ -89,7 +90,7 @@ export default function Ashik({ person }) {
       </Section>
 
       {/* the register of directorships — numbered, ruled, formal */}
-      <Section kicker={T({ en: 'Positions', bn: 'দায়িত্ব' })} title={T({ en: 'Directorships', bn: 'পরিচালনার দায়িত্ব' })}
+      <Section sectionKey="positions" kicker={T({ en: 'Positions', bn: 'দায়িত্ব' })} title={T({ en: 'Directorships', bn: 'পরিচালনার দায়িত্ব' })}
         className="max-w-4xl text-center" kickerClass="text-center">
         <div className="mt-2 border-t border-base-content/15 text-left">
           {person.roles.map((r, i) => (
@@ -109,7 +110,7 @@ export default function Ashik({ person }) {
       </Section>
 
       {/* three stats, because a practice is easier to grasp as figures */}
-      <Section className="max-w-4xl">
+      <Section sectionKey="figures" className="max-w-4xl">
         <div className="grid gap-px border border-base-content/15 bg-base-content/15 sm:grid-cols-3">
           {[
             { n: 4, s: '+', l: T({ en: 'Companies led', bn: 'যেসব প্রতিষ্ঠান পরিচালনা করেন' }) },
@@ -128,7 +129,7 @@ export default function Ashik({ person }) {
         </div>
       </Section>
 
-      <Section kicker={T({ en: 'Practice', bn: 'পেশা' })} title={T({ en: 'Law, and what it is for', bn: 'আইন, এবং তার উদ্দেশ্য' })}
+      <Section sectionKey="practice" kicker={T({ en: 'Practice', bn: 'পেশা' })} title={T({ en: 'Law, and what it is for', bn: 'আইন, এবং তার উদ্দেশ্য' })}
         className="max-w-5xl text-center" kickerClass="text-center">
         <div className="grid gap-5 text-left sm:grid-cols-3">
           {person.practice.map((p, i) => (
@@ -143,7 +144,7 @@ export default function Ashik({ person }) {
       </Section>
 
       {/* ── the wider register of companies ── */}
-      <Section kicker={T({ en: 'Companies', bn: 'প্রতিষ্ঠান' })} title={T({ en: 'The wider register', bn: 'বৃহত্তর তালিকা' })}
+      <Section sectionKey="companies" kicker={T({ en: 'Companies', bn: 'প্রতিষ্ঠান' })} title={T({ en: 'The wider register', bn: 'বৃহত্তর তালিকা' })}
         className="max-w-5xl text-center" kickerClass="text-center">
         <div className="grid gap-px border border-base-content/15 bg-base-content/15 text-left sm:grid-cols-2">
           {person.companies.map((c, i) => (
@@ -159,7 +160,7 @@ export default function Ashik({ person }) {
       </Section>
 
       {/* ── memberships ── */}
-      <Section kicker={T({ en: 'Memberships', bn: 'সদস্যপদ' })} title={T({ en: 'Where he serves', bn: 'যেখানে যুক্ত' })}
+      <Section sectionKey="memberships" kicker={T({ en: 'Memberships', bn: 'সদস্যপদ' })} title={T({ en: 'Where he serves', bn: 'যেখানে যুক্ত' })}
         className="max-w-4xl text-center" kickerClass="text-center">
         <div className="grid gap-4 text-left sm:grid-cols-3">
           {person.memberships.map((m, i) => (
@@ -175,12 +176,12 @@ export default function Ashik({ person }) {
       </Section>
 
       {/* ── core expertise ── */}
-      <Section kicker={T({ en: 'Expertise', bn: 'দক্ষতা' })} title={T({ en: 'Core expertise', bn: 'মূল দক্ষতা' })}
+      <Section sectionKey="expertise" kicker={T({ en: 'Expertise', bn: 'দক্ষতা' })} title={T({ en: 'Core expertise', bn: 'মূল দক্ষতা' })}
         className="max-w-4xl text-center" kickerClass="text-center">
         <Chips items={person.focus.map(T)} className="justify-center" />
       </Section>
 
-      <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Where he read', bn: 'যেখানে পড়েছেন' })}
+      <Section sectionKey="education" kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Where he read', bn: 'যেখানে পড়েছেন' })}
         className="max-w-4xl text-center" kickerClass="text-center">
         <div className="flex flex-wrap justify-center gap-3">
           {person.education.map((e, i) => (
@@ -194,7 +195,7 @@ export default function Ashik({ person }) {
         </div>
       </Section>
 
-      <Section kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Four tongues', bn: 'চারটি ভাষা' })}
+      <Section sectionKey="languages" kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Four tongues', bn: 'চারটি ভাষা' })}
         className="max-w-3xl text-center" kickerClass="text-center">
         <div className="grid gap-6 text-left">
           {person.languages.map((l, i) => (
@@ -202,6 +203,7 @@ export default function Ashik({ person }) {
           ))}
         </div>
       </Section>
+      </Ordered>
 
       <Footer name={T(person.name)} role={T(person.role)} links={person.links} />
     </div>

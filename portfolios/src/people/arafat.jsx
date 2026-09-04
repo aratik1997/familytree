@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Chips, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Chips, Ordered, useT } from '../lib/shell.jsx';
 
 /* ═══ ARAFAT · the smallholding ═══════════════════════════════════════════
    Nothing on this page is a straight line if it can help it. The portrait is
@@ -108,7 +108,8 @@ export default function Arafat({ person }) {
       ]} />
 
 
-      <Section kicker={T({ en: 'In his words', bn: 'তাঁর ভাষায়' })}>
+      <Ordered person={person}>
+      <Section sectionKey="speech" kicker={T({ en: 'In his words', bn: 'তাঁর ভাষায়' })}>
         <Reveal>
           <blockquote className="relative rounded-box border border-base-content/10 bg-base-200/60 p-8 shadow-lg sm:p-12"
             style={{ borderBottomLeftRadius: '0.35rem' }}>
@@ -122,7 +123,7 @@ export default function Arafat({ person }) {
       </Section>
 
       {/* the year, as four seasons rather than a list of tasks */}
-      <Section kicker={T({ en: 'The year', bn: 'বছরটি' })} title={T({ en: 'How the work goes round', bn: 'কাজ যেভাবে ঘুরে চলে' })}>
+      <Section sectionKey="year" kicker={T({ en: 'The year', bn: 'বছরটি' })} title={T({ en: 'How the work goes round', bn: 'কাজ যেভাবে ঘুরে চলে' })}>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {person.seasons.map((s, i) => (
             <Reveal key={s.label.en} delay={i * 0.1}>
@@ -143,7 +144,7 @@ export default function Arafat({ person }) {
         </div>
       </Section>
 
-      <Section kicker={T({ en: 'Work', bn: 'কাজ' })} title={T({ en: 'Land, and a small oven', bn: 'জমি, আর ছোট এক ওভেন' })}>
+      <Section sectionKey="work" kicker={T({ en: 'Work', bn: 'কাজ' })} title={T({ en: 'Land, and a small oven', bn: 'জমি, আর ছোট এক ওভেন' })}>
         <div className="grid gap-5 sm:grid-cols-3">
           {person.roles.map((r, i) => (
             <Reveal key={r.title.en} delay={i * 0.09}>
@@ -173,11 +174,11 @@ export default function Arafat({ person }) {
       </Section>
 
       {/* ── focus ── */}
-      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What the work involves', bn: 'কাজে যা যা থাকে' })}>
+      <Section sectionKey="focus" kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What the work involves', bn: 'কাজে যা যা থাকে' })}>
         <Chips items={person.focus.map(T)} />
       </Section>
 
-      <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Schooling', bn: 'পড়াশোনা' })}>
+      <Section sectionKey="education" kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Schooling', bn: 'পড়াশোনা' })}>
         <div className="grid gap-5 sm:grid-cols-2">
           {person.education.map((e, i) => (
             <Reveal key={e.school} delay={i * 0.09}>
@@ -191,13 +192,14 @@ export default function Arafat({ person }) {
         </div>
       </Section>
 
-      <Section kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Four tongues', bn: 'চারটি ভাষা' })}>
+      <Section sectionKey="languages" kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Four tongues', bn: 'চারটি ভাষা' })}>
         <div className="grid max-w-2xl gap-6">
           {person.languages.map((l, i) => (
             <LevelBar key={l.name.en} name={T(l.name)} level={T(l.level)} value={l.v} delay={i * 0.06} />
           ))}
         </div>
       </Section>
+      </Ordered>
 
       <Footer name={T(person.name)} role={T(person.role)} links={person.links} />
     </div>

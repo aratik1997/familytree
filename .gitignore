@@ -27,3 +27,8 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Published portfolio overrides. Written by the app beside each built page and
+# different on every machine — tracking them would let a deploy overwrite what
+# someone has just published from the live site.
+portfolios/dist/*/data.json

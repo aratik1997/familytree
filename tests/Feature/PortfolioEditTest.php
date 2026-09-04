@@ -51,7 +51,9 @@ class PortfolioEditTest extends TestCase
             'fields' => ['profession' => ['en' => 'Software Engineer', 'bn' => 'সফটওয়্যার প্রকৌশলী']],
         ])->assertRedirect(route('admin.portfolios.index'));
 
-        $saved = PortfolioContent::for('atik');
+        // Wording sits under 'fields', beside the lists and section order an
+        // owner sets for themselves — an admin's save must not disturb those.
+        $saved = PortfolioContent::for('atik')['fields'];
         $this->assertSame('Software Engineer', $saved['profession']['en']);
         $this->assertSame('সফটওয়্যার প্রকৌশলী', $saved['profession']['bn']);
     }
@@ -63,7 +65,7 @@ class PortfolioEditTest extends TestCase
             'fields' => ['profession' => ['en' => 'Engineer', 'bn' => ''], 'speech' => ['en' => '', 'bn' => '']],
         ]);
 
-        $saved = PortfolioContent::for('atik');
+        $saved = PortfolioContent::for('atik')['fields'];
         $this->assertSame('Engineer', $saved['profession']['en']);
         $this->assertArrayNotHasKey('bn', $saved['profession']);
         $this->assertArrayNotHasKey('speech', $saved);
@@ -84,7 +86,7 @@ class PortfolioEditTest extends TestCase
 
         $file = $dir.'/data.json';
         $this->assertFileExists($file);
-        $this->assertSame('Architect and baker', json_decode(File::get($file), true)['profession']['en']);
+        $this->assertSame('Architect and baker', json_decode(File::get($file), true)['fields']['profession']['en']);
 
         File::delete($file);
     }

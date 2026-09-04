@@ -12,6 +12,11 @@ import { join } from 'node:path';
  */
 const PEOPLE = ['ansary', 'ashik', 'morsheda', 'atik', 'maria', 'maimuna', 'anas', 'arafat'];
 
+// Re-export what the pages say out of the box, for the editor in the Laravel
+// app to open its form with. Done here so the two can never fall out of step:
+// if the pages change, the editor's starting point changes with them.
+execSync('node scripts/export-defaults.mjs', { stdio: 'inherit' });
+
 if (existsSync('dist')) rmSync('dist', { recursive: true, force: true });
 
 /**

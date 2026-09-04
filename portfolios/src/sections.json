@@ -1,0 +1,234 @@
+{
+  "anas": [
+    {
+      "key": "speech",
+      "label": "Their words"
+    },
+    {
+      "key": "roles",
+      "label": "Roles"
+    },
+    {
+      "key": "instruments",
+      "label": "Instrument row"
+    },
+    {
+      "key": "checklist",
+      "label": "Checklist"
+    },
+    {
+      "key": "focus",
+      "label": "Focus areas"
+    },
+    {
+      "key": "education",
+      "label": "Education"
+    },
+    {
+      "key": "languages",
+      "label": "Languages"
+    }
+  ],
+  "ansary": [
+    {
+      "key": "speech",
+      "label": "Their words"
+    },
+    {
+      "key": "positions",
+      "label": "Positions"
+    },
+    {
+      "key": "venue",
+      "label": "Al-Wawah"
+    },
+    {
+      "key": "focus",
+      "label": "Focus areas"
+    },
+    {
+      "key": "education",
+      "label": "Education"
+    },
+    {
+      "key": "languages",
+      "label": "Languages"
+    }
+  ],
+  "arafat": [
+    {
+      "key": "speech",
+      "label": "Their words"
+    },
+    {
+      "key": "year",
+      "label": "The year"
+    },
+    {
+      "key": "work",
+      "label": "Work"
+    },
+    {
+      "key": "focus",
+      "label": "Focus areas"
+    },
+    {
+      "key": "education",
+      "label": "Education"
+    },
+    {
+      "key": "languages",
+      "label": "Languages"
+    }
+  ],
+  "ashik": [
+    {
+      "key": "speech",
+      "label": "Their words"
+    },
+    {
+      "key": "positions",
+      "label": "Positions"
+    },
+    {
+      "key": "figures",
+      "label": "By the numbers"
+    },
+    {
+      "key": "practice",
+      "label": "Practice"
+    },
+    {
+      "key": "companies",
+      "label": "Companies"
+    },
+    {
+      "key": "memberships",
+      "label": "Memberships"
+    },
+    {
+      "key": "expertise",
+      "label": "Expertise"
+    },
+    {
+      "key": "education",
+      "label": "Education"
+    },
+    {
+      "key": "languages",
+      "label": "Languages"
+    }
+  ],
+  "atik": [
+    {
+      "key": "speech",
+      "label": "Their words"
+    },
+    {
+      "key": "roles",
+      "label": "Roles"
+    },
+    {
+      "key": "stack",
+      "label": "Stack"
+    },
+    {
+      "key": "projects",
+      "label": "Projects"
+    },
+    {
+      "key": "experience",
+      "label": "Experience"
+    },
+    {
+      "key": "focus",
+      "label": "Focus areas"
+    },
+    {
+      "key": "education",
+      "label": "Education"
+    },
+    {
+      "key": "languages",
+      "label": "Languages"
+    }
+  ],
+  "maimuna": [
+    {
+      "key": "speech",
+      "label": "Their words"
+    },
+    {
+      "key": "work",
+      "label": "Work"
+    },
+    {
+      "key": "method",
+      "label": "Method"
+    },
+    {
+      "key": "focus",
+      "label": "Focus areas"
+    },
+    {
+      "key": "education",
+      "label": "Education"
+    },
+    {
+      "key": "languages",
+      "label": "Languages"
+    }
+  ],
+  "maria": [
+    {
+      "key": "speech",
+      "label": "Their words"
+    },
+    {
+      "key": "work",
+      "label": "Work"
+    },
+    {
+      "key": "method",
+      "label": "Method"
+    },
+    {
+      "key": "focus",
+      "label": "Focus areas"
+    },
+    {
+      "key": "education",
+      "label": "Education"
+    },
+    {
+      "key": "languages",
+      "label": "Languages"
+    }
+  ],
+  "morsheda": [
+    {
+      "key": "speech",
+      "label": "Their words"
+    },
+    {
+      "key": "practice",
+      "label": "Practice"
+    },
+    {
+      "key": "education",
+      "label": "Education"
+    },
+    {
+      "key": "journey",
+      "label": "Journey"
+    },
+    {
+      "key": "focus",
+      "label": "Focus areas"
+    },
+    {
+      "key": "languages",
+      "label": "Languages"
+    }
+  ]
+}

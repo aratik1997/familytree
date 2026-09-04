@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Falling, Chips, Steps, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Falling, Chips, Steps, Ordered, useT } from '../lib/shell.jsx';
 
 /* ═══ MORSHEDA · the clinic ═══════════════════════════════════════════════
    Bright, rounded, nothing sharp anywhere — a room you are not frightened of.
@@ -81,7 +81,8 @@ export default function Morsheda({ person }) {
       ]} />
 
 
-      <Section kicker={T({ en: 'In her words', bn: 'তাঁর ভাষায়' })}>
+      <Ordered person={person}>
+      <Section sectionKey="speech" kicker={T({ en: 'In her words', bn: 'তাঁর ভাষায়' })}>
         <Reveal>
           <div className="relative rounded-box border border-base-content/10 bg-base-200/60 p-8 shadow-lg sm:p-12">
             <span className="absolute -top-5 left-8 grid h-11 w-11 place-items-center rounded-full bg-primary font-display text-2xl leading-none text-primary-content" aria-hidden>&ldquo;</span>
@@ -92,7 +93,7 @@ export default function Morsheda({ person }) {
       </Section>
 
       {/* bento: what she does, in tiles of different weight */}
-      <Section kicker={T({ en: 'Practice', bn: 'পেশা' })} title={T({ en: 'What she does', bn: 'তিনি যা করেন' })}>
+      <Section sectionKey="practice" kicker={T({ en: 'Practice', bn: 'পেশা' })} title={T({ en: 'What she does', bn: 'তিনি যা করেন' })}>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {person.roles.map((r, i) => (
             <Reveal key={r.title.en} delay={i * 0.09} className={i === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}>
@@ -113,7 +114,7 @@ export default function Morsheda({ person }) {
       </Section>
 
       {/* education as three stops, Dhaka to Sapporo */}
-      <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Dhaka to Sapporo', bn: 'ঢাকা থেকে সাপ্পোরো' })}>
+      <Section sectionKey="education" kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Dhaka to Sapporo', bn: 'ঢাকা থেকে সাপ্পোরো' })}>
         <div className="grid gap-5 sm:grid-cols-3">
           {person.education.map((e, i) => (
             <Reveal key={e.school + i} delay={i * 0.1}>
@@ -129,22 +130,23 @@ export default function Morsheda({ person }) {
       </Section>
 
       {/* ── the road to a doctorate ── */}
-      <Section kicker={T({ en: 'Journey', bn: 'পথচলা' })} title={T({ en: 'Dhaka to Sapporo', bn: 'ঢাকা থেকে সাপ্পোরো' })}>
+      <Section sectionKey="journey" kicker={T({ en: 'Journey', bn: 'পথচলা' })} title={T({ en: 'Dhaka to Sapporo', bn: 'ঢাকা থেকে সাপ্পোরো' })}>
         <Steps items={person.journey.map((j) => ({ n: j.n, title: j.place, note: T(j.what) }))} mono />
       </Section>
 
       {/* ── focus ── */}
-      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What she works on', bn: 'যেসব নিয়ে কাজ করেন' })}>
+      <Section sectionKey="focus" kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What she works on', bn: 'যেসব নিয়ে কাজ করেন' })}>
         <Chips items={person.focus.map(T)} />
       </Section>
 
-      <Section kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Five tongues', bn: 'পাঁচটি ভাষা' })}>
+      <Section sectionKey="languages" kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Five tongues', bn: 'পাঁচটি ভাষা' })}>
         <div className="grid max-w-2xl gap-6">
           {person.languages.map((l, i) => (
             <LevelBar key={l.name.en} name={T(l.name)} level={T(l.level)} value={l.v} delay={i * 0.06} />
           ))}
         </div>
       </Section>
+      </Ordered>
 
       <Footer name={T(person.name)} role={T(person.role)} links={person.links} />
     </div>

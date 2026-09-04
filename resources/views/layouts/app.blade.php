@@ -48,5 +48,10 @@
                 {{ $slot }}
             </main>
         </div>
+
+        {{-- Page-specific scripts. Plain <script> at the end of the body, so
+             anything a page's x-data names is defined before the deferred
+             module that starts Alpine runs. --}}
+        @stack('scripts')
     </body>
 </html>

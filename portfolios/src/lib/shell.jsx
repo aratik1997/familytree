@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useRef } from 'react';
+import { Children, createContext, isValidElement, useContext, useEffect, useState, useRef } from 'react';
 import { motion, useInView, useScroll, useSpring, useReducedMotion } from 'motion/react';
 
 /* ═══════════════════════════════════════════════════════════════════════
@@ -20,18 +20,101 @@ export function useT() {
   return (v) => (v && typeof v === 'object' && 'en' in v ? v[lang] : v);
 }
 
+/** A two-language value with anything blank falling back to what was built. */
+function mergeText(built, edit) {
+  if (!edit || typeof edit !== 'object') return built;
+
+  return {
+    en: (edit.en ?? '').trim() || built?.en || '',
+    bn: (edit.bn ?? '').trim() || built?.bn || '',
+  };
+}
+
+/**
+ * Lays published edits over the built page.
+ *
+ * Deliberately conservative in one direction and not the other. A blank text
+ * box means "leave the built line alone" — someone clearing a field by
+ * accident should not wipe a sentence. But a list that has been edited
+ * replaces the built list outright, including when it has been emptied:
+ * removing every role has to actually remove them, or deletion would be
+ * impossible.
+ */
+export function mergePublished(built, edits) {
+  const next = { ...built };
+  const fields = edits.fields && typeof edits.fields === 'object' ? edits.fields : edits;
+
+  for (const [key, value] of Object.entries(fields || {})) {
+    // Only what the page already has, and only the text ones: lists and the
+    // section order arrive separately and have their own rules.
+    if (!(key in next) || key === 'sections' || key === 'lists' || key === 'fields') continue;
+    if (!value || typeof value !== 'object' || Array.isArray(value)) continue;
+    if (!('en' in value || 'bn' in value)) continue;
+    next[key] = mergeText(next[key], value);
+  }
+
+  const lists = edits.lists;
+  if (lists && typeof lists === 'object') {
+    if (Array.isArray(lists.focus)) {
+      next.focus = lists.focus.map((f) => mergeText({ en: '', bn: '' }, f));
+    }
+    if (Array.isArray(lists.roles)) {
+      next.roles = lists.roles.map((r) => ({
+        icon: r.icon || '•',
+        title: mergeText({ en: '', bn: '' }, r.title),
+        org: typeof r.org === 'string' ? r.org : mergeText({ en: '', bn: '' }, r.org),
+        note: r.note ? mergeText({ en: '', bn: '' }, r.note) : undefined,
+      }));
+    }
+    if (Array.isArray(lists.education)) {
+      next.education = lists.education.map((e) => ({
+        school: e.school || '',
+        where: mergeText({ en: '', bn: '' }, e.where),
+      }));
+    }
+    if (Array.isArray(lists.languages)) {
+      next.languages = lists.languages.map((l) => ({
+        name: mergeText({ en: '', bn: '' }, l.name),
+        level: mergeText({ en: '', bn: '' }, l.level),
+        // Clamped rather than trusted: a bar is a picture of a number, and a
+        // number outside 0–100 draws a picture of nothing.
+        v: Math.max(0, Math.min(100, Number(l.v) || 0)),
+      }));
+    }
+  }
+
+  // Either form: a list of keys, or a list of { key, on }. Ordered decides
+  // what each means; this only keeps out entries that are neither.
+  if (Array.isArray(edits.sections) && edits.sections.length) {
+    const clean = edits.sections.filter(
+      (k) => typeof k === 'string' || (k && typeof k === 'object' && typeof k.key === 'string')
+    );
+    if (clean.length) next.sections = clean;
+  }
+
+  return next;
+}
+
 export function Shell({ person: built, children }) {
   const [lang, setLang] = useState('en');
   const [theme, setTheme] = useState(built.defaultTheme || 'dark');
   const [person, setPerson] = useState(built);
 
   /**
-   * Wording edited in the admin area, laid beside the page as data.json.
+   * What the owner has published, laid beside the page as data.json.
    *
    * Fetched relative to the page, never from the main site: each portfolio is
    * its own subdomain and a cross-origin request would simply be refused. If
-   * the file is absent — nothing has been published yet — the page keeps the
-   * words it was built with, so it is always complete either way.
+   * the file is absent — nothing published yet — the page keeps everything it
+   * was built with, so it is complete either way.
+   *
+   * Shape:
+   *   { fields: { name: {en,bn}, ... },
+   *     lists:  { roles: [...], education: [...], languages: [...], focus: [...] },
+   *     sections: ["speech", "roles", ...] }
+   *
+   * An older file that is just the fields at the top level still works — the
+   * first pages published were written that way.
    */
   useEffect(() => {
     // Opened straight from disk there is nothing to fetch from, and asking
@@ -44,20 +127,9 @@ export function Shell({ person: built, children }) {
       .then((r) => (r.ok ? r.json() : null))
       .then((edits) => {
         if (!live || !edits || typeof edits !== 'object') return;
-        const next = { ...built };
-        for (const [field, value] of Object.entries(edits)) {
-          if (!value || typeof value !== 'object') continue;
-          // Only fields the page already has, and only languages actually
-          // filled in — a blank box in the form must not erase a line.
-          if (!(field in next)) continue;
-          next[field] = {
-            en: value.en?.trim() || next[field]?.en,
-            bn: value.bn?.trim() || next[field]?.bn,
-          };
-        }
-        setPerson(next);
+        setPerson(mergePublished(built, edits));
       })
-      .catch(() => { /* no file, or offline: the built words stand */ });
+      .catch(() => { /* no file, or offline: the built page stands */ });
     return () => { live = false; };
   }, [built]);
 
@@ -258,9 +330,9 @@ export function Photo({ slug, alt, glyph, className = '', imgClass = '' }) {
 }
 
 /** Section wrapper: an eyebrow, a heading, and whatever follows. */
-export function Section({ id, kicker, title, children, className = '', kickerClass = '', titleClass = '' }) {
+export function Section({ id, kicker, title, children, className = '', kickerClass = '', titleClass = '', sectionKey }) {
   return (
-    <section id={id} className={`relative z-10 mx-auto w-[92vw] max-w-6xl py-16 sm:py-24 ${className}`}>
+    <section id={id} data-section={sectionKey} className={`relative z-10 mx-auto w-[92vw] max-w-6xl py-16 sm:py-24 ${className}`}>
       {(kicker || title) && (
         <Reveal className="mb-10">
           {kicker && (
@@ -444,6 +516,43 @@ export function Steps({ items, mono = false }) {
       ))}
     </div>
   );
+}
+
+
+/**
+ * Renders its sections in the order the owner chose, leaving out any they hid.
+ *
+ * Each child carries a sectionKey. The saved layout is a list of
+ * { key, on } — every section the editor offered, in the order chosen, each
+ * marked shown or hidden. Recording the hidden ones rather than just omitting
+ * them is what makes the two cases distinguishable: a section absent from the
+ * list has been added to the page since the layout was saved, and is appended
+ * so it is not invisible to everyone who saved a layout before it existed.
+ *
+ * A plain list of keys is also accepted and means exactly those, in that
+ * order — nothing else.
+ */
+export function Ordered({ person, children }) {
+  const kids = Children.toArray(children).filter(isValidElement);
+  const saved = person?.sections;
+
+  if (!Array.isArray(saved) || saved.length === 0) return kids;
+
+  const byKey = new Map(kids.map((k) => [k.props?.sectionKey, k]));
+
+  if (typeof saved[0] === 'string') {
+    return saved.map((key) => byKey.get(key)).filter(Boolean);
+  }
+
+  const mentioned = new Set(saved.map((s) => s?.key));
+  const chosen = saved
+    .filter((s) => s && s.on !== false)
+    .map((s) => byKey.get(s.key))
+    .filter(Boolean);
+
+  const added = kids.filter((k) => !mentioned.has(k.props?.sectionKey));
+
+  return [...chosen, ...added];
 }
 
 /** Footer, identical in structure everywhere, themed by the tokens. */

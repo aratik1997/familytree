@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Falling, Chips, Steps, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Falling, Chips, Steps, Ordered, useT } from '../lib/shell.jsx';
 
 /* ═══ MARIA · the drafting table ══════════════════════════════════════════
    Not one rounded corner on the page — the radius tokens are set to zero, so
@@ -89,7 +89,8 @@ export default function Maria({ person }) {
       ]} />
 
 
-      <Section kicker={T({ en: 'In her words', bn: 'তাঁর ভাষায়' })}>
+      <Ordered person={person}>
+      <Section sectionKey="speech" kicker={T({ en: 'In her words', bn: 'তাঁর ভাষায়' })}>
         <Reveal>
           <blockquote className="relative border border-base-content/30 bg-base-200/40 p-8 sm:p-12">
             <span className="absolute bottom-3 right-3 h-6 w-6 border-b border-r border-primary" aria-hidden />
@@ -100,7 +101,7 @@ export default function Maria({ person }) {
       </Section>
 
       {/* work, set out as drawing sheets */}
-      <Section kicker={T({ en: 'Work', bn: 'কাজ' })} title={T({ en: 'Two practices', bn: 'দুই ধরনের কাজ' })}>
+      <Section sectionKey="work" kicker={T({ en: 'Work', bn: 'কাজ' })} title={T({ en: 'Two practices', bn: 'দুই ধরনের কাজ' })}>
         <div className="grid gap-px border border-base-content/25 bg-base-content/25 sm:grid-cols-3">
           {person.roles.map((r, i) => (
             <Reveal key={r.title.en} delay={i * 0.09}>
@@ -131,16 +132,16 @@ export default function Maria({ person }) {
       </Section>
 
       {/* ── how a drawing gets made ── */}
-      <Section kicker={T({ en: 'Method', bn: 'পদ্ধতি' })} title={T({ en: 'How a drawing gets made', bn: 'একটি নকশা যেভাবে তৈরি হয়' })}>
+      <Section sectionKey="method" kicker={T({ en: 'Method', bn: 'পদ্ধতি' })} title={T({ en: 'How a drawing gets made', bn: 'একটি নকশা যেভাবে তৈরি হয়' })}>
         <Steps items={person.method.map((m) => ({ n: m.n, title: T(m.title), note: T(m.note) }))} mono />
       </Section>
 
       {/* ── focus ── */}
-      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What she works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
+      <Section sectionKey="focus" kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What she works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
         <Chips items={person.focus.map(T)} mono />
       </Section>
 
-      <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Schooling', bn: 'পড়াশোনা' })}>
+      <Section sectionKey="education" kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Schooling', bn: 'পড়াশোনা' })}>
         <div className="grid gap-px border border-base-content/25 bg-base-content/25 sm:grid-cols-2">
           {person.education.map((e, i) => (
             <Reveal key={e.school} delay={i * 0.09}>
@@ -154,13 +155,14 @@ export default function Maria({ person }) {
         </div>
       </Section>
 
-      <Section kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Four tongues', bn: 'চারটি ভাষা' })}>
+      <Section sectionKey="languages" kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Four tongues', bn: 'চারটি ভাষা' })}>
         <div className="grid max-w-2xl gap-6">
           {person.languages.map((l, i) => (
             <LevelBar key={l.name.en} name={T(l.name)} level={T(l.level)} value={l.v} delay={i * 0.06} mono />
           ))}
         </div>
       </Section>
+      </Ordered>
 
       <Footer name={T(person.name)} role={T(person.role)} links={person.links} />
     </div>

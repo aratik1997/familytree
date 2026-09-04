@@ -1,0 +1,1417 @@
+{
+  "ansary": {
+    "fields": {
+      "name": {
+        "en": "Mohammed Abdur Rahman Ansary",
+        "bn": "মোহাম্মদ আব্দুর রহমান আনসারী"
+      },
+      "called": {
+        "en": "Robin",
+        "bn": "রবিন"
+      },
+      "role": {
+        "en": "Chairman · Khandani Legacy",
+        "bn": "চেয়ারম্যান · খানদানি লিগ্যাসি"
+      },
+      "profession": {
+        "en": "Businessman",
+        "bn": "ব্যবসায়ী"
+      },
+      "tagline": {
+        "en": "Founder of Al-Wawah Cafe. Director at Provati Insurance Company Limited and 8 Bit Private Limited. A businessman who builds places people want to sit down in.",
+        "bn": "আল-ওয়াওয়াহ ক্যাফের প্রতিষ্ঠাতা। প্রভাতী ইন্স্যুরেন্স কোম্পানি লিমিটেড ও ৮ বিট প্রাইভেট লিমিটেডের পরিচালক। একজন ব্যবসায়ী, যিনি এমন জায়গা গড়েন যেখানে মানুষ বসতে চায়।"
+      },
+      "speech": {
+        "en": "A cafe is not sold in cups. It is sold in the hour someone chooses to spend with you instead of anywhere else. Build the hour properly and the cup takes care of itself — and that is true of every business I have ever put my name to.",
+        "bn": "ক্যাফে কাপে বিক্রি হয় না। বিক্রি হয় সেই ঘণ্টাটিতে, যেটি কেউ অন্য কোথাও না গিয়ে আপনার সঙ্গে কাটাতে বেছে নেয়। ঘণ্টাটি ঠিকভাবে গড়ুন, কাপ নিজের যত্ন নিজেই নেবে — আর আমি যত ব্যবসায় নাম দিয়েছি, সবগুলোর ক্ষেত্রেই কথাটি সত্যি।"
+      }
+    },
+    "lists": {
+      "roles": [
+        {
+          "icon": "🏛️",
+          "title": {
+            "en": "Chairman",
+            "bn": "চেয়ারম্যান"
+          },
+          "org": {
+            "en": "Khandani Legacy",
+            "bn": "Khandani Legacy"
+          },
+          "note": {
+            "en": "Head of the family's collective business interests.",
+            "bn": "পরিবারের সম্মিলিত ব্যবসায়িক স্বার্থের প্রধান।"
+          }
+        },
+        {
+          "icon": "☕",
+          "title": {
+            "en": "Owner & Founder",
+            "bn": "স্বত্বাধিকারী ও প্রতিষ্ঠাতা"
+          },
+          "org": {
+            "en": "Al-Wawah Cafe · Uttara, Dhaka",
+            "bn": "Al-Wawah Cafe · Uttara, Dhaka"
+          },
+          "note": {
+            "en": "Cafe, bistro and bakery — premium coffee, fresh bakes, a room worth staying in.",
+            "bn": "ক্যাফে, বিস্ট্রো ও বেকারি — প্রিমিয়াম কফি, তাজা বেকিং, বসে থাকার মতো এক পরিবেশ।"
+          }
+        },
+        {
+          "icon": "🛡️",
+          "title": {
+            "en": "Director",
+            "bn": "পরিচালক"
+          },
+          "org": {
+            "en": "Provati Insurance Company Limited",
+            "bn": "Provati Insurance Company Limited"
+          },
+          "note": {
+            "en": "On the board of one of the country's insurance houses.",
+            "bn": "দেশের অন্যতম বিমা প্রতিষ্ঠানের পরিচালনা পর্ষদে।"
+          }
+        },
+        {
+          "icon": "💻",
+          "title": {
+            "en": "Director",
+            "bn": "পরিচালক"
+          },
+          "org": {
+            "en": "8 Bit Private Limited",
+            "bn": "8 Bit Private Limited"
+          },
+          "note": {
+            "en": "The technology arm of the family's holdings.",
+            "bn": "পরিবারের প্রতিষ্ঠানসমূহের প্রযুক্তি শাখা।"
+          }
+        }
+      ],
+      "education": [
+        {
+          "school": "Sarsina Madrasa",
+          "where": {
+            "en": "Barisal",
+            "bn": "বরিশাল"
+          }
+        },
+        {
+          "school": "Darun Najat Siddikia Kamil Madrasa",
+          "where": {
+            "en": "Demra, Dhaka",
+            "bn": "ডেমরা, ঢাকা"
+          }
+        },
+        {
+          "school": "Daulatganj Gajimura Kamil Madrasa",
+          "where": {
+            "en": "Laksam, Cumilla",
+            "bn": "লাকসাম, কুমিল্লা"
+          }
+        },
+        {
+          "school": "Green University of Bangladesh",
+          "where": {
+            "en": "Dhaka",
+            "bn": "ঢাকা"
+          }
+        }
+      ],
+      "languages": [
+        {
+          "name": {
+            "en": "Bangla",
+            "bn": "বাংলা"
+          },
+          "level": {
+            "en": "Mother tongue",
+            "bn": "মাতৃভাষা"
+          },
+          "v": 100
+        },
+        {
+          "name": {
+            "en": "English",
+            "bn": "ইংরেজি"
+          },
+          "level": {
+            "en": "Fluent",
+            "bn": "সাবলীল"
+          },
+          "v": 95
+        },
+        {
+          "name": {
+            "en": "Farsi",
+            "bn": "ফারসি"
+          },
+          "level": {
+            "en": "Conversational",
+            "bn": "কথোপকথন"
+          },
+          "v": 55
+        },
+        {
+          "name": {
+            "en": "Hindi",
+            "bn": "হিন্দি"
+          },
+          "level": {
+            "en": "Understands",
+            "bn": "বোঝেন"
+          },
+          "v": 45
+        },
+        {
+          "name": {
+            "en": "Arabic",
+            "bn": "আরবি"
+          },
+          "level": {
+            "en": "Basic",
+            "bn": "প্রাথমিক"
+          },
+          "v": 35
+        }
+      ],
+      "focus": [
+        {
+          "en": "Hospitality",
+          "bn": "আতিথেয়তা"
+        },
+        {
+          "en": "Insurance",
+          "bn": "বিমা"
+        },
+        {
+          "en": "Technology",
+          "bn": "প্রযুক্তি"
+        },
+        {
+          "en": "Investment",
+          "bn": "বিনিয়োগ"
+        },
+        {
+          "en": "Brand building",
+          "bn": "ব্র্যান্ড গঠন"
+        },
+        {
+          "en": "Team building",
+          "bn": "দল গঠন"
+        }
+      ]
+    }
+  },
+  "ashik": {
+    "fields": {
+      "name": {
+        "en": "Mohammed Ashikur Rahman",
+        "bn": "মোহাম্মদ আশিকুর রহমান"
+      },
+      "called": {
+        "en": "Riyad",
+        "bn": "রিয়াদ"
+      },
+      "role": {
+        "en": "Director · Khandani Legacy",
+        "bn": "পরিচালক · খানদানি লিগ্যাসি"
+      },
+      "profession": {
+        "en": "Advocate & Philanthropist",
+        "bn": "আইনজীবী ও সমাজসেবী"
+      },
+      "tagline": {
+        "en": "Managing Director at 8 Bit Private Limited, proprietor of Octate Construction & Supplies, founder of Ayesha Foundation. Uses a legal training not for profit but for purpose — child rights and juvenile justice.",
+        "bn": "৮ বিট প্রাইভেট লিমিটেডের ব্যবস্থাপনা পরিচালক, অক্টেট কনস্ট্রাকশন অ্যান্ড সাপ্লাইজের স্বত্বাধিকারী, আয়েশা ফাউন্ডেশনের প্রতিষ্ঠাতা। আইনের শিক্ষা মুনাফার জন্য নয়, উদ্দেশ্যের জন্য — শিশু অধিকার ও কিশোর ন্যায়বিচার।"
+      },
+      "speech": {
+        "en": "Representing a child who has no one is not a case on a list. It is the difference between a life that gets a second chance and one that does not. True success lies in giving back to the community and fulfilling our shared human responsibilities.",
+        "bn": "যে শিশুর কেউ নেই, তার পক্ষে দাঁড়ানো কেবল তালিকার একটি মামলা নয়। এটি এমন এক জীবনের পার্থক্য গড়ে দেয়, যে দ্বিতীয় সুযোগ পায় আর যে পায় না। প্রকৃত সাফল্য সমাজকে ফিরিয়ে দেওয়ার মধ্যে, আমাদের অভিন্ন মানবিক দায়িত্ব পালনের মধ্যে।"
+      }
+    },
+    "lists": {
+      "roles": [
+        {
+          "icon": "⚖️",
+          "title": {
+            "en": "Director",
+            "bn": "পরিচালক"
+          },
+          "org": {
+            "en": "Khandani Legacy",
+            "bn": "Khandani Legacy"
+          },
+          "note": {
+            "en": "",
+            "bn": ""
+          }
+        },
+        {
+          "icon": "💻",
+          "title": {
+            "en": "Managing Director",
+            "bn": "ব্যবস্থাপনা পরিচালক"
+          },
+          "org": {
+            "en": "8 Bit Private Limited",
+            "bn": "8 Bit Private Limited"
+          },
+          "note": {
+            "en": "",
+            "bn": ""
+          }
+        },
+        {
+          "icon": "🏗️",
+          "title": {
+            "en": "Proprietor",
+            "bn": "স্বত্বাধিকারী"
+          },
+          "org": {
+            "en": "Octate Construction & Supplies",
+            "bn": "Octate Construction & Supplies"
+          },
+          "note": {
+            "en": "",
+            "bn": ""
+          }
+        },
+        {
+          "icon": "🌱",
+          "title": {
+            "en": "Founder & Chairman",
+            "bn": "প্রতিষ্ঠাতা ও চেয়ারম্যান"
+          },
+          "org": {
+            "en": "Ayesha Foundation",
+            "bn": "Ayesha Foundation"
+          },
+          "note": {
+            "en": "Non-profit for community welfare across Bangladesh.",
+            "bn": "বাংলাদেশজুড়ে সমাজকল্যাণে নিবেদিত অলাভজনক সংস্থা।"
+          }
+        }
+      ],
+      "education": [
+        {
+          "school": "Abdul Malek Institution",
+          "where": {
+            "en": "Laksam",
+            "bn": "লাকসাম"
+          }
+        },
+        {
+          "school": "Cumilla Cadet College",
+          "where": {
+            "en": "Cumilla",
+            "bn": "কুমিল্লা"
+          }
+        },
+        {
+          "school": "London College of Legal Studies",
+          "where": {
+            "en": "LLB",
+            "bn": "এলএলবি"
+          }
+        },
+        {
+          "school": "International Islamic University Malaysia",
+          "where": {
+            "en": "Business Administration",
+            "bn": "ব্যবসায় প্রশাসন"
+          }
+        }
+      ],
+      "languages": [
+        {
+          "name": {
+            "en": "Bangla",
+            "bn": "বাংলা"
+          },
+          "level": {
+            "en": "Mother tongue",
+            "bn": "মাতৃভাষা"
+          },
+          "v": 100
+        },
+        {
+          "name": {
+            "en": "English",
+            "bn": "ইংরেজি"
+          },
+          "level": {
+            "en": "Fluent",
+            "bn": "সাবলীল"
+          },
+          "v": 95
+        },
+        {
+          "name": {
+            "en": "Hindi",
+            "bn": "হিন্দি"
+          },
+          "level": {
+            "en": "Understands",
+            "bn": "বোঝেন"
+          },
+          "v": 45
+        },
+        {
+          "name": {
+            "en": "Arabic",
+            "bn": "আরবি"
+          },
+          "level": {
+            "en": "Quran reading",
+            "bn": "কুরআন পাঠ"
+          },
+          "v": 40
+        }
+      ],
+      "focus": [
+        {
+          "en": "Accounting",
+          "bn": "হিসাবরক্ষণ"
+        },
+        {
+          "en": "Market analysis",
+          "bn": "বাজার বিশ্লেষণ"
+        },
+        {
+          "en": "Market research",
+          "bn": "বাজার গবেষণা"
+        },
+        {
+          "en": "Investment management",
+          "bn": "বিনিয়োগ ব্যবস্থাপনা"
+        },
+        {
+          "en": "Export and import",
+          "bn": "আমদানি-রপ্তানি"
+        },
+        {
+          "en": "Economic analysis",
+          "bn": "অর্থনৈতিক বিশ্লেষণ"
+        },
+        {
+          "en": "Statistics",
+          "bn": "পরিসংখ্যান"
+        },
+        {
+          "en": "Juvenile law",
+          "bn": "কিশোর আইন"
+        }
+      ]
+    }
+  },
+  "morsheda": {
+    "fields": {
+      "name": {
+        "en": "Mosammat Morsheda Khatun",
+        "bn": "মোসাম্মৎ মোরশেদা খাতুন"
+      },
+      "called": {
+        "en": "",
+        "bn": ""
+      },
+      "role": {
+        "en": "Director · Khandani Legacy",
+        "bn": "পরিচালক · খানদানি লিগ্যাসি"
+      },
+      "profession": {
+        "en": "Dentist",
+        "bn": "দন্তচিকিৎসক"
+      },
+      "tagline": {
+        "en": "Trained at Pioneer Dental College and North South University, now reading for a PhD at Hokkaido University in Japan.",
+        "bn": "পাইওনিয়ার ডেন্টাল কলেজ ও নর্থ সাউথ ইউনিভার্সিটিতে প্রশিক্ষিত, বর্তমানে জাপানের হোক্কাইদো বিশ্ববিদ্যালয়ে পিএইচডি করছেন।"
+      },
+      "speech": {
+        "en": "Most people arrive at a dentist already braced for it. Half of what I do is undo that before I have picked anything up. A calm patient heals better, comes back sooner, and tells the truth about what hurts — and none of that is written in a textbook.",
+        "bn": "বেশির ভাগ মানুষ দন্তচিকিৎসকের কাছে আসেন আগে থেকেই ভয় নিয়ে। আমার কাজের অর্ধেকটাই সেই ভয় দূর করা, কিছু হাতে নেওয়ার আগেই। শান্ত রোগী দ্রুত সুস্থ হন, আবার আসেন, আর কোথায় ব্যথা তা সত্যি করে বলেন — এর কোনোটাই পাঠ্যবইয়ে লেখা নেই।"
+      }
+    },
+    "lists": {
+      "roles": [
+        {
+          "icon": "🦷",
+          "title": {
+            "en": "Clinical Dentistry",
+            "bn": "ক্লিনিক্যাল ডেন্টিস্ট্রি"
+          },
+          "org": {
+            "en": "Practice",
+            "bn": "চিকিৎসা"
+          },
+          "note": {
+            "en": "Everyday care, done gently and explained plainly.",
+            "bn": "প্রতিদিনের চিকিৎসা — যত্ন করে, সহজ করে বুঝিয়ে।"
+          }
+        },
+        {
+          "icon": "🔬",
+          "title": {
+            "en": "Research",
+            "bn": "গবেষণা"
+          },
+          "org": {
+            "en": "Hokkaido University",
+            "bn": "Hokkaido University"
+          },
+          "note": {
+            "en": "Doctoral work, where the questions get harder.",
+            "bn": "ডক্টরাল গবেষণা, যেখানে প্রশ্নগুলো আরও কঠিন।"
+          }
+        },
+        {
+          "icon": "💚",
+          "title": {
+            "en": "Patient Care",
+            "bn": "রোগীর যত্ন"
+          },
+          "org": {
+            "en": "Every day",
+            "bn": "প্রতিদিন"
+          },
+          "note": {
+            "en": "Taking the fear out of the chair, one appointment at a time.",
+            "bn": "চেয়ারের ভয় দূর করা, এক একটি অ্যাপয়েন্টমেন্টে।"
+          }
+        }
+      ],
+      "education": [
+        {
+          "school": "Pioneer Dental College",
+          "where": {
+            "en": "Dhaka · Dental surgery",
+            "bn": "ঢাকা · দন্তশল্য"
+          }
+        },
+        {
+          "school": "North South University",
+          "where": {
+            "en": "Dhaka",
+            "bn": "ঢাকা"
+          }
+        },
+        {
+          "school": "Hokkaido University",
+          "where": {
+            "en": "Japan · PhD",
+            "bn": "জাপান · পিএইচডি"
+          }
+        }
+      ],
+      "languages": [
+        {
+          "name": {
+            "en": "Bangla",
+            "bn": "বাংলা"
+          },
+          "level": {
+            "en": "Mother tongue",
+            "bn": "মাতৃভাষা"
+          },
+          "v": 100
+        },
+        {
+          "name": {
+            "en": "English",
+            "bn": "ইংরেজি"
+          },
+          "level": {
+            "en": "Fluent",
+            "bn": "সাবলীল"
+          },
+          "v": 95
+        },
+        {
+          "name": {
+            "en": "Hindi",
+            "bn": "হিন্দি"
+          },
+          "level": {
+            "en": "Understands",
+            "bn": "বোঝেন"
+          },
+          "v": 45
+        },
+        {
+          "name": {
+            "en": "Arabic",
+            "bn": "আরবি"
+          },
+          "level": {
+            "en": "Quran reading",
+            "bn": "কুরআন পাঠ"
+          },
+          "v": 40
+        },
+        {
+          "name": {
+            "en": "Japanese",
+            "bn": "জাপানি"
+          },
+          "level": {
+            "en": "Basic",
+            "bn": "প্রাথমিক"
+          },
+          "v": 30
+        }
+      ],
+      "focus": [
+        {
+          "en": "Clinical dentistry",
+          "bn": "ক্লিনিক্যাল ডেন্টিস্ট্রি"
+        },
+        {
+          "en": "Oral health",
+          "bn": "মুখগহ্বরের স্বাস্থ্য"
+        },
+        {
+          "en": "Preventive care",
+          "bn": "প্রতিরোধমূলক সেবা"
+        },
+        {
+          "en": "Dental research",
+          "bn": "দন্ত গবেষণা"
+        },
+        {
+          "en": "Patient communication",
+          "bn": "রোগীর সঙ্গে যোগাযোগ"
+        },
+        {
+          "en": "Academic writing",
+          "bn": "একাডেমিক লেখা"
+        }
+      ]
+    }
+  },
+  "atik": {
+    "fields": {
+      "name": {
+        "en": "Mohammed Atikur Rahman",
+        "bn": "মোহাম্মদ আতিকুর রহমান"
+      },
+      "called": {
+        "en": "",
+        "bn": ""
+      },
+      "role": {
+        "en": "Director · Khandani Legacy",
+        "bn": "পরিচালক · খানদানি লিগ্যাসি"
+      },
+      "profession": {
+        "en": "Full-Stack Developer & DevOps",
+        "bn": "ফুল-স্ট্যাক ডেভেলপার ও ডেভঅপস"
+      },
+      "tagline": {
+        "en": "CEO of 8 Bit Private Limited. Backend first, from the database up to the pixel.",
+        "bn": "৮ বিট প্রাইভেট লিমিটেডের সিইও। ব্যাকএন্ড আগে, ডেটাবেজ থেকে পিক্সেল পর্যন্ত।"
+      },
+      "speech": {
+        "en": "Code that works is the low bar. Code someone can still read a year from now, when I have forgotten why I wrote it and the person fixing it has never met me — that is the actual job. Everything else is typing.",
+        "bn": "কোড কাজ করলেই হলো — এটা সবচেয়ে সহজ শর্ত। এক বছর পরেও যেন কেউ পড়ে বুঝতে পারে, যখন আমি নিজেই ভুলে গেছি কেন লিখেছিলাম আর যে ঠিক করছে সে আমাকে কোনোদিন দেখেনি — সেটাই আসল কাজ। বাকিটা শুধু টাইপ করা।"
+      }
+    },
+    "lists": {
+      "roles": [
+        {
+          "icon": "⌨️",
+          "title": "CEO",
+          "org": {
+            "en": "8 Bit Private Limited",
+            "bn": "8 Bit Private Limited"
+          },
+          "note": {
+            "en": "Leads the technology company end to end.",
+            "bn": "প্রযুক্তি প্রতিষ্ঠানটির সম্পূর্ণ নেতৃত্ব দেন।"
+          }
+        },
+        {
+          "icon": "🗄️",
+          "title": {
+            "en": "Backend & DevOps",
+            "bn": "ব্যাকএন্ড ও ডেভঅপস"
+          },
+          "org": {
+            "en": "Day to day",
+            "bn": "প্রতিদিন"
+          },
+          "note": {
+            "en": "Databases, servers, security updates, keeping the lights on.",
+            "bn": "ডেটাবেজ, সার্ভার, নিরাপত্তা হালনাগাদ — আর সবকিছু সচল রাখা।"
+          }
+        },
+        {
+          "icon": "🌳",
+          "title": {
+            "en": "Director",
+            "bn": "পরিচালক"
+          },
+          "org": {
+            "en": "Khandani Legacy",
+            "bn": "Khandani Legacy"
+          },
+          "note": {
+            "en": "",
+            "bn": ""
+          }
+        }
+      ],
+      "education": [
+        {
+          "school": "Daulatganj Gazimura Kamil Madrasah",
+          "where": {
+            "en": "Dakhil · GPA 4.22",
+            "bn": "দাখিল · জিপিএ ৪.২২"
+          }
+        },
+        {
+          "school": "Eminence College",
+          "where": {
+            "en": "HSC · GPA 3.92",
+            "bn": "এইচএসসি · জিপিএ ৩.৯২"
+          }
+        },
+        {
+          "school": "North South University",
+          "where": {
+            "en": "BSc · Computer Science",
+            "bn": "বিএসসি · কম্পিউটার সায়েন্স"
+          }
+        }
+      ],
+      "languages": [
+        {
+          "name": {
+            "en": "Bangla",
+            "bn": "বাংলা"
+          },
+          "level": {
+            "en": "Mother tongue",
+            "bn": "মাতৃভাষা"
+          },
+          "v": 100
+        },
+        {
+          "name": {
+            "en": "English",
+            "bn": "ইংরেজি"
+          },
+          "level": {
+            "en": "Fluent",
+            "bn": "সাবলীল"
+          },
+          "v": 95
+        },
+        {
+          "name": {
+            "en": "Arabic",
+            "bn": "আরবি"
+          },
+          "level": {
+            "en": "Quran reading",
+            "bn": "কুরআন পাঠ"
+          },
+          "v": 45
+        }
+      ],
+      "focus": [
+        {
+          "en": "Security updates",
+          "bn": "নিরাপত্তা হালনাগাদ"
+        },
+        {
+          "en": "Database manipulation",
+          "bn": "ডেটাবেজ ব্যবস্থাপনা"
+        },
+        {
+          "en": "Problem solving",
+          "bn": "সমস্যা সমাধান"
+        },
+        {
+          "en": "Backend coding",
+          "bn": "ব্যাকএন্ড কোডিং"
+        },
+        {
+          "en": "System architecture",
+          "bn": "সিস্টেম আর্কিটেকচার"
+        },
+        {
+          "en": "Excel expertise",
+          "bn": "এক্সেল দক্ষতা"
+        }
+      ]
+    }
+  },
+  "maria": {
+    "fields": {
+      "name": {
+        "en": "Mosammat Maria Khatun",
+        "bn": "মোসাম্মৎ মারিয়া খাতুন"
+      },
+      "called": {
+        "en": "",
+        "bn": ""
+      },
+      "role": {
+        "en": "Director · Khandani Legacy",
+        "bn": "পরিচালক · খানদানি লিগ্যাসি"
+      },
+      "profession": {
+        "en": "Architect",
+        "bn": "স্থপতি"
+      },
+      "tagline": {
+        "en": "Architect, trained at North South University. Founder of Bikku Bikku — cookies baked from scratch, which turns out to be another kind of drawing that has to hold together.",
+        "bn": "স্থপতি, নর্থ সাউথ ইউনিভার্সিটিতে প্রশিক্ষিত। বিক্কু বিক্কুর প্রতিষ্ঠাতা — একেবারে শুরু থেকে বানানো কুকি, যা আসলে আরেক ধরনের নকশা, যাকে ঠিকঠাক দাঁড়াতে হয়।"
+      },
+      "speech": {
+        "en": "A building is a promise you make to people you will never meet — that the stair will hold, that the light will arrive in the afternoon, that the room will make sense without a manual. I like that the promise has to be kept in millimetres.",
+        "bn": "একটি ভবন হলো এমন মানুষদের দেওয়া প্রতিশ্রুতি, যাদের সঙ্গে আপনার কোনোদিন দেখা হবে না — সিঁড়ি ধরে রাখবে, বিকেলে আলো এসে পড়বে, ঘরটি কোনো নির্দেশিকা ছাড়াই বোঝা যাবে। আমার ভালো লাগে যে এই প্রতিশ্রুতি মিলিমিটারে রক্ষা করতে হয়।"
+      }
+    },
+    "lists": {
+      "roles": [
+        {
+          "icon": "📐",
+          "title": {
+            "en": "Architecture",
+            "bn": "স্থাপত্য"
+          },
+          "org": {
+            "en": "B.Arch · North South University",
+            "bn": "বি.আর্ক · নর্থ সাউথ ইউনিভার্সিটি"
+          },
+          "note": {
+            "en": "Drawing, detailing, and the long argument between what is wanted and what will stand.",
+            "bn": "নকশা, খুঁটিনাটি, আর যা চাওয়া হয় ও যা দাঁড়াবে — এই দুইয়ের দীর্ঘ তর্ক।"
+          }
+        },
+        {
+          "icon": "🍪",
+          "title": {
+            "en": "Founder · Bikku Bikku",
+            "bn": "প্রতিষ্ঠাতা · বিক্কু বিক্কু"
+          },
+          "org": {
+            "en": "Homemade cookies",
+            "bn": "ঘরে বানানো কুকি"
+          },
+          "note": {
+            "en": "A small bakery brand — freshly baked, nothing bought in.",
+            "bn": "ছোট এক বেকারি ব্র্যান্ড — তাজা বেকিং, বাইরে থেকে কিছুই কেনা নয়।"
+          }
+        },
+        {
+          "icon": "🏛️",
+          "title": {
+            "en": "Director",
+            "bn": "পরিচালক"
+          },
+          "org": {
+            "en": "Khandani Legacy",
+            "bn": "Khandani Legacy"
+          },
+          "note": {
+            "en": "",
+            "bn": ""
+          }
+        }
+      ],
+      "education": [
+        {
+          "school": "Uttara High School & College",
+          "where": {
+            "en": "Dhaka",
+            "bn": "ঢাকা"
+          }
+        },
+        {
+          "school": "North South University",
+          "where": {
+            "en": "Bachelor of Architecture",
+            "bn": "স্থাপত্যে স্নাতক"
+          }
+        }
+      ],
+      "languages": [
+        {
+          "name": {
+            "en": "Bangla",
+            "bn": "বাংলা"
+          },
+          "level": {
+            "en": "Mother tongue",
+            "bn": "মাতৃভাষা"
+          },
+          "v": 100
+        },
+        {
+          "name": {
+            "en": "English",
+            "bn": "ইংরেজি"
+          },
+          "level": {
+            "en": "Fluent",
+            "bn": "সাবলীল"
+          },
+          "v": 95
+        },
+        {
+          "name": {
+            "en": "French",
+            "bn": "ফরাসি"
+          },
+          "level": {
+            "en": "Intermediate",
+            "bn": "মাধ্যমিক"
+          },
+          "v": 60
+        },
+        {
+          "name": {
+            "en": "Arabic",
+            "bn": "আরবি"
+          },
+          "level": {
+            "en": "Quran reading",
+            "bn": "কুরআন পাঠ"
+          },
+          "v": 45
+        }
+      ],
+      "focus": [
+        {
+          "en": "Architectural design",
+          "bn": "স্থাপত্য নকশা"
+        },
+        {
+          "en": "Technical drawing",
+          "bn": "কারিগরি অঙ্কন"
+        },
+        {
+          "en": "Space planning",
+          "bn": "স্থান পরিকল্পনা"
+        },
+        {
+          "en": "Detailing",
+          "bn": "খুঁটিনাটি নকশা"
+        },
+        {
+          "en": "Material selection",
+          "bn": "উপকরণ নির্বাচন"
+        },
+        {
+          "en": "Recipe development",
+          "bn": "রেসিপি উন্নয়ন"
+        }
+      ]
+    }
+  },
+  "maimuna": {
+    "fields": {
+      "name": {
+        "en": "Mosammat Maimuna Khatun",
+        "bn": "মোসাম্মৎ মাইমুনা খাতুন"
+      },
+      "called": {
+        "en": "",
+        "bn": ""
+      },
+      "role": {
+        "en": "Director · Khandani Legacy",
+        "bn": "পরিচালক · খানদানি লিগ্যাসি"
+      },
+      "profession": {
+        "en": "Researcher · Economics",
+        "bn": "গবেষক · অর্থনীতি"
+      },
+      "tagline": {
+        "en": "Bachelor in Economics and two Master's degrees from Independent University, Bangladesh. Co-founder of Bikku Bikku. Spends her working life turning arguments into evidence.",
+        "bn": "ইন্ডিপেনডেন্ট ইউনিভার্সিটি, বাংলাদেশ থেকে অর্থনীতিতে স্নাতক ও দুটি স্নাতকোত্তর। বিক্কু বিক্কুর সহ-প্রতিষ্ঠাতা। কর্মজীবন কাটে যুক্তিকে প্রমাণে রূপ দিতে।"
+      },
+      "speech": {
+        "en": "Everyone already knows what they think before the data arrives. The whole discipline is the habit of letting the numbers say no to you — and saying so out loud afterwards, even when it was your own idea they refused.",
+        "bn": "উপাত্ত আসার আগেই সবাই জানে তারা কী ভাবে। গোটা বিদ্যাটাই এই অভ্যাসের — সংখ্যাকে আপনাকে 'না' বলতে দেওয়া, আর পরে সেটা প্রকাশ্যে বলা, এমনকি যখন সেই 'না' আপনার নিজের ধারণাকেই বলা হয়েছে।"
+      }
+    },
+    "lists": {
+      "roles": [
+        {
+          "icon": "📊",
+          "title": {
+            "en": "Researcher",
+            "bn": "গবেষক"
+          },
+          "org": {
+            "en": "Economics",
+            "bn": "অর্থনীতি"
+          },
+          "note": {
+            "en": "Evidence, method, and the patience to be proved wrong.",
+            "bn": "প্রমাণ, পদ্ধতি, আর ভুল প্রমাণিত হওয়ার ধৈর্য।"
+          }
+        },
+        {
+          "icon": "🍪",
+          "title": {
+            "en": "Co-Founder · Bikku Bikku",
+            "bn": "সহ-প্রতিষ্ঠাতা · বিক্কু বিক্কু"
+          },
+          "org": {
+            "en": "Homemade cookies",
+            "bn": "ঘরে বানানো কুকি"
+          },
+          "note": {
+            "en": "Baked fresh, from scratch, every time.",
+            "bn": "প্রতিবারই একেবারে শুরু থেকে, তাজা বেক করা।"
+          }
+        },
+        {
+          "icon": "🏛️",
+          "title": {
+            "en": "Director",
+            "bn": "পরিচালক"
+          },
+          "org": {
+            "en": "Khandani Legacy",
+            "bn": "Khandani Legacy"
+          },
+          "note": {
+            "en": "",
+            "bn": ""
+          }
+        }
+      ],
+      "education": [
+        {
+          "school": "Independent University, Bangladesh",
+          "where": {
+            "en": "Bachelor · Economics",
+            "bn": "স্নাতক · অর্থনীতি"
+          }
+        },
+        {
+          "school": "Independent University, Bangladesh",
+          "where": {
+            "en": "Master's",
+            "bn": "স্নাতকোত্তর"
+          }
+        },
+        {
+          "school": "Independent University, Bangladesh",
+          "where": {
+            "en": "Second Master's",
+            "bn": "দ্বিতীয় স্নাতকোত্তর"
+          }
+        }
+      ],
+      "languages": [
+        {
+          "name": {
+            "en": "Bangla",
+            "bn": "বাংলা"
+          },
+          "level": {
+            "en": "Mother tongue",
+            "bn": "মাতৃভাষা"
+          },
+          "v": 100
+        },
+        {
+          "name": {
+            "en": "English",
+            "bn": "ইংরেজি"
+          },
+          "level": {
+            "en": "Fluent",
+            "bn": "সাবলীল"
+          },
+          "v": 95
+        },
+        {
+          "name": {
+            "en": "French",
+            "bn": "ফরাসি"
+          },
+          "level": {
+            "en": "Intermediate",
+            "bn": "মাধ্যমিক"
+          },
+          "v": 60
+        },
+        {
+          "name": {
+            "en": "Arabic",
+            "bn": "আরবি"
+          },
+          "level": {
+            "en": "Quran reading",
+            "bn": "কুরআন পাঠ"
+          },
+          "v": 45
+        }
+      ],
+      "focus": [
+        {
+          "en": "Economic analysis",
+          "bn": "অর্থনৈতিক বিশ্লেষণ"
+        },
+        {
+          "en": "Statistics",
+          "bn": "পরিসংখ্যান"
+        },
+        {
+          "en": "Survey design",
+          "bn": "জরিপ নকশা"
+        },
+        {
+          "en": "Data cleaning",
+          "bn": "উপাত্ত পরিশোধন"
+        },
+        {
+          "en": "Academic writing",
+          "bn": "একাডেমিক লেখা"
+        },
+        {
+          "en": "Field research",
+          "bn": "মাঠ গবেষণা"
+        }
+      ]
+    }
+  },
+  "anas": {
+    "fields": {
+      "name": {
+        "en": "Mohammed Azizur Rahman Anas",
+        "bn": "মোহাম্মদ আজিজুর রহমান আনাস"
+      },
+      "called": {
+        "en": "",
+        "bn": ""
+      },
+      "role": {
+        "en": "Director · Khandani Legacy",
+        "bn": "পরিচালক · খানদানি লিগ্যাসি"
+      },
+      "profession": {
+        "en": "Pilot",
+        "bn": "পাইলট"
+      },
+      "tagline": {
+        "en": "Pilot, trained at the Malaysian Flying Academy. Marketing Officer at Al-Wawah. Spends his working life somewhere between a checklist and a horizon.",
+        "bn": "পাইলট, মালয়েশিয়ান ফ্লাইং একাডেমিতে প্রশিক্ষিত। আল-ওয়াওয়াহর মার্কেটিং অফিসার। কর্মজীবন কাটে চেকলিস্ট আর দিগন্তের মাঝামাঝি কোথাও।"
+      },
+      "speech": {
+        "en": "Flying is not the thrill people imagine. It is the same checklist, read the same way, on the good days and the bad ones — and that is exactly why it is safe. The discipline is the romance. The view is a bonus.",
+        "bn": "ওড়া মানে সেই রোমাঞ্চ নয়, যা মানুষ কল্পনা করে। এটি একই চেকলিস্ট, একইভাবে পড়া — ভালো দিনেও, খারাপ দিনেও। আর ঠিক সে কারণেই এটি নিরাপদ। নিয়মানুবর্তিতাই এখানে রোমান্স। দৃশ্যটা উপরি পাওনা।"
+      }
+    },
+    "lists": {
+      "roles": [
+        {
+          "icon": "✈️",
+          "title": {
+            "en": "Pilot",
+            "bn": "পাইলট"
+          },
+          "org": {
+            "en": "Malaysian Flying Academy Sdn Bhd",
+            "bn": "Malaysian Flying Academy Sdn Bhd"
+          },
+          "note": {
+            "en": "",
+            "bn": ""
+          }
+        },
+        {
+          "icon": "📣",
+          "title": {
+            "en": "Marketing Officer",
+            "bn": "মার্কেটিং অফিসার"
+          },
+          "org": {
+            "en": "Al-Wawah",
+            "bn": "Al-Wawah"
+          },
+          "note": {
+            "en": "Bringing people through the door of the family's cafe.",
+            "bn": "পরিবারের ক্যাফের দরজা দিয়ে মানুষ নিয়ে আসা।"
+          }
+        },
+        {
+          "icon": "🏛️",
+          "title": {
+            "en": "Director",
+            "bn": "পরিচালক"
+          },
+          "org": {
+            "en": "Khandani Legacy",
+            "bn": "Khandani Legacy"
+          },
+          "note": {
+            "en": "",
+            "bn": ""
+          }
+        }
+      ],
+      "education": [
+        {
+          "school": "Mastermind School",
+          "where": {
+            "en": "Dhaka",
+            "bn": "ঢাকা"
+          }
+        },
+        {
+          "school": "Malaysian Flying Academy",
+          "where": {
+            "en": "Sdn Bhd · Malaysia",
+            "bn": "এসডিএন বিএইচডি · মালয়েশিয়া"
+          }
+        }
+      ],
+      "languages": [
+        {
+          "name": {
+            "en": "Bangla",
+            "bn": "বাংলা"
+          },
+          "level": {
+            "en": "Mother tongue",
+            "bn": "মাতৃভাষা"
+          },
+          "v": 100
+        },
+        {
+          "name": {
+            "en": "English",
+            "bn": "ইংরেজি"
+          },
+          "level": {
+            "en": "Fluent",
+            "bn": "সাবলীল"
+          },
+          "v": 95
+        },
+        {
+          "name": {
+            "en": "Arabic",
+            "bn": "আরবি"
+          },
+          "level": {
+            "en": "Quran reading",
+            "bn": "কুরআন পাঠ"
+          },
+          "v": 45
+        },
+        {
+          "name": {
+            "en": "Malay",
+            "bn": "মালয়"
+          },
+          "level": {
+            "en": "Basic",
+            "bn": "প্রাথমিক"
+          },
+          "v": 30
+        }
+      ],
+      "focus": [
+        {
+          "en": "Flight operations",
+          "bn": "ফ্লাইট পরিচালনা"
+        },
+        {
+          "en": "Navigation",
+          "bn": "নেভিগেশন"
+        },
+        {
+          "en": "Standard procedures",
+          "bn": "প্রমিত প্রক্রিয়া"
+        },
+        {
+          "en": "Crew coordination",
+          "bn": "ক্রু সমন্বয়"
+        },
+        {
+          "en": "Brand marketing",
+          "bn": "ব্র্যান্ড মার্কেটিং"
+        },
+        {
+          "en": "Customer outreach",
+          "bn": "গ্রাহক সংযোগ"
+        }
+      ]
+    }
+  },
+  "arafat": {
+    "fields": {
+      "name": {
+        "en": "Mohammed Ahmadur Rahman Arafat",
+        "bn": "মোহাম্মদ আহমাদুর রহমান আরাফাত"
+      },
+      "called": {
+        "en": "",
+        "bn": ""
+      },
+      "role": {
+        "en": "Director · Khandani Legacy",
+        "bn": "পরিচালক · খানদানি লিগ্যাসি"
+      },
+      "profession": {
+        "en": "Homesteader",
+        "bn": "হোমস্টেডার"
+      },
+      "tagline": {
+        "en": "Co-founder of Bikku Bikku. Works at the pace things actually grow at, which is slower than anybody would like and exactly as fast as it needs to be.",
+        "bn": "বিক্কু বিক্কুর সহ-প্রতিষ্ঠাতা। কাজ করেন সেই গতিতে, যে গতিতে জিনিস সত্যিই বাড়ে — যা সবার চাওয়ার চেয়ে ধীর, আর ঠিক ততটাই দ্রুত যতটা দরকার।"
+      },
+      "speech": {
+        "en": "Nothing on a homestead can be hurried, and that is the whole lesson. You do the work in the right week or you do without for the year. Everything else I have ever been taught about patience was theory next to that.",
+        "bn": "খামারে কোনো কিছুই তাড়াহুড়ো করা যায় না, আর এটাই পুরো শিক্ষা। ঠিক সপ্তাহে কাজটি করবেন, নয়তো সারা বছর তা ছাড়াই কাটাবেন। ধৈর্য নিয়ে আর যা কিছু শিখেছি, তার পাশে সেসব কেবল তত্ত্ব।"
+      }
+    },
+    "lists": {
+      "roles": [
+        {
+          "icon": "🌱",
+          "title": {
+            "en": "Homesteading",
+            "bn": "হোমস্টেডিং"
+          },
+          "org": {
+            "en": "The land",
+            "bn": "জমি"
+          },
+          "note": {
+            "en": "Growing, keeping, mending — the work that does not announce itself.",
+            "bn": "ফলানো, দেখাশোনা, মেরামত — যে কাজ নিজের কথা জানান দেয় না।"
+          }
+        },
+        {
+          "icon": "🍪",
+          "title": {
+            "en": "Co-Founder · Bikku Bikku",
+            "bn": "সহ-প্রতিষ্ঠাতা · বিক্কু বিক্কু"
+          },
+          "org": {
+            "en": "Homemade cookies",
+            "bn": "ঘরে বানানো কুকি"
+          },
+          "note": {
+            "en": "Baked from scratch, fresh, for anytime munching.",
+            "bn": "একেবারে শুরু থেকে বানানো, তাজা — যখন খুশি খাওয়ার জন্য।"
+          }
+        },
+        {
+          "icon": "🏡",
+          "title": {
+            "en": "Director",
+            "bn": "পরিচালক"
+          },
+          "org": {
+            "en": "Khandani Legacy",
+            "bn": "Khandani Legacy"
+          },
+          "note": {
+            "en": "",
+            "bn": ""
+          }
+        }
+      ],
+      "education": [
+        {
+          "school": "Mastermind School",
+          "where": {
+            "en": "Dhaka",
+            "bn": "ঢাকা"
+          }
+        },
+        {
+          "school": "Yell International",
+          "where": {
+            "en": "Further study",
+            "bn": "উচ্চতর পড়াশোনা"
+          }
+        }
+      ],
+      "languages": [
+        {
+          "name": {
+            "en": "Bangla",
+            "bn": "বাংলা"
+          },
+          "level": {
+            "en": "Mother tongue",
+            "bn": "মাতৃভাষা"
+          },
+          "v": 100
+        },
+        {
+          "name": {
+            "en": "English",
+            "bn": "ইংরেজি"
+          },
+          "level": {
+            "en": "Fluent",
+            "bn": "সাবলীল"
+          },
+          "v": 95
+        },
+        {
+          "name": {
+            "en": "French",
+            "bn": "ফরাসি"
+          },
+          "level": {
+            "en": "Intermediate",
+            "bn": "মাধ্যমিক"
+          },
+          "v": 60
+        },
+        {
+          "name": {
+            "en": "Arabic",
+            "bn": "আরবি"
+          },
+          "level": {
+            "en": "Quran reading",
+            "bn": "কুরআন পাঠ"
+          },
+          "v": 45
+        }
+      ],
+      "focus": [
+        {
+          "en": "Growing",
+          "bn": "চাষ"
+        },
+        {
+          "en": "Animal keeping",
+          "bn": "পশুপালন"
+        },
+        {
+          "en": "Preserving",
+          "bn": "সংরক্ষণ"
+        },
+        {
+          "en": "Repair and maintenance",
+          "bn": "মেরামত ও রক্ষণাবেক্ষণ"
+        },
+        {
+          "en": "Baking",
+          "bn": "বেকিং"
+        },
+        {
+          "en": "Small-batch production",
+          "bn": "অল্প পরিমাণে উৎপাদন"
+        }
+      ]
+    }
+  }
+}

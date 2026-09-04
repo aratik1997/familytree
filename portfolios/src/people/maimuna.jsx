@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { motion, useInView, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Counter, Falling, Chips, Steps, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, FactBand, Counter, Falling, Chips, Steps, Ordered, useT } from '../lib/shell.jsx';
 
 /* ═══ MAIMUNA · the working paper ═════════════════════════════════════════
    Set like something printed: ruled paper, a serif face, and figures that are
@@ -80,7 +80,8 @@ export default function Maimuna({ person }) {
       ]} />
 
 
-      <Section kicker={T({ en: 'In her words', bn: 'তাঁর ভাষায়' })}>
+      <Ordered person={person}>
+      <Section sectionKey="speech" kicker={T({ en: 'In her words', bn: 'তাঁর ভাষায়' })}>
         <Reveal>
           <blockquote className="border border-l-4 border-base-content/12 border-l-primary bg-base-100 p-8 shadow-sm sm:p-12">
             <p className="font-display text-xl italic leading-relaxed sm:text-2xl lg:text-3xl">{T(person.speech)}</p>
@@ -89,7 +90,7 @@ export default function Maimuna({ person }) {
         </Reveal>
       </Section>
 
-      <Section kicker={T({ en: 'Work', bn: 'কাজ' })} title={T({ en: 'Research, and a bakery', bn: 'গবেষণা, আর এক বেকারি' })}>
+      <Section sectionKey="work" kicker={T({ en: 'Work', bn: 'কাজ' })} title={T({ en: 'Research, and a bakery', bn: 'গবেষণা, আর এক বেকারি' })}>
         <div className="grid gap-5 sm:grid-cols-3">
           {person.roles.map((r, i) => (
             <Reveal key={r.title.en} delay={i * 0.09}>
@@ -120,16 +121,16 @@ export default function Maimuna({ person }) {
 
       {/* three degrees from one university — a footnote-ish list */}
       {/* ── how a finding gets made ── */}
-      <Section kicker={T({ en: 'Method', bn: 'পদ্ধতি' })} title={T({ en: 'How a finding gets made', bn: 'একটি সিদ্ধান্ত যেভাবে আসে' })}>
+      <Section sectionKey="method" kicker={T({ en: 'Method', bn: 'পদ্ধতি' })} title={T({ en: 'How a finding gets made', bn: 'একটি সিদ্ধান্ত যেভাবে আসে' })}>
         <Steps items={person.method.map((m) => ({ n: m.n, title: T(m.title), note: T(m.note) }))} mono />
       </Section>
 
       {/* ── focus ── */}
-      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What she works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
+      <Section sectionKey="focus" kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What she works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
         <Chips items={person.focus.map(T)} />
       </Section>
 
-      <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'One university, three degrees', bn: 'এক বিশ্ববিদ্যালয়, তিন ডিগ্রি' })}>
+      <Section sectionKey="education" kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'One university, three degrees', bn: 'এক বিশ্ববিদ্যালয়, তিন ডিগ্রি' })}>
         <ol className="max-w-3xl border-t border-base-content/15">
           {person.education.map((e, i) => (
             <Reveal key={i} delay={i * 0.08} as="li">
@@ -145,13 +146,14 @@ export default function Maimuna({ person }) {
         </ol>
       </Section>
 
-      <Section kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Four tongues', bn: 'চারটি ভাষা' })}>
+      <Section sectionKey="languages" kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Four tongues', bn: 'চারটি ভাষা' })}>
         <div className="grid max-w-2xl gap-6">
           {person.languages.map((l, i) => (
             <LevelBar key={l.name.en} name={T(l.name)} level={T(l.level)} value={l.v} delay={i * 0.06} mono />
           ))}
         </div>
       </Section>
+      </Ordered>
 
       <Footer name={T(person.name)} role={T(person.role)} links={person.links} />
     </div>

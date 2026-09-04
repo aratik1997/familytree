@@ -27,6 +27,23 @@
                 </div>
             @endif
 
+            @if ($portfolio = App\Support\PortfolioOwners::slugFor(auth()->user()))
+                <div class="card card-hover p-6 flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <p class="eyebrow">{{ __('Your own website') }}</p>
+                        <p class="font-serif text-xl mt-1">{{ $portfolio }}.khandanilegacy.com</p>
+                        <p class="text-sm mt-0.5" style="color: var(--text-mid)">
+                            {{ __('Change what it says, what it lists, and the order it reads in.') }}
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="https://{{ $portfolio }}.khandanilegacy.com/" target="_blank" rel="noopener"
+                           class="btn btn-secondary">{{ __('View') }}</a>
+                        <a href="{{ route('my-portfolio.edit') }}" class="btn btn-primary">{{ __('Edit portfolio') }}</a>
+                    </div>
+                </div>
+            @endif
+
             <div class="card p-6">
                 <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
                     <div>

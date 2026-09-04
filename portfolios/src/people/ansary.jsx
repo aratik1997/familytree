@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react';
 import { useRef } from 'react';
-import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, TiltCard, FactBand, Falling, Chips, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, Words, LevelBar, Photo, Section, Footer, TiltCard, FactBand, Falling, Chips, Ordered, useT } from '../lib/shell.jsx';
 
 /* ═══ ANSARY · the cafe ═══════════════════════════════════════════════════
    Warm, unhurried, serif. The hero is a cup: a round portrait inside a ring
@@ -100,7 +100,8 @@ export default function Ansary({ person }) {
 
 
       {/* ── speech ── */}
-      <Section kicker={T({ en: 'In his words', bn: 'তাঁর ভাষায়' })}>
+      <Ordered person={person}>
+      <Section sectionKey="speech" kicker={T({ en: 'In his words', bn: 'তাঁর ভাষায়' })}>
         <Reveal>
           <blockquote className="relative rounded-r-box border border-l-4 border-base-content/10 border-l-primary bg-base-200/60 p-8 sm:p-12">
             <span className="pointer-events-none absolute -top-4 left-5 font-display text-8xl leading-none text-primary/25" aria-hidden>&ldquo;</span>
@@ -112,7 +113,7 @@ export default function Ansary({ person }) {
 
 
       {/* ── positions ── */}
-      <Section id="work" kicker={T({ en: 'Positions', bn: 'দায়িত্ব' })} title={T({ en: 'Where he sits', bn: 'যেখানে তিনি আছেন' })}>
+      <Section sectionKey="positions" id="work" kicker={T({ en: 'Positions', bn: 'দায়িত্ব' })} title={T({ en: 'Where he sits', bn: 'যেখানে তিনি আছেন' })}>
         <div className="grid gap-5 sm:grid-cols-2">
           {person.roles.map((r, i) => (
             <Reveal key={r.org} delay={i * 0.08}>
@@ -132,7 +133,7 @@ export default function Ansary({ person }) {
       </Section>
 
       {/* ── the cafe he built, in its own words ── */}
-      <Section kicker={T({ en: 'Al-Wawah', bn: 'আল-ওয়াওয়াহ' })} title={T({ en: 'The room he built', bn: 'যে ঘরটি তিনি গড়েছেন' })}>
+      <Section sectionKey="venue" kicker={T({ en: 'Al-Wawah', bn: 'আল-ওয়াওয়াহ' })} title={T({ en: 'The room he built', bn: 'যে ঘরটি তিনি গড়েছেন' })}>
         <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
           <Reveal>
             <div className="h-full rounded-box border border-base-content/10 bg-base-200/50 p-7 sm:p-9">
@@ -162,12 +163,12 @@ export default function Ansary({ person }) {
       </Section>
 
       {/* ── what he works in ── */}
-      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What he works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
+      <Section sectionKey="focus" kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'What he works in', bn: 'যেসব ক্ষেত্রে কাজ করেন' })}>
         <Chips items={person.focus.map(T)} />
       </Section>
 
       {/* ── education, as a timeline ── */}
-      <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Madrasa to boardroom', bn: 'মাদ্রাসা থেকে বোর্ডরুম' })}>
+      <Section sectionKey="education" kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Madrasa to boardroom', bn: 'মাদ্রাসা থেকে বোর্ডরুম' })}>
         <ol className="relative ml-3 border-l border-primary/35 pl-8">
           {person.education.map((e, i) => (
             <Reveal key={e.school} delay={i * 0.08} as="li" className="relative pb-9 last:pb-0">
@@ -180,13 +181,14 @@ export default function Ansary({ person }) {
       </Section>
 
       {/* ── languages ── */}
-      <Section kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Five tongues', bn: 'পাঁচটি ভাষা' })}>
+      <Section sectionKey="languages" kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Five tongues', bn: 'পাঁচটি ভাষা' })}>
         <div className="grid max-w-2xl gap-6">
           {person.languages.map((l, i) => (
             <LevelBar key={l.name.en} name={T(l.name)} level={T(l.level)} value={l.v} delay={i * 0.06} />
           ))}
         </div>
       </Section>
+      </Ordered>
 
       <Footer name={T(person.name)} role={T(person.role)} links={person.links} />
     </div>

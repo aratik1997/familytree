@@ -7,6 +7,7 @@ use App\Http\Controllers\FieldPrivacyController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\MailDiagnosticController;
 use App\Http\Controllers\ModeratorController;
+use App\Http\Controllers\MyPortfolioController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\PortfolioController;
@@ -41,6 +42,12 @@ Route::get('/dashboard', function () {
 })->middleware('auth')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // A person editing their own portfolio. No slug in the address: which page
+    // this is follows from who is signed in, so there is nothing to change in
+    // the URL that would reach somebody else's.
+    Route::get('/my-portfolio', [MyPortfolioController::class, 'edit'])->name('my-portfolio.edit');
+    Route::patch('/my-portfolio', [MyPortfolioController::class, 'update'])->name('my-portfolio.update');
+
     // Breeze's own account settings (login email / password) — distinct from
     // the tree profile below, which is the person's public-facing record.
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

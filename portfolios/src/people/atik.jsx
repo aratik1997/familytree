@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { Nav, ScrollBar, Reveal, LevelBar, Photo, Section, Footer, FactBand, useShell, Chips, useT } from '../lib/shell.jsx';
+import { Nav, ScrollBar, Reveal, LevelBar, Photo, Section, Footer, FactBand, useShell, Chips, Ordered, useT } from '../lib/shell.jsx';
 
 /* ═══ ATIK · the terminal ═════════════════════════════════════════════════
    Monospace wherever it can be. The hero is a shell that answers `whoami` by
@@ -135,7 +135,8 @@ export default function Atik({ person }) {
       ]} />
 
 
-      <Section kicker={T({ en: 'In his words', bn: 'তাঁর ভাষায়' })}>
+      <Ordered person={person}>
+      <Section sectionKey="speech" kicker={T({ en: 'In his words', bn: 'তাঁর ভাষায়' })}>
         <Reveal>
           <div className="relative overflow-hidden rounded-box border border-base-content/12 bg-base-200/50 p-8 sm:p-12">
             <span className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-primary to-secondary" aria-hidden />
@@ -145,7 +146,7 @@ export default function Atik({ person }) {
         </Reveal>
       </Section>
 
-      <Section kicker={T({ en: 'Roles', bn: 'দায়িত্ব' })} title={T({ en: 'What he runs', bn: 'যা তিনি চালান' })}>
+      <Section sectionKey="roles" kicker={T({ en: 'Roles', bn: 'দায়িত্ব' })} title={T({ en: 'What he runs', bn: 'যা তিনি চালান' })}>
         <div className="grid gap-4 sm:grid-cols-3">
           {person.roles.map((r, i) => (
             <Reveal key={r.title.en} delay={i * 0.08}>
@@ -163,7 +164,7 @@ export default function Atik({ person }) {
         </div>
       </Section>
 
-      <Section kicker={T({ en: 'Stack', bn: 'প্রযুক্তি' })} title={T({ en: 'Tools of the trade', bn: 'কাজের হাতিয়ার' })}>
+      <Section sectionKey="stack" kicker={T({ en: 'Stack', bn: 'প্রযুক্তি' })} title={T({ en: 'Tools of the trade', bn: 'কাজের হাতিয়ার' })}>
         <div className="grid max-w-3xl gap-5">
           {person.skills.map((s, i) => (
             <LevelBar key={s.label} name={s.label} level={String(s.v)} value={s.v} delay={i * 0.05} mono />
@@ -177,7 +178,7 @@ export default function Atik({ person }) {
       </Section>
 
       {/* ── what he has actually shipped ── */}
-      <Section kicker={T({ en: 'Projects', bn: 'প্রকল্প' })} title={T({ en: 'Things he has shipped', bn: 'যা তিনি বানিয়েছেন' })}>
+      <Section sectionKey="projects" kicker={T({ en: 'Projects', bn: 'প্রকল্প' })} title={T({ en: 'Things he has shipped', bn: 'যা তিনি বানিয়েছেন' })}>
         <div className="grid gap-4 sm:grid-cols-2">
           {person.projects.map((pr, i) => (
             <Reveal key={pr.name} delay={i * 0.09}>
@@ -199,7 +200,7 @@ export default function Atik({ person }) {
       </Section>
 
       {/* ── the day job, in bullets ── */}
-      <Section kicker={T({ en: 'Experience', bn: 'অভিজ্ঞতা' })} title={T({ en: 'The day job', bn: 'প্রতিদিনের কাজ' })}>
+      <Section sectionKey="experience" kicker={T({ en: 'Experience', bn: 'অভিজ্ঞতা' })} title={T({ en: 'The day job', bn: 'প্রতিদিনের কাজ' })}>
         <Reveal>
           <div className="rounded-box border border-base-content/12 bg-base-200/40 p-7">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -221,7 +222,7 @@ export default function Atik({ person }) {
       </Section>
 
       {/* ── focus, hobbies, and where he has been ── */}
-      <Section kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'Beyond the stack', bn: 'কোডের বাইরে' })}>
+      <Section sectionKey="focus" kicker={T({ en: 'Focus', bn: 'কাজের ক্ষেত্র' })} title={T({ en: 'Beyond the stack', bn: 'কোডের বাইরে' })}>
         <Chips items={person.focus.map(T)} mono />
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           <Reveal>
@@ -247,7 +248,7 @@ export default function Atik({ person }) {
         </div>
       </Section>
 
-      <Section kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Madrasa to CSE', bn: 'মাদ্রাসা থেকে সিএসই' })}>
+      <Section sectionKey="education" kicker={T({ en: 'Education', bn: 'শিক্ষা' })} title={T({ en: 'Madrasa to CSE', bn: 'মাদ্রাসা থেকে সিএসই' })}>
         <div className="grid gap-4 sm:grid-cols-3">
           {person.education.map((e, i) => (
             <Reveal key={e.school} delay={i * 0.09}>
@@ -261,13 +262,14 @@ export default function Atik({ person }) {
         </div>
       </Section>
 
-      <Section kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Three tongues', bn: 'তিনটি ভাষা' })}>
+      <Section sectionKey="languages" kicker={T({ en: 'Languages', bn: 'ভাষা' })} title={T({ en: 'Three tongues', bn: 'তিনটি ভাষা' })}>
         <div className="grid max-w-2xl gap-6">
           {person.languages.map((l, i) => (
             <LevelBar key={l.name.en} name={T(l.name)} level={T(l.level)} value={l.v} delay={i * 0.06} mono />
           ))}
         </div>
       </Section>
+      </Ordered>
 
       <Footer name={T(person.name)} role={T(person.role)} links={person.links} />
     </div>
