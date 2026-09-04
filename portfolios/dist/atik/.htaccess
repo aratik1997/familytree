@@ -1,0 +1,10 @@
+# This folder is a static page, not part of the Laravel application it sits
+# inside. This host reads .htaccess from directories above the document root,
+# and the project root's file rewrites every request into public/ — from here
+# that is a loop, and a loop is the 500 that was being served for every path,
+# including files that do not exist.
+#
+# Switching the engine off stops that inheritance. Nothing here needs rewriting.
+RewriteEngine Off
+Options -Indexes
+DirectoryIndex index.html

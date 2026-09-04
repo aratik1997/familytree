@@ -20,7 +20,8 @@ HOST="${SSH_HOST:-8bit.com.bd@ssh.gb.stackcp.com}"
 # .htaccess serves a real directory before it rewrites to index.php, so a
 # folder here is served as-is. Point REMOTE at the subdomain roots once the
 # panel side is sorted.
-REMOTE="${REMOTE:-khandanilegacy/public/p}"
+# The subdomains' own document roots, as configured in the panel.
+REMOTE="${REMOTE:-khandanilegacy/portfolios/dist}"
 
 PEOPLE=("$@")
 if [ ${#PEOPLE[@]} -eq 0 ]; then
@@ -39,6 +40,9 @@ for p in "${PEOPLE[@]}"; do
   printf '%-9s ' "$p"
   ssh "${SSH_OPTS[@]}" "$HOST" "mkdir -p ~/$REMOTE/$p/img"
   scp "${SSH_OPTS[@]}" -q "$src/index.html" "$HOST:~/$REMOTE/$p/index.html"
+  # Without this the Laravel .htaccess above these folders is inherited and
+  # rewrites every request into public/ — a loop, served as a 500.
+  scp "${SSH_OPTS[@]}" -q "$src/.htaccess" "$HOST:~/$REMOTE/$p/.htaccess"
 
   # Only this person's photograph, and only if one has been added yet.
   if compgen -G "$src/img/$p.jpg" > /dev/null; then
@@ -54,4 +58,4 @@ done
 
 echo
 echo "Uploaded to ~/$REMOTE/<name>/ on $HOST"
-echo "Live at https://khandanilegacy.com/p/<name>/"
+echo "Live at https://<name>.khandanilegacy.com/"
