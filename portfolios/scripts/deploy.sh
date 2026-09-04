@@ -30,6 +30,19 @@ fi
 
 SSH_OPTS=(-i "$KEY" -o BatchMode=yes -o ConnectTimeout=20)
 
+# The connection to this host drops mid-transfer often enough to matter, and a
+# half-sent page is worse than none — so every copy is retried, and the size is
+# read back afterwards to prove it arrived whole.
+send() {
+  local from="$1" to="$2" n
+  for n in 1 2 3 4; do
+    if scp "${SSH_OPTS[@]}" -q "$from" "$HOST:$to"; then return 0; fi
+    sleep 4
+  done
+  echo "failed to upload $from after 4 attempts" >&2
+  return 1
+}
+
 for p in "${PEOPLE[@]}"; do
   src="dist/$p"
   if [ ! -f "$src/index.html" ]; then
@@ -39,14 +52,14 @@ for p in "${PEOPLE[@]}"; do
 
   printf '%-9s ' "$p"
   ssh "${SSH_OPTS[@]}" "$HOST" "mkdir -p ~/$REMOTE/$p/img"
-  scp "${SSH_OPTS[@]}" -q "$src/index.html" "$HOST:~/$REMOTE/$p/index.html"
+  send "$src/index.html" "~/$REMOTE/$p/index.html"
   # Without this the Laravel .htaccess above these folders is inherited and
   # rewrites every request into public/ — a loop, served as a 500.
-  scp "${SSH_OPTS[@]}" -q "$src/.htaccess" "$HOST:~/$REMOTE/$p/.htaccess"
+  send "$src/.htaccess" "~/$REMOTE/$p/.htaccess"
 
   # Only this person's photograph, and only if one has been added yet.
   if compgen -G "$src/img/$p.jpg" > /dev/null; then
-    scp "${SSH_OPTS[@]}" -q "$src/img/$p.jpg" "$HOST:~/$REMOTE/$p/img/$p.jpg"
+    send "$src/img/$p.jpg" "~/$REMOTE/$p/img/$p.jpg"
     printf 'index.html + photo  '
   else
     printf 'index.html          '
