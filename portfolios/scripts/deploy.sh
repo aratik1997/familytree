@@ -12,7 +12,15 @@ set -euo pipefail
 
 KEY="${SSH_KEY:-$HOME/.ssh/alwawah_stackcp}"
 HOST="${SSH_HOST:-8bit.com.bd@ssh.gb.stackcp.com}"
-REMOTE="public_html"
+# Under the main site's document root, not a subdomain folder.
+#
+# The eight subdomains return 500 for every path, including files that do not
+# exist — Apache never reaches the filesystem, so their vhosts are broken and
+# no file placement fixes it. The main site works, and Laravel's public
+# .htaccess serves a real directory before it rewrites to index.php, so a
+# folder here is served as-is. Point REMOTE at the subdomain roots once the
+# panel side is sorted.
+REMOTE="${REMOTE:-khandanilegacy/public/p}"
 
 PEOPLE=("$@")
 if [ ${#PEOPLE[@]} -eq 0 ]; then
@@ -46,4 +54,4 @@ done
 
 echo
 echo "Uploaded to ~/$REMOTE/<name>/ on $HOST"
-echo "Each subdomain still needs its DNS record and document root set to that folder."
+echo "Live at https://khandanilegacy.com/p/<name>/"
