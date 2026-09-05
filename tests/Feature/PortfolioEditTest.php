@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\Person;
 use App\Models\User;
 use App\Support\PortfolioContent;
+use App\Support\PortfolioOwners;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Tests\TestCase;
@@ -23,6 +25,7 @@ class PortfolioEditTest extends TestCase
     {
         parent::setUp();
         File::delete(storage_path('app/portfolios.json'));
+        File::deleteDirectory(storage_path('app/portfolio-photos'));
     }
 
     protected function tearDown(): void
@@ -89,6 +92,57 @@ class PortfolioEditTest extends TestCase
         $this->assertSame('Architect and baker', json_decode(File::get($file), true)['fields']['profession']['en']);
 
         File::delete($file);
+    }
+
+    public function test_the_admin_form_offers_the_lists_and_the_layout(): void
+    {
+        // The admin panel has the same reach over all eight that each person
+        // has over their own page — the point of it is being able to make a
+        // change for somebody who has not claimed their account yet.
+        $this->actingAs($this->admin())
+            ->get('/admin/portfolios/atik/edit')
+            ->assertOk()
+            ->assertSee('Add a role')
+            ->assertSee('The order of the page')
+            ->assertSee('Photograph')
+            ->assertSee('Languages you speak');
+    }
+
+    public function test_an_admin_can_change_the_lists_and_the_order_of_any_page(): void
+    {
+        $this->actingAs($this->admin())->patch('/admin/portfolios/morsheda', [
+            'lists' => ['focus' => [['en' => 'Set by an admin', 'bn' => '']]],
+            'sections' => [
+                ['key' => 'languages', 'on' => '1'],
+                ['key' => 'speech'],
+            ],
+        ])->assertRedirect(route('admin.portfolios.index'));
+
+        $saved = PortfolioContent::for('morsheda');
+
+        $this->assertSame('Set by an admin', $saved['lists']['focus'][0]['en']);
+        $this->assertSame([
+            ['key' => 'languages', 'on' => true],
+            ['key' => 'speech', 'on' => false],
+        ], $saved['sections']);
+    }
+
+    public function test_the_admin_form_names_the_person_whose_page_it_is(): void
+    {
+        Person::factory()->create(['full_name' => 'Mosammat Morsheda Khatun']);
+        PortfolioOwners::flush();
+
+        $this->actingAs($this->admin())
+            ->get('/admin/portfolios/morsheda/edit')
+            ->assertOk()
+            ->assertSee('This page belongs to Mosammat Morsheda Khatun');
+    }
+
+    public function test_an_admin_cannot_save_a_section_a_page_does_not_have(): void
+    {
+        $this->actingAs($this->admin())->patch('/admin/portfolios/morsheda', [
+            'sections' => [['key' => 'not-a-section', 'on' => '1']],
+        ])->assertSessionHasErrors('sections.0.key');
     }
 
     public function test_an_unknown_person_is_not_found(): void

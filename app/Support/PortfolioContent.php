@@ -296,7 +296,18 @@ class PortfolioContent
                 json_encode($all[$slug] ?? new \stdClass, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
             );
 
-            $result[$slug] = $written === false ? 'could not write' : 'published';
+            if ($written === false) {
+                $result[$slug] = 'could not write';
+                continue;
+            }
+
+            // The portrait goes out with the wording. It is copied on every
+            // publish rather than only when it changes, so that uploading the
+            // built pages again — which overwrites the folder's photo with the
+            // one from the repository — is undone by the next publish.
+            $photo = PortfolioPhoto::publish($slug);
+
+            $result[$slug] = $photo === 'published' ? 'published, with the photo' : 'published';
         }
 
         return $result;

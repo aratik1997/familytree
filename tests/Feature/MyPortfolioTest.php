@@ -28,12 +28,14 @@ class MyPortfolioTest extends TestCase
         // The store is a file, not a table, so it does not roll back with the
         // database. Each test starts from nothing saved.
         File::delete(storage_path('app/portfolios.json'));
+        File::deleteDirectory(storage_path('app/portfolio-photos'));
         PortfolioOwners::flush();
     }
 
     protected function tearDown(): void
     {
         File::delete(storage_path('app/portfolios.json'));
+        File::deleteDirectory(storage_path('app/portfolio-photos'));
         PortfolioOwners::flush();
         parent::tearDown();
     }
@@ -54,7 +56,7 @@ class MyPortfolioTest extends TestCase
             ->get(route('my-portfolio.edit'))
             ->assertOk()
             ->assertSee('Save and publish')
-            ->assertSee('The order of your page');
+            ->assertSee('The order of the page');
     }
 
     public function test_the_dashboard_offers_the_editor_only_to_an_owner(): void
@@ -196,7 +198,7 @@ class MyPortfolioTest extends TestCase
 
         $this->actingAs($this->owner('Mohammed Atikur Rahman'))->patch(route('my-portfolio.update'), [
             'fields' => ['tagline' => ['en' => 'Live straight away.', 'bn' => '']],
-        ])->assertSessionHas('publish_result', 'published');
+        ])->assertSessionHas('publish_result', fn ($r) => str_starts_with($r, 'published'));
 
         $published = json_decode(File::get($dir.'/data.json'), true);
 

@@ -2,19 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Concerns\EditsPortfolios;
 use App\Support\PortfolioContent;
+use App\Support\PortfolioOwners;
+use App\Support\PortfolioPhoto;
 use Illuminate\Http\Request;
 
 /**
  * The eight family portfolios, listed and edited from the admin area.
  *
  * The pages themselves are static files on their own subdomains. What can be
- * changed here is their wording — saved to a JSON file, then published into
- * each page's folder for the page to read when it loads. Anything structural
- * (a new section, a different layout) is still a rebuild.
+ * changed here is everything they say and show — the wording, the lists, the
+ * photograph and the order the sections read in — saved to a JSON file, then
+ * published into each page's folder for the page to read when it loads.
+ *
+ * An admin has the same reach over all eight that each person has over their
+ * own, which is what makes the panel useful when somebody has not claimed
+ * their account yet or has asked for a change to be made for them.
  */
 class PortfolioController extends Controller
 {
+    use EditsPortfolios;
+
     /**
      * What each page says out of the box.
      *
@@ -126,7 +135,10 @@ class PortfolioController extends Controller
 
         return view('admin.portfolio-edit', [
             'portfolio' => $portfolio,
-            'values' => PortfolioContent::withDefaults($slug, $portfolio),
+            'form' => PortfolioContent::formFor($slug),
+            // Named so an admin can see whose page they are about to change.
+            'owner' => PortfolioOwners::personFor($slug)?->full_name,
+            ...$this->photoView($slug),
         ]);
     }
 
@@ -134,16 +146,8 @@ class PortfolioController extends Controller
     {
         self::find($slug);
 
-        $rules = [];
-        foreach (PortfolioContent::FIELDS as $f) {
-            // Generous limits: a speech is a paragraph, a name is not.
-            $max = in_array($f, ['tagline', 'speech'], true) ? 1200 : 160;
-            $rules["fields.$f.en"] = ['nullable', 'string', "max:$max"];
-            $rules["fields.$f.bn"] = ['nullable', 'string', "max:$max"];
-        }
-
-        $validated = $request->validate($rules);
-        PortfolioContent::save($slug, $validated['fields'] ?? []);
+        $validated = $request->validate($this->portfolioRules($slug));
+        $this->savePortfolio($request, $slug, $validated);
 
         return redirect()
             ->route('admin.portfolios.index')

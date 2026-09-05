@@ -11,6 +11,7 @@ use App\Http\Controllers\MyPortfolioController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\PortfolioPhotoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileFieldController;
 use App\Http\Controllers\RecordController;
@@ -47,6 +48,11 @@ Route::middleware('auth')->group(function () {
     // the URL that would reach somebody else's.
     Route::get('/my-portfolio', [MyPortfolioController::class, 'edit'])->name('my-portfolio.edit');
     Route::patch('/my-portfolio', [MyPortfolioController::class, 'update'])->name('my-portfolio.update');
+
+    // The stored portrait, shown back in whichever editor is open. It lives
+    // under storage/ rather than in the web root, so it is served through here
+    // and only to the person whose page it is, or to an admin.
+    Route::get('/portfolio-photo/{slug}', PortfolioPhotoController::class)->name('portfolio.photo');
 
     // Breeze's own account settings (login email / password) — distinct from
     // the tree profile below, which is the person's public-facing record.
