@@ -46,6 +46,11 @@
         return $row;
     };
 
+    // What this server will actually accept, said in the form rather than
+    // guessed at: the host's ceiling is what decides, not us.
+    $maxKb = App\Support\PortfolioPhoto::maxKilobytes();
+    $maxLabel = $maxKb >= 1024 ? round($maxKb / 1024, 1).' MB' : $maxKb.' KB';
+
     $state = [
         'lists' => collect($form['lists'])
             ->map(fn ($rows, $name) => array_map(fn ($r) => $shape($r, $blank[$name]), $rows))
@@ -84,7 +89,7 @@
                 <input id="photo" type="file" name="photo" accept="image/jpeg,image/png,image/webp"
                        class="field mt-1 text-sm">
                 <p class="text-xs mt-1" style="color: var(--text-low)">
-                    {{ __('JPEG, PNG or WebP, up to 8 MB. It is resized and turned the right way up automatically.') }}
+                    {{ __('JPEG, PNG or WebP, up to :size. It is resized and turned the right way up automatically.', ['size' => $maxLabel]) }}
                 </p>
                 <x-input-error :messages="$errors->get('photo')" class="mt-1" />
 

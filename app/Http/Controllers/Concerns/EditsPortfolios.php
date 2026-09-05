@@ -65,7 +65,7 @@ trait EditsPortfolios
         $rules['sections.*.key'] = ['required', 'string', 'in:'.implode(',', $keys ?: ['none'])];
         $rules['sections.*.on'] = ['nullable', 'boolean'];
 
-        $rules['photo'] = ['nullable', 'image', 'mimetypes:'.implode(',', PortfolioPhoto::MIME_TYPES), 'max:8192'];
+        $rules['photo'] = ['nullable', 'image', 'mimetypes:'.implode(',', PortfolioPhoto::MIME_TYPES), 'max:'.PortfolioPhoto::maxKilobytes()];
         $rules['remove_photo'] = ['nullable', 'boolean'];
 
         return $rules;

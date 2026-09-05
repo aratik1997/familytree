@@ -28,6 +28,53 @@ class PortfolioPhoto
     /** What a browser may send. Anything else is refused before GD sees it. */
     public const MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
+    /**
+     * The largest picture this server will actually accept, in kilobytes.
+     *
+     * Read from PHP rather than written down, because a limit we state and the
+     * host does not enforce is worse than useless: an upload past the host's
+     * own ceiling never reaches the application at all, and the person is left
+     * looking at a form that appears to have worked.
+     *
+     * post_max_size counts too — it caps the whole request, so a file just
+     * under upload_max_filesize can still be thrown away with the rest of the
+     * form around it.
+     */
+    public static function maxKilobytes(): int
+    {
+        $limits = array_filter([
+            static::iniBytes('upload_max_filesize'),
+            // Leave room for the rest of the form: the wording, the lists and
+            // the layout travel in the same request as the picture.
+            static::iniBytes('post_max_size') - 512 * 1024,
+        ], fn ($n) => $n > 0);
+
+        $bytes = $limits ? min($limits) : 2 * 1024 * 1024;
+
+        // Never offer more than the pages need; a bigger file is only a slower
+        // upload for a portrait that gets shrunk to 1200px regardless.
+        return (int) max(256, min($bytes, 8 * 1024 * 1024) / 1024);
+    }
+
+    /** Reads a php.ini size, which may be written as 8M or 512K. */
+    private static function iniBytes(string $key): int
+    {
+        $raw = trim((string) ini_get($key));
+
+        if ($raw === '') {
+            return 0;
+        }
+
+        $n = (int) $raw;
+
+        return match (strtoupper(substr($raw, -1))) {
+            'G' => $n * 1024 ** 3,
+            'M' => $n * 1024 ** 2,
+            'K' => $n * 1024,
+            default => $n,
+        };
+    }
+
     public static function path(string $slug): string
     {
         return storage_path("app/portfolio-photos/{$slug}.jpg");
