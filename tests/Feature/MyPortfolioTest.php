@@ -30,6 +30,10 @@ class MyPortfolioTest extends TestCase
         File::delete(storage_path('app/portfolios.json'));
         File::deleteDirectory(storage_path('app/portfolio-photos'));
         PortfolioOwners::flush();
+
+        foreach (['atik', 'morsheda'] as $slug) {
+            $this->keepPageFolder($slug);
+        }
     }
 
     protected function tearDown(): void
@@ -37,8 +41,35 @@ class MyPortfolioTest extends TestCase
         File::delete(storage_path('app/portfolios.json'));
         File::deleteDirectory(storage_path('app/portfolio-photos'));
         PortfolioOwners::flush();
+        $this->restorePageFolder();
         parent::tearDown();
     }
+
+    /**
+     * The built pages are real files in this repository, and publishing writes
+     * into them. Kept and put back around every test, so a run can never leave
+     * a fake portrait or a stray data.json behind in the working tree.
+     */
+    private array $pageFolder = [];
+
+    private function keepPageFolder(string $slug): void
+    {
+        $dir = PortfolioContent::pageDir($slug);
+
+        foreach ([$dir.'/data.json', $dir."/img/{$slug}.jpg"] as $file) {
+            $this->pageFolder[$file] = File::exists($file) ? File::get($file) : null;
+        }
+    }
+
+    private function restorePageFolder(): void
+    {
+        foreach ($this->pageFolder as $file => $before) {
+            $before === null ? File::delete($file) : File::put($file, $before);
+        }
+
+        $this->pageFolder = [];
+    }
+
 
     /** A signed-in user who is the person a portfolio belongs to. */
     private function owner(string $fullName): User

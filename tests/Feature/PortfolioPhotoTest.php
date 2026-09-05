@@ -29,6 +29,10 @@ class PortfolioPhotoTest extends TestCase
         File::delete(storage_path('app/portfolios.json'));
         File::deleteDirectory(storage_path('app/portfolio-photos'));
         PortfolioOwners::flush();
+
+        foreach (['atik', 'morsheda'] as $slug) {
+            $this->keepPageFolder($slug);
+        }
     }
 
     protected function tearDown(): void
@@ -36,8 +40,35 @@ class PortfolioPhotoTest extends TestCase
         File::delete(storage_path('app/portfolios.json'));
         File::deleteDirectory(storage_path('app/portfolio-photos'));
         PortfolioOwners::flush();
+        $this->restorePageFolder();
         parent::tearDown();
     }
+
+    /**
+     * The built pages are real files in this repository, and publishing writes
+     * into them. Kept and put back around every test, so a run can never leave
+     * a fake portrait or a stray data.json behind in the working tree.
+     */
+    private array $pageFolder = [];
+
+    private function keepPageFolder(string $slug): void
+    {
+        $dir = PortfolioContent::pageDir($slug);
+
+        foreach ([$dir.'/data.json', $dir."/img/{$slug}.jpg"] as $file) {
+            $this->pageFolder[$file] = File::exists($file) ? File::get($file) : null;
+        }
+    }
+
+    private function restorePageFolder(): void
+    {
+        foreach ($this->pageFolder as $file => $before) {
+            $before === null ? File::delete($file) : File::put($file, $before);
+        }
+
+        $this->pageFolder = [];
+    }
+
 
     private function owner(string $fullName): User
     {
@@ -123,24 +154,16 @@ class PortfolioPhotoTest extends TestCase
         }
 
         $published = $dir.'/img/atik.jpg';
-        $before = File::exists($published) ? File::get($published) : null;
 
-        try {
-            $this->actingAs($this->owner('Mohammed Atikur Rahman'))
-                ->patch(route('my-portfolio.update'), [
-                    'photo' => UploadedFile::fake()->image('me.jpg', 600, 800),
-                ])
-                ->assertSessionHas('publish_result', 'published, with the photo');
+        $this->actingAs($this->owner('Mohammed Atikur Rahman'))
+            ->patch(route('my-portfolio.update'), [
+                'photo' => UploadedFile::fake()->image('me.jpg', 600, 800),
+            ])
+            ->assertSessionHas('publish_result', 'published, with the photo');
 
-            // The page asks for img/<slug>.jpg beside itself; that is the file.
-            $this->assertFileExists($published);
-            $this->assertSame(
-                File::get(PortfolioPhoto::path('atik')),
-                File::get($published)
-            );
-        } finally {
-            $before === null ? File::delete($published) : File::put($published, $before);
-        }
+        // The page asks for img/<slug>.jpg beside itself; that is the file.
+        $this->assertFileExists($published);
+        $this->assertSame(File::get(PortfolioPhoto::path('atik')), File::get($published));
     }
 
     public function test_the_stored_photo_is_served_only_to_those_who_may_edit_it(): void
